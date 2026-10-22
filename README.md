@@ -115,6 +115,7 @@ Docker/원격 배포 검증 여부는 [환경 검증 기록](docs/environment.md
 ## 학습 자료
 
 - [Git 운영 규칙](docs/git-workflow.md) · [에이전트 작업 지침](AGENTS.md)
+- [일차별 개발 기록](docs/devlog/README.md) · [주요 판단·문제 해결](docs/decisions.md)
 - [초기 설계](docs/initial-design.md)
 - [환경 검증 기록](docs/environment.md)
 - [타입과 오류 예방](docs/typescript.md)
