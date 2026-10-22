@@ -1,0 +1,50 @@
+{
+  "corpus_version": "apple-kr-20261023-v1",
+  "documents": [
+    {
+      "document_id": "apple-kr-orders",
+      "title": "주문 확인 및 변경",
+      "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+      "resolved_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+      "locale": "ko-KR",
+      "collected_at": "2026-10-22T15:32:44.321131+00:00",
+      "effective_date": null,
+      "collection_method": "http",
+      "http_status": 200,
+      "raw_path": "raw/apple-kr-20261023-v1/apple-kr-orders.html",
+      "raw_sha256": "517e5084e5f26f2f511f8fc9816c6ea44f6144cd2c98d8a09f0a504811feedb5",
+      "review_text_path": "raw/apple-kr-20261023-v1/apple-kr-orders.txt",
+      "page_heading": "주문 확인 및 변경"
+    },
+    {
+      "document_id": "apple-kr-shipping",
+      "title": "배송 및 픽업",
+      "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+      "resolved_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+      "locale": "ko-KR",
+      "collected_at": "2026-10-22T15:32:45.019279+00:00",
+      "effective_date": null,
+      "collection_method": "http",
+      "http_status": 200,
+      "raw_path": "raw/apple-kr-20261023-v1/apple-kr-shipping.html",
+      "raw_sha256": "9f9608e07dc78f29643a1ccda2401bc76bbb297dc2ff6507ff65efa7398c44cc",
+      "review_text_path": "raw/apple-kr-20261023-v1/apple-kr-shipping.txt",
+      "page_heading": "배송 및 픽업"
+    },
+    {
+      "document_id": "apple-kr-returns",
+      "title": "반품 및 환불",
+      "source_url": "https://www.apple.com/kr/shop/help/returns_refund",
+      "resolved_url": "https://www.apple.com/kr/shop/help/returns_refund",
+      "locale": "ko-KR",
+      "collected_at": "2026-10-22T15:32:45.973672+00:00",
+      "effective_date": null,
+      "collection_method": "http",
+      "http_status": 200,
+      "raw_path": "raw/apple-kr-20261023-v1/apple-kr-returns.html",
+      "raw_sha256": "78ad08a88e95b6fc777458b54a2b9b5baea9138547177555f9e31d845807da28",
+      "review_text_path": "raw/apple-kr-20261023-v1/apple-kr-returns.txt",
+      "page_heading": "반품 및 환불"
+    }
+  ]
+}

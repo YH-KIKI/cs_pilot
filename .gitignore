@@ -218,3 +218,15 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# CS Pilot local tooling, secrets, generated data and frontend output
+.tools/
+node_modules/
+*.tsbuildinfo
+*.sqlite3
+*.sqlite3-*
+*.sqlite3.tmp
+data/runtime/
+app/static/
+.env.*
+!.env.example

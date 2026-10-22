@@ -1,0 +1,1041 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "CS Pilot",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/orders/{order_id}": {
+      "get": {
+        "summary": "Get Order",
+        "operationId": "get_order_api_orders__order_id__get",
+        "parameters": [
+          {
+            "name": "order_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^A[0-9]{2,6}$",
+              "title": "Order Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/OrderFound"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrderNotFound"
+                    },
+                    {
+                      "$ref": "#/components/schemas/OrderError"
+                    }
+                  ],
+                  "discriminator": {
+                    "propertyName": "kind",
+                    "mapping": {
+                      "found": "#/components/schemas/OrderFound",
+                      "not_found": "#/components/schemas/OrderNotFound",
+                      "error": "#/components/schemas/OrderError"
+                    }
+                  },
+                  "title": "Response Get Order Api Orders  Order Id  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/consultations": {
+      "post": {
+        "summary": "Create Consultation",
+        "operationId": "create_consultation_api_consultations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsultationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConsultationResponse"
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "Contract defined; agent not implemented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiError": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "const": "not_implemented",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ApiError"
+      },
+      "AppliedPolicy": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Text"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Evidence Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "text",
+          "evidence_ids"
+        ],
+        "title": "AppliedPolicy"
+      },
+      "ConsultationRequest": {
+        "properties": {
+          "question": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Question"
+          },
+          "order_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^A[0-9]{2,6}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Order Id"
+          },
+          "target_item_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9]{2,6}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Item Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "question"
+        ],
+        "title": "ConsultationRequest"
+      },
+      "ConsultationResponse": {
+        "properties": {
+          "contract_version": {
+            "type": "string",
+            "const": "1.0",
+            "title": "Contract Version",
+            "default": "1.0"
+          },
+          "request_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Request Id"
+          },
+          "reference_time": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Reference Time"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "answered",
+              "needs_information",
+              "order_not_found",
+              "insufficient_evidence",
+              "limit_reached",
+              "system_error"
+            ],
+            "title": "Status"
+          },
+          "order_result": {
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/OrderNotRequested"
+              },
+              {
+                "$ref": "#/components/schemas/OrderFound"
+              },
+              {
+                "$ref": "#/components/schemas/OrderNotFound"
+              },
+              {
+                "$ref": "#/components/schemas/OrderError"
+              }
+            ],
+            "title": "Order Result",
+            "discriminator": {
+              "propertyName": "kind",
+              "mapping": {
+                "error": "#/components/schemas/OrderError",
+                "found": "#/components/schemas/OrderFound",
+                "not_found": "#/components/schemas/OrderNotFound",
+                "not_requested": "#/components/schemas/OrderNotRequested"
+              }
+            }
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/PolicySource"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "applied_policies": {
+            "items": {
+              "$ref": "#/components/schemas/AppliedPolicy"
+            },
+            "type": "array",
+            "title": "Applied Policies"
+          },
+          "recommendation": {
+            "$ref": "#/components/schemas/Recommendation"
+          },
+          "draft_reply": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Draft Reply"
+          },
+          "missing_fields": {
+            "items": {
+              "$ref": "#/components/schemas/MissingField"
+            },
+            "type": "array",
+            "title": "Missing Fields"
+          },
+          "tool_events": {
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/OrderToolEvent"
+                },
+                {
+                  "$ref": "#/components/schemas/SearchToolEvent"
+                }
+              ],
+              "discriminator": {
+                "propertyName": "tool_name",
+                "mapping": {
+                  "lookup_order": "#/components/schemas/OrderToolEvent",
+                  "search_policy": "#/components/schemas/SearchToolEvent"
+                }
+              }
+            },
+            "type": "array",
+            "maxItems": 3,
+            "title": "Tool Events"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "request_id",
+          "reference_time",
+          "status",
+          "order_result",
+          "sources",
+          "applied_policies",
+          "recommendation",
+          "draft_reply",
+          "missing_fields",
+          "tool_events"
+        ],
+        "title": "ConsultationResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "ok",
+            "title": "Status",
+            "default": "ok"
+          },
+          "database": {
+            "type": "string",
+            "const": "ready",
+            "title": "Database",
+            "default": "ready"
+          },
+          "ai_enabled": {
+            "type": "boolean",
+            "const": false,
+            "title": "Ai Enabled",
+            "default": false
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "default": "환경 구축 단계입니다. 정책 검색과 AI 상담은 아직 연결되지 않았습니다."
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "HealthResponse"
+      },
+      "MissingField": {
+        "properties": {
+          "field": {
+            "type": "string",
+            "enum": [
+              "order_id",
+              "item_id",
+              "order_status",
+              "delivered_at",
+              "condition",
+              "components_complete",
+              "security_lock_disabled",
+              "payment_method",
+              "card_brand",
+              "purchase_country",
+              "current_country",
+              "receipt_available",
+              "other"
+            ],
+            "title": "Field"
+          },
+          "item_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Item Id"
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Question"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "field",
+          "item_id",
+          "question"
+        ],
+        "title": "MissingField"
+      },
+      "Order": {
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "title": "Order Id"
+          },
+          "is_synthetic": {
+            "type": "boolean",
+            "const": true,
+            "title": "Is Synthetic"
+          },
+          "store": {
+            "type": "string",
+            "title": "Store"
+          },
+          "purchase_country": {
+            "type": "string",
+            "title": "Purchase Country"
+          },
+          "ordered_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ordered At"
+          },
+          "payment_method": {
+            "type": "string",
+            "enum": [
+              "card",
+              "bank_transfer",
+              "other",
+              "unknown"
+            ],
+            "title": "Payment Method"
+          },
+          "card_brand": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Card Brand"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/OrderItem"
+            },
+            "type": "array",
+            "minItems": 1,
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "order_id",
+          "is_synthetic",
+          "store",
+          "purchase_country",
+          "ordered_at",
+          "payment_method",
+          "card_brand",
+          "items"
+        ],
+        "title": "Order"
+      },
+      "OrderError": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "error",
+            "title": "Kind",
+            "default": "error"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "OrderError"
+      },
+      "OrderFound": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "found",
+            "title": "Kind",
+            "default": "found"
+          },
+          "order": {
+            "$ref": "#/components/schemas/Order"
+          },
+          "snapshot_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Snapshot At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "order",
+          "snapshot_at"
+        ],
+        "title": "OrderFound"
+      },
+      "OrderItem": {
+        "properties": {
+          "item_id": {
+            "type": "string",
+            "title": "Item Id"
+          },
+          "product_name": {
+            "type": "string",
+            "title": "Product Name"
+          },
+          "product_type": {
+            "type": "string",
+            "title": "Product Type"
+          },
+          "quantity": {
+            "type": "integer",
+            "exclusiveMinimum": 0.0,
+            "title": "Quantity"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "received",
+              "processing",
+              "preparing",
+              "shipped",
+              "delivered",
+              "cancelled",
+              "unknown"
+            ],
+            "title": "Status"
+          },
+          "shipped_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shipped At"
+          },
+          "estimated_delivery_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Estimated Delivery Date"
+          },
+          "delivered_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delivered At"
+          },
+          "tracking_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tracking Number"
+          },
+          "last_tracking_event": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Tracking Event"
+          },
+          "snapshot_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Snapshot At"
+          },
+          "condition": {
+            "type": "string",
+            "enum": [
+              "original",
+              "damaged",
+              "other",
+              "unknown"
+            ],
+            "title": "Condition"
+          },
+          "components_complete": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Components Complete"
+          },
+          "security_lock_disabled": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Security Lock Disabled"
+          },
+          "return_requested_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Return Requested At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "item_id",
+          "product_name",
+          "product_type",
+          "quantity",
+          "status",
+          "shipped_at",
+          "estimated_delivery_date",
+          "delivered_at",
+          "tracking_number",
+          "last_tracking_event",
+          "snapshot_at",
+          "condition",
+          "components_complete",
+          "security_lock_disabled",
+          "return_requested_at"
+        ],
+        "title": "OrderItem"
+      },
+      "OrderNotFound": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "not_found",
+            "title": "Kind",
+            "default": "not_found"
+          },
+          "order_id": {
+            "type": "string",
+            "title": "Order Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "order_id"
+        ],
+        "title": "OrderNotFound"
+      },
+      "OrderNotRequested": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "not_requested",
+            "title": "Kind",
+            "default": "not_requested"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "title": "OrderNotRequested"
+      },
+      "OrderToolEvent": {
+        "properties": {
+          "sequence": {
+            "type": "integer",
+            "maximum": 3.0,
+            "minimum": 1.0,
+            "title": "Sequence"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Duration Ms"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "success",
+              "error"
+            ],
+            "title": "Status"
+          },
+          "result_summary": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Result Summary"
+          },
+          "tool_name": {
+            "type": "string",
+            "const": "lookup_order",
+            "title": "Tool Name"
+          },
+          "input": {
+            "$ref": "#/components/schemas/OrderToolInput"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "sequence",
+          "duration_ms",
+          "status",
+          "result_summary",
+          "tool_name",
+          "input"
+        ],
+        "title": "OrderToolEvent"
+      },
+      "OrderToolInput": {
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "pattern": "^A[0-9]{2,6}$",
+            "title": "Order Id"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "order_id"
+        ],
+        "title": "OrderToolInput"
+      },
+      "PolicySource": {
+        "properties": {
+          "evidence_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Evidence Id"
+          },
+          "document_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Document Id"
+          },
+          "rule_group_id": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Rule Group Id"
+          },
+          "chunk_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chunk Id"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Title"
+          },
+          "heading": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Heading"
+          },
+          "source_url": {
+            "type": "string",
+            "maxLength": 2083,
+            "minLength": 1,
+            "format": "uri",
+            "title": "Source Url"
+          },
+          "collected_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Collected At"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective Date"
+          },
+          "excerpt": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Excerpt"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "evidence_id",
+          "document_id",
+          "rule_group_id",
+          "chunk_id",
+          "title",
+          "heading",
+          "source_url",
+          "collected_at",
+          "effective_date",
+          "excerpt"
+        ],
+        "title": "PolicySource"
+      },
+      "Recommendation": {
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Text"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "text",
+          "evidence_ids"
+        ],
+        "title": "Recommendation"
+      },
+      "SearchToolEvent": {
+        "properties": {
+          "sequence": {
+            "type": "integer",
+            "maximum": 3.0,
+            "minimum": 1.0,
+            "title": "Sequence"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Duration Ms"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "success",
+              "error"
+            ],
+            "title": "Status"
+          },
+          "result_summary": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Result Summary"
+          },
+          "tool_name": {
+            "type": "string",
+            "const": "search_policy",
+            "title": "Tool Name"
+          },
+          "input": {
+            "$ref": "#/components/schemas/SearchToolInput"
+          },
+          "evidence_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Evidence Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "sequence",
+          "duration_ms",
+          "status",
+          "result_summary",
+          "tool_name",
+          "input",
+          "evidence_ids"
+        ],
+        "title": "SearchToolEvent"
+      },
+      "SearchToolInput": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Query"
+          },
+          "topic": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "shipping",
+                  "cancellation",
+                  "returns"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Topic"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "query",
+          "topic"
+        ],
+        "title": "SearchToolInput"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "corpus_version": "apple-kr-20261023-v1",
+  "rules": [
+    {"rule_group_id":"order-status","document_id":"apple-kr-orders","heading":"주문 상태 확인","mode":"section","topic":"cancellation","review_summary":"품목별 주문 상태의 의미를 보존한다. 주문 변경 설명을 취소 허용 여부로 치환하지 않는다. 픽업 상태는 MVP 상세 처리 범위 밖이다."},
+    {"rule_group_id":"order-tracking","document_id":"apple-kr-orders","heading":"배송 추적","mode":"prefix","topic":"shipping","review_summary":"출고 알림과 품목별 추적 정보를 보존한다. 가상 DB의 마지막 기록을 실시간 운송 위치로 표현하지 않는다."},
+    {"rule_group_id":"order-cancellation","document_id":"apple-kr-orders","heading":"주문 취소","mode":"section","topic":"cancellation","review_summary":"출고 준비 중/출고됨의 온라인 취소 제한과 Visa·MasterCard·Diners 다품목 부분 취소 예외를 분리하지 않는다. 배송 완료·취소됨·unknown 상태에 부정 조건을 기계적으로 적용해 취소 가능하다고 안내하지 않는다."},
+    {"rule_group_id":"shipping-options","document_id":"apple-kr-shipping","heading":"배송 옵션","mode":"prefix","topic":"shipping","review_summary":"표준 배송 무료와 주문별 예상 시점 조회를 함께 보존한다. 더 빠른 배송 옵션의 조건으로 확대하지 않는다."},
+    {"rule_group_id":"shipping-estimates","document_id":"apple-kr-shipping","heading":"예상 배송 시간","mode":"subsection","topic":"shipping","review_summary":"예상 일정은 보장이 아니며 재고 부족으로 변경될 수 있다는 조건을 함께 보존한다."},
+    {"rule_group_id":"shipping-customized","document_id":"apple-kr-shipping","heading":"각인 및 맞춤 구성 제품의 배송 시간","mode":"subsection","topic":"shipping","review_summary":"각인·맞춤 구성은 준비 시간이 더 걸릴 수 있다. 실제 주문 정보 없이 특정 지연 원인으로 확정하지 않는다."},
+    {"rule_group_id":"shipping-eta","document_id":"apple-kr-shipping","heading":"주문 제품에 대한 예상 배송일자는 언제입니까?","mode":"section","topic":"shipping","review_summary":"정확한 도착 시간 확인 제한과 지역별 안내를 보존한다. 지역·주소·주문 시각 정보가 없는 MVP에서는 특정 시간대를 확약하지 않는다."},
+    {"rule_group_id":"shipping-damage","document_id":"apple-kr-shipping","heading":"주문한 제품 중 빠진 제품이 있거나 제품이 손상된 경우","mode":"section","topic":"shipping","review_summary":"누락·손상 문의의 공식 문의 방향을 보존한다. 일률적인 보상금이나 자동 환불 규정을 만들어내지 않는다."},
+    {"rule_group_id":"returns-process","document_id":"apple-kr-returns","heading":"제품 반품","mode":"prefix","topic":"returns","review_summary":"수령 후 최대 14일 내 반품 시작과 신청 후 14일 내 센터 도착을 구분한다. 대상 제품 조건 및 ZEISS 별도 문의 예외를 보존한다. 이 묶음만으로 최종 반품 가능 여부를 확정하지 않고 returns-standard를 함께 검색한다."},
+    {"rule_group_id":"returns-standard","document_id":"apple-kr-returns","heading":"표준 반품 정책","mode":"agreement","topic":"returns","review_summary":"수령 후 14일·영수증·최초 상태·부품/액세서리/상자·원구매 국가와 다운로드/개봉 소프트웨어/보안 기능 예외를 한 묶음으로 보존한다. 수집일을 시행일로 간주하지 않는다."},
+    {"rule_group_id":"returns-damage","document_id":"apple-kr-returns","heading":"제품 결함 또는 손상","mode":"subsection","topic":"returns","review_summary":"결함·배송 손상은 공식 상담 경로로 안내한다. 단순 변심 기간 경과를 모든 권리 부정으로 확대하지 않는다."}
+  ]
+}

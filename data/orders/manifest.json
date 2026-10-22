@@ -1,0 +1,13 @@
+{
+    "schema_version":  1,
+    "reference_time":  "2026-10-22T12:00:00+09:00",
+    "counts":  {
+                   "order_items":  14,
+                   "orders":  12
+               },
+    "files":  {
+                  "seed_orders.sql":  "631a09125c234b0ec6980820d8bf8a9c2b56150e37331870a057c9e5839f6f60",
+                  "schema.sql":  "e329f2a77783d69b1e1abe9d9e3aba12adf5bdc246d781400ddf986de54b6c63"
+              },
+    "seed_version":  "2026-10-22-v1"
+}

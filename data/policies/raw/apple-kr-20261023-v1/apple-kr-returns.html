@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html class="korea ko ko-kr kr nojs seg-consumer apac" lang="ko-KR" >
+        <head>
+
+
+            
+    <script crossorigin="anonymous">
+        window.ECHO_CONFIG = {
+            metadata: {
+                environment: "",
+                format: "common",
+                fmt: "common",
+                region: "apac",
+                country: "KR",
+                sf: "kr",
+                segment: "Consumer",
+                locale: "ko-kr",
+                referer: document.referrer,
+                node: "standard/help/returns_refund",
+                pageResource: "rs-merch-4",
+                feature: "help-details",
+                targetEnabled: "false"
+            },
+            config: {
+                "pageViewId": Math.random().toString(36).substring(2, 12) + '-' + Date.now().toString(36),
+                "app": "com.apple.www.Store",
+                "delaySendingPageViewDataMS": 500,
+                "altTextEventSampleRatePct": 1.0,
+                "interactionEventSampleRatePct": 100.0,
+                "resourceEventSampleRatePct": 5.0,
+                "rumEventSampleRatePct": 25.0,
+                "performanceMeasurePollingIntervalMS": 1000,
+                "performanceMeasuresToReport": "".split(','),
+                "resourceDisallowedResourceList": "securemetrics.apple.com".split(','),
+                "resourcePollingIntervalMS": 2001,
+                "sendErrors": true,
+                "sendPageViewData": true,
+                "sendResourceData":  true,
+                "passiveEventIngestionUrl": "https://www.apple.com/fxpmdp/ec/as/v1/api",
+                "criticalEventIngestionUrl": "/shop/mdp/api/echo",
+                "sendLoggingData": true,
+                "eventListeners": null || {},
+                "preLoadErrors": []
+            }
+        };
+
+        window.ECHO_CONFIG.config.preLoadErrorListener =  (event) => {
+            window.ECHO_CONFIG.config.preLoadErrors.push(event);
+        };
+
+        window.addEventListener('error',window.ECHO_CONFIG.config.preLoadErrorListener);
+
+        window.AS_LOG_LEVEL = "ERROR";
+    </script>
+
+                <script crossorigin="anonymous">
+                    document.addEventListener('readystatechange', function() {
+                        function createAndDispatchEchoEvent(data) {
+                            var event = new CustomEvent("echoPerformanceNowEvent", {
+                                detail: data,
+                            });
+                            window.dispatchEvent(event);
+                        }
+
+                        if (document.readyState === "interactive") {
+                            let lastIntersectedTime = 0;
+
+                            const observerCallback = function (entries, observer) {
+                                entries.forEach((entry) => {
+                                    if (entry.isIntersecting) {
+                                        lastIntersectedTime = performance.now();
+                                    }
+
+                                    observer.unobserve(entry.target);
+                                });
+
+                                observer.disconnect();
+
+                                // Dispatch time for last intersecting object with viewport
+                                createAndDispatchEchoEvent({
+                                    id: "viewportLoad",
+                                    performanceNow: lastIntersectedTime,
+                                });
+                            };
+                        
+                            if (window.IntersectionObserver) {
+                                // get all the els on page
+                                const itemsInViewport = document.querySelectorAll('*');
+
+                                // instantiate 
+                                const intersectionObserver = new IntersectionObserver(observerCallback, {
+                                    root: null,
+                                    rootMargin: "0px 0px 0px 0px",
+                                    threshold: 0.0,
+                                });
+
+                                // iterate over all els and observe each one
+                                itemsInViewport.forEach(el => {
+                                    intersectionObserver.observe(el);
+                                });
+                            } //END window.IntersectionObserver
+                        } //END document.readyState === "interactive"
+                    });
+                </script>
+
+    <script crossorigin="anonymous">
+        (function () {
+            const logger = typeof window.Log === "function" ? window.Log("pixel") : window.console;
+
+            try {
+                function sanitizeAndNormalizePathname(pathname) {
+                    let newPathname = pathname;
+                    let decodedPathname;
+
+                    try {
+                        decodedPathname = decodeURIComponent(pathname);
+                    } catch (error) {
+                        decodedPathname = pathname;
+                    }
+
+                    // first handle /storepickup and /<sf>/storepickup
+                    if (decodedPathname.includes('/storepickup')) {
+                        newPathname = '/storepickup';
+                    }
+
+                    // then handle /store and /<sf>/store
+                    else if (decodedPathname.includes('/store')) {
+                        const base = '/store';
+                        const path = decodedPathname.split('/store')[1];
+                        newPathname = `${base}${path}`;
+                    }
+
+                    // handle /search and /<sf>/search
+                    else if (decodedPathname.includes('/search')) {
+                        newPathname = '/search';
+                    }
+
+                    // handle /giftcard and /<sf>/giftcard
+                    else if (decodedPathname.includes('/giftcard')) {
+                        newPathname = '/giftcard';
+                    }
+
+                    // handle /shop/bag/saved_bag and /<sf>/shop/bag/saved_bag
+                    else if (decodedPathname.includes('/shop/bag/saved_bag')) {
+                        const base = '/shop/bag/saved_bag';
+                        newPathname = `${base}`;
+                    }
+
+                    // handle /shop/order and /<sf>/shop/order
+                    else if (decodedPathname.includes('/shop/bag')) {
+                        const base = '/shop/bag';
+                        newPathname = `${base}`;
+                    }
+
+                    // handle /shop/order and /<sf>/shop/order
+                    else if (decodedPathname.includes('/shop/pdpAddToBag')) {
+                        const base = '/shop/pdpAddToBag';
+                        newPathname = `${base}`;
+                    }
+
+                    // handle /shop/order and /<sf>/shop/order
+                    else if (decodedPathname.includes('/shop/order')) {
+                        const base = '/shop/order';
+                        const path = decodedPathname
+                            .split(base)[1]
+                            .replace(/\d/g, '0')
+                            .replace(/[\w.-]+@[\w.-]+\.\w+/g, 'user@example.com');
+                        newPathname = `${base}${path}`;
+                    }
+
+                    // handle /shop/recap and /<sf>/shop/recap
+                    else if (decodedPathname.includes('/shop/recap')) {
+                        const base = '/shop/recap';
+                        newPathname = `${base}`;
+                    }
+
+                    // handle /shop/start and /<sf>/shop/start
+                    else if (decodedPathname.includes('/shop/start')) {
+                        const base = '/shop/start';
+                        newPathname = `${base}`;
+                    }
+
+                    // handle /shop/confirm and /<sf>/shop/confirm
+                    else if (decodedPathname.includes('/shop/confirm')) {
+                        const base = '/shop/confirm';
+                        newPathname = `${base}`;
+                    }
+
+                    // handle /shop/posThankYou and /<sf>/shop/posThankYou
+                    else if (decodedPathname.includes('/shop/posThankYou')) {
+                        const base = '/shop/posThankYou';
+                        newPathname = `${base}`;
+                    }
+
+                    // handle /shop/yoursaves and /<sf>/shop/yoursaves
+                    else if (decodedPathname.includes('/shop/yoursaves')) {
+                        const base = '/shop/yoursaves';
+                        newPathname = `${base}`;
+                    }
+
+                    // handle /shop and /<sf>/shop
+                    else if (decodedPathname.includes('/shop')) {
+                        const base = '/shop';
+                        const path = decodedPathname.split('/shop')[1];
+                        newPathname = `${base}${path}`;
+                    }
+
+                    // handle %
+                    if (newPathname.includes('%')) {
+                        newPathname = newPathname.split('%')[0];
+                    }
+
+                    return newPathname;
+                }
+
+                function getSanitizedLocation(location) {
+                    if (!location) {
+                        return {};
+                    }
+                    const newLocation = new URL(location);
+                    if (newLocation.protocol.startsWith('http')) {
+                        return newLocation;
+                    }
+                    newLocation.pathname = 'pathname';
+                    return newLocation;
+                }
+
+                function getAosSanitizedLocation(location) {
+                    const sanitizedLocation = getSanitizedLocation(location);
+
+                    const normalizedPath = sanitizeAndNormalizePathname(sanitizedLocation.pathname);
+
+                    sanitizedLocation.hash = '';
+                    sanitizedLocation.href = `${sanitizedLocation.protocol}//${sanitizedLocation.host}${normalizedPath}`;
+                    sanitizedLocation.password = '';
+                    sanitizedLocation.pathname = normalizedPath;
+                    sanitizedLocation.search = '';
+
+                    return sanitizedLocation;
+                }
+
+                const sanitizedLocation = getAosSanitizedLocation(window.location);
+
+                function getPageShopPath(pathname) {
+                    let newPathname = pathname;
+
+                    // handle /shop/product and /<sf>/shop/product
+                    if (newPathname.includes('/shop/product')) {
+                        const base = '/shop/product';
+                        newPathname = `${base}`;
+                    }
+
+                    const pathElements = newPathname.split('/');
+
+                    if (pathElements.length <= 5) {
+                        return newPathname;
+                    }
+
+                    return pathElements.slice(0, 4).join('/');
+                }
+
+                const { app, pageViewId } = window.ECHO_CONFIG && window.ECHO_CONFIG.config;
+                const referrer = document.referrer.includes('apple.com') ? getAosSanitizedLocation(document.referrer).href : document.referrer;
+                const host = sanitizedLocation.host;
+                const pageHostname = sanitizedLocation.hostname;
+                const pagePathname = sanitizedLocation.pathname;
+                const pageUrl = sanitizedLocation.href;
+                const pageShopPath = getPageShopPath(sanitizedLocation.pathname);
+                const recordTime=Date.now();
+
+                function sanitizeQuery({ search, pageResource }) {
+                    if ([
+                        'accessories-3',
+                        'accessories-4',
+                        'giftcards-1',
+                        'giftcards-3',
+                        'ipad-4',
+                        'iphone-2',
+                        'mac-2',
+                        'rs-buyflow-1',
+                        'rs-merch-4',
+                        'rs-pdp-1',
+                        'vision-1',
+                        'watch-3',
+                    ].includes(pageResource)) {
+                        return search
+                            .replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2}/g, 'user@example.com')
+                            .replace(/\b[0-9a-f]{40}\b/g, '[REDACTED]');
+                    }
+                    return '?<query>';
+                }
+
+                const pageUrlParams = encodeURIComponent(
+                    window.location.search
+                    ? sanitizeQuery({ search: window.location.search, pageResource: 'rs-merch-4' })
+                    : ''
+                );
+                const src = `https://www.apple.com/shop/mdp/echo/echo.png?app=${app}&pageViewId=${pageViewId}&recordTime=${recordTime}&referrer=${referrer}&referer=${referrer}&host=${host}&pageHostname=${pageHostname}&pageUrl=${pageUrl}&pagePathname=${pagePathname}&pageShopPath=${pageShopPath}&pageUrlParams=${pageUrlParams}&eventType=pageview&environment=&format=common&region=apac&country=KR&sf=kr&segment=Consumer&locale=ko-kr&node=standard/help/returns_refund&pageResource=rs-merch-4&feature=help-details`;
+                const pixelScript = document.createElement("img");
+                
+                pixelScript.setAttribute("src", src);
+
+                const srcB = `https://www.apple.com/fxpmdp/ec/as/v1/echo.png?app=${app}&pageViewId=${pageViewId}&recordTime=${recordTime}&referrer=${referrer}&referer=${referrer}&host=${host}&pageHostname=${pageHostname}&pageUrl=${pageUrl}&pagePathname=${pagePathname}&pageShopPath=${pageShopPath}&pageUrlParams=${pageUrlParams}&eventType=pageview&environment=&format=common&region=apac&country=KR&sf=kr&segment=Consumer&locale=ko-kr&node=standard/help/returns_refund&pageResource=rs-merch-4&feature=help-details`;
+                const pixelScriptB = document.createElement("img");
+
+                pixelScriptB.setAttribute("src", srcB);
+            } catch (e) {
+                logger.error(e);
+            }
+        })();
+    </script>
+
+    <noscript>
+        <img src="https://www.apple.com/shop/mdp/echo/echo.png?app=com.apple.www.Store&pageViewId=no-js&recordTime=no-js&referrer=no-js&referer=no-js&host=no-js&pageHostname=no-js&pageUrl=no-js&pagePathname=no-js&pageShopPath=no-js&pageUrlParams=no-js&eventType=pageview&environment=&format=common&region=apac&country=KR&sf=kr&segment=Consumer&locale=ko-kr&node=standard/help/returns_refund&pageResource=rs-merch-4&feature=help-details" width="1" height="1" />
+
+        <img src="https://www.apple.com/fxpmdp/ec/as/v1/echo.png?app=com.apple.www.Store&pageViewId=no-js&recordTime=no-js&referrer=no-js&referer=no-js&host=no-js&pageHostname=no-js&pageUrl=no-js&pagePathname=no-js&pageShopPath=no-js&pageUrlParams=no-js&eventType=pageview&environment=&format=common&region=apac&country=KR&sf=kr&segment=Consumer&locale=ko-kr&node=standard/help/returns_refund&pageResource=rs-merch-4&feature=help-details" width="1" height="1" />
+    </noscript>
+
+            <link rel="preconnect" href="https://store.storeimages.cdn-apple.com/8756/store.apple.com" crossorigin="anonymous">
+<link rel="dns-prefetch" href="https://store.storeimages.cdn-apple.com/8756/store.apple.com" crossorigin="anonymous">
+
+<link rel="preconnect" href="https://www.apple.com" crossorigin="anonymous">
+<link rel="dns-prefetch" href="https://www.apple.com" crossorigin="anonymous">
+
+
+            <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1" />
+    <title>반품 및 환불 - 쇼핑 도움말 - Apple (KR)</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />    
+    <meta name="format-detection" content="telephone=no" />        
+         <meta property="og:type" content="product" />
+        <meta property="og:image" content="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/og-default?wid=1200&amp;hei=630&amp;fmt=jpeg&amp;qlt=95&amp;.v=1525370171638" />
+        <meta property="og:site_name" content="Apple (KR)" />
+        <meta property="og:url" content="https://www.apple.com/kr/shop/help/returns_refund" />
+        <meta name="robots" content="max-image-preview:large" />
+        <meta property="og:description" content="제품 반품하는 방법, 환불 처리에 걸리는 시간, 송장이 주문한 제품과 동봉되지 않은 경우 어떻게 해야 하는지 등을 알아보세요." />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="og:locale" content="ko_KR" />
+        <meta name="twitter:site" content="@apple" />
+        <meta property="og:title" content="반품 및 환불 - 쇼핑 도움말" />
+    <meta name="description" content="제품 반품하는 방법, 환불 처리에 걸리는 시간, 송장이 주문한 제품과 동봉되지 않은 경우 어떻게 해야 하는지 등을 알아보세요." />
+        
+      
+      
+      <link rel="canonical" href="https://www.apple.com/kr/shop/help/returns_refund" />
+          <script  crossorigin="anonymous"> document.cookie = "as_sfa=Mnxrcnxrcnx8a29fS1J8Y29uc3VtZXJ8aW50ZXJuZXR8MHwwfDE; path=/; domain=apple.com; expires=Tue, 20-Apr-2027 15:32:45 GMT; Secure;"; </script>
+			<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":"1","item":{"@id":"https://www.apple.com/kr/shop/help","url":"https://www.apple.com/kr/shop/help","name":"도움말"}},{"@type":"ListItem","position":"2","name":"반품 및 환불"}]}</script>
+		
+		
+	<script type="application/json" id="metrics">{"config":{"asMetrics":{"maxCampaignAndAffiliateLength":255,"asMetricsFeatures":["sharedDataLayer"],"dataMule":"v1","storedEntryPointEnabled":false,"graffitiEnabled":false},"omniture":{"account":["applestoreww"],"trackingServer":"securemetrics.apple.com","internalDomains":["store.apple.com","secure.store.apple.com","secure1.store.apple.com","secure2.store.apple.com","epp.apple.com","secure1.epp.apple.com","storeint.apple.com","secure1.storeint.apple.com","www.apple.com"]},"global":{"cookieDomain":"apple.com"}},"data":{"node":"standard/help/returns_refund","pageName":"AOS: help/returns_refund","properties":{"isHomePage":false,"encryptedStoreId":"wYUXD77UJFDDTUPK7","serverName":"c7478000","characterSetForCountry":"UTF-8","currencyCode":"KRW","computedChannel":"AOS: Help","storeSegmentVariable":"AOS: KR Consumer","storeFrontId":"10160","computedCustomStoreName":"AOS: Korea Consumer","langAttribute":"ko-kr","evarDataNodesEnabled":true},"currency":"KRW","area":"shop"}}</script>
+    
+    
+    
+
+            <script crossorigin="anonymous">
+                     if (/(iPhone|iPod).*OS ([6-9]|[1-9][0-9]).*AppleWebKit.*Mobile.*Safari/.test(navigator.userAgent)) {
+                       var headNode = document.getElementsByTagName("head")[0];
+var sbNode = document.createElement('meta');
+var url = decodeURI("https://www.apple.com/kr/shop/help/returns_refund");
+var ses = "; " + document.cookie;
+var sesParts = ses.split("; s_vi=");
+ses = sesParts.length == 2 ? sesParts.pop().split(";").shift() : '';
+if (ses !== '') {
+    url += url.indexOf('?') >= 0 ? '&' : '?';
+    url += 'ses=' + encodeURI(ses);
+}
+sbNode.name = 'apple-itunes-app';
+sbNode.content = 'app-id=375380948, app-argument=' + url;
+headNode.appendChild(sbNode);
+
+                     }
+                    else if (/(iPad).*OS ([6-9]|[1-9][0-9]).*AppleWebKit.*Mobile.*Safari/.test(navigator.userAgent)) {
+                      var headNode = document.getElementsByTagName("head")[0];
+var sbNode = document.createElement('meta');
+var url = decodeURI("https://www.apple.com/kr/shop/help/returns_refund");
+var ses = "; " + document.cookie;
+var sesParts = ses.split("; s_vi=");
+ses = sesParts.length == 2 ? sesParts.pop().split(";").shift() : '';
+if (ses !== '') {
+    url += url.indexOf('?') >= 0 ? '&' : '?';
+    url += 'ses=' + encodeURI(ses);
+}
+sbNode.name = 'apple-itunes-app';
+sbNode.content = 'app-id=375380948, app-argument=' + url;
+headNode.appendChild(sbNode);
+
+                    }
+            </script>
+
+
+
+        
+
+        
+
+        
+
+                <script crossorigin="anonymous" type="application/json" id="uiConfig">
+        {
+                    "fetchHeaders": {
+                        "sendHeaders": true
+                    }
+        }
+    </script>
+
+	<script crossorigin="anonymous">
+		window.asUnsupportedBrowserUrl = "https://www.apple.com/kr/shop/unsupported";
+	</script>
+
+
+<script crossorigin="anonymous">
+	//replace nojs class with js on html element
+	(function(html){
+		html.className = html.className.replace(/\bnojs\b/,'js')
+	})(document.documentElement);
+
+	// add metric shim
+	window.s = {
+		t: () => {},
+		tl: () => {},
+		clearVars: () => {},
+		pageName: 'disabled',
+		disabled: true
+	};
+</script>
+
+    
+            <link data-srs rel="stylesheet" href="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-globalelements-2.25.0-4bbf8/dist/ac-globalnav.css" media="screen, print"  />
+
+
+
+
+        <link data-srs rel="stylesheet" href="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-external-1.74.1-85ac2/dist/kr/external.css" media="screen, print"  />
+        <link data-srs rel="stylesheet" href="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-vendor-1.36.0-38108/dist/common-css@1.3.3/dist/common.css" media="screen, print"  />
+        <link data-srs rel="stylesheet" href="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-merch-4.19.8-240b0/dist/help-details.css" media="screen, print"  />
+
+        <link data-srs rel="stylesheet" href="https://www.apple.com/wss/fonts?families=SF+Pro+KR,v2:400,600|SF+Pro+Text,v3:400,600|SF+Pro+Display,v3:500|SF+Pro+Icons,v3|Apple+Monochrome+Emoji,v3|Apple+Monochrome+Emoji+Ind,v2"  />
+
+    
+
+
+
+
+	<script crossorigin="anonymous">
+		window.irOn=true;
+	</script>
+
+    
+        <script data-srs
+
+            src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-external-1.74.1-85ac2/dist/unsupportedBrowser.min.js"
+
+
+         nomodule crossorigin="anonymous" integrity="sha384-xA4aSWL+MVd9UwGaciKIe6Ws2in1+cSOXfCZ/KgWWJeJ1eBDhPaftM2S97id4HfU"></script>
+        <script data-srs
+
+            src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-echo-3.35.1-cfadd/dist/echo.min.js"
+
+
+         async crossorigin="anonymous" type="module" integrity="sha384-0I+kZmpldKJb/SXzAO0FAPzFZfihmidAtr0GGlmveZTTcYctWo5XBEGzXUIBtfDI"></script>
+        <script data-srs
+
+            src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-external-1.74.1-85ac2/dist/external.js"
+
+
+         crossorigin="anonymous" integrity="sha384-NTbqmRN1XvDxnsUvkcHO9DrZEcmCa3pc4i9dmeOoe4dy6mlL7qVN1D75qRanApEW"></script>
+        <script data-srs
+
+            src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-external-1.74.1-85ac2/dist/log.js"
+
+
+         crossorigin="anonymous" integrity="sha384-Lpw75dcRr7edu/M8cDUYQwQ1un8+qbzwwYIKToObJpfOn6ojmGE1jjLJG/Hkx2hs"></script>
+        <script data-srs
+
+            src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-vendor-1.36.0-38108/dist/adobe-appmeasurement@3.0.0/third-party/js/ActivityMap.js"
+
+
+         crossorigin="anonymous" integrity="sha384-1BlDpZz9HnfIFjQdcsaUw/pAX0CahbI4PMPj1Z5XWURAnf0yB/t0e0N67vGRNrOW"></script>
+        <script data-srs
+
+            src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-vendor-1.36.0-38108/dist/adobe-appmeasurement@3.0.0/third-party/js/AppMeasurement.js"
+
+
+         crossorigin="anonymous" integrity="sha384-jCdgBbxALZsf+8fwj1dHUYG0m12IfDTcySU5niui301KztArcUL2ZqP1I6z1y4u3"></script>
+        <script data-srs
+
+            src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-analytics-1.12.1-41aac/dist/analytics.js"
+
+
+         crossorigin="anonymous" integrity="sha384-gNU5eSOxt1af/FhlrOS0uBRbe7Alkka9/EBTs2we2Vt1Z2U5OFsbWbYqm7f1Acdp"></script>
+        <script data-srs
+
+            src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-vendor-1.36.0-38108/dist/lodash@4.17.21/lodash.min.js"
+
+
+         crossorigin="anonymous" integrity="sha384-H6KKS1H1WwuERMSm+54dYLzjg0fKqRK5ZRyASdbrI/lwrCc6bXEmtGYr5SwvP1pZ"></script>
+        <script data-srs
+
+            src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-vendor-1.36.0-38108/dist/react-js@19.2.3/dist/react/umd/react.production.min.js"
+
+
+         crossorigin="anonymous" integrity="sha384-YjP45appJSZ/GgDODJxG9S9NPCwGEl0+bZJyTEO8jMsTfa9q11TPgVIzTqObZo1k"></script>
+        <script data-srs
+
+            src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-vendor-1.36.0-38108/dist/react-js@19.2.3/dist/react-dom/umd/react-dom.production.min.js"
+
+
+         crossorigin="anonymous" integrity="sha384-2hK6/EYXuQi8/C+gVN5OuxSDAAqSYnnBT+TY2TdShtHdYe55fr2MF3xOND6NJ+ar"></script>
+        <script data-srs
+
+            src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-merch-4.19.8-240b0/dist/help-details.js"
+
+
+         crossorigin="anonymous"></script>
+
+        <script data-srs src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-globalelements-2.25.0-4bbf8/dist/ac-globalnav.umd.js" defer crossorigin="anonymous" integrity="sha384-3QnQXRcOP6ItGTJ9lbKxojuy9pV1KAEykS7ix0Te+k7wj5b42Rcj0eLpLDTNxBH5"></script>
+    <script data-srs src="https://store.storeimages.cdn-apple.com/8756/store.apple.com/static-resources/rs-globalelements-2.25.0-4bbf8/dist/globalelements.js" crossorigin="anonymous" integrity="sha384-Vd4M0TI5DAjH73dnM/hI4oN/2/mxN9SrrUwWVLjAtD3r4q5hE2DcNVMnjkwpAinh"></script>
+
+
+
+
+
+
+
+
+    
+
+
+        <script id="shldVerify" type="module" crossorigin="anonymous" src="/shop/shld/s3/verify.js" integrity="sha384-oOIX4JWuarzGclyWP2fvPJs+7F7Kn4ivjayuJXXFcNKFkh6rVCxbg0YSus7w1T+R"></script>
+        <script crossorigin="anonymous">
+            window.shldConfig= {
+                isEnabled: true
+            };
+        </script>
+
+
+
+        <script crossorigin="anonymous">
+            window.dynamicFootnotesConfig = {
+                dynamicSymbols: ["<sup>※</sup>","<sup>※※</sup>","<sup>¶</sup>","<sup>¶¶</sup>","<sup>±</sup>","<sup>±±</sup>","°","<sup>°°</sup>"],
+                selector: "div.footnotes",
+                footnoteElementType: "p",
+                footnoteElementDataAttr: "data-dynamic-footnote",
+                placeholderRegex: /{footnote\.(.*?)}/g,
+                placeholderIdFindFn: function (str) {
+                    return str.split(".")[1].split("}")[0]
+                },
+                symbolCache: {},
+                nextSymbolIndex: 0
+            };
+        </script>
+
+        <script crossorigin="anonymous">
+            window.dynamicHashConfig = {
+                // should match something like '__hash__'
+                placeholderRegex: /__hash__/g,
+            };
+
+            window.dcpConfig = {
+                mzoneUrl: "/kr/shop/personalization",
+                mzoneParamPrefix: "mz",
+                moduleBaseUrl: "/kr/shop/content-module",
+                timeoutMS: 2000,
+                enabled: true,
+                mzoneIdList: [],
+                mzoneMap: {},
+                dataAttr: 'data-mzone',
+                dynamicDataAttr: 'data-mzone-dynamic-content',
+                acStatusConfigGetter: function () {
+                    var acConfig = window.acSetup;
+
+                    if (!acConfig) {
+                        return false;
+                    }
+
+                    return {
+                        merchantIdentifier: acConfig.merchantIdentifier || '',
+                        signature: acConfig.signature || '',
+                        signedFields: acConfig.signedFields || null
+                    };
+                },
+                analytics: {
+                    attributesToAddToModules: [
+                        { key: "role", value: "listitem", type: "string" },
+                        { key: "data-rule-id", value: "ruleId", type: "moduleProperty" },
+                        { key: "data-module-id", value: "moduleId", type: "moduleProperty" }
+                    ],
+                    selectorsToIgnore: [".dcp-module-hook", "style", "script", "noscript"],
+                }
+            };
+        </script>
+
+
+
+        
+
+            <script crossorigin="anonymous">
+    window.chatConfig = {"chat":{"page":[{"name":"WEB_CHAT_COUNTRY","value":"kr"},{"name":"WEB_CHAT_LANGUAGE","value":"ko"},{"name":"WEB_CHAT_ORDERNUMBER","value":null},{"name":"WEB_CHAT_GEO","value":"apac"},{"name":"WEB_CHAT_SEGMENT","value":"consumer"},{"name":"WEB_CHAT_SECTION","value":"product selection"},{"name":"WEB_CHAT_SUBSECTION","value":"returns_refund"},{"name":"WEB_CHAT_REFER","value":null},{"name":"WEB_CHAT_APP","value":"AOS"},{"name":"WEB_CHAT_PAGE","value":"AOS: help/returns_refund"},{"name":"url","value":"https://contactretail.apple.com"}]}};
+</script>
+
+
+
+    
+
+<script crossorigin="anonymous">
+	if(!/dssid2/.test(document.cookie) || !/as_dc/.test(document.cookie)) {
+		document.addEventListener('DOMContentLoaded', () => {
+			const ie = document.createElement("IMG");
+			ie.src = '/kr/shop/dc';
+			ie.width = 1;
+			ie.height = 1;
+			ie.style.display = "none";
+			ie.alt = "";
+			document.body.appendChild(ie);
+		});
+	}
+</script>
+
+
+    
+
+
+</head>
+
+
+    <body class="as-theme-light-heroimage">
+            <div class="metrics">
+            <noscript>
+        <img src="https://securemetrics.apple.com/b/ss/applestoreww/1/H.8--NS/0?pageName=No-Script:AOS%3A+help%2Freturns_refund" height="1" width="1" alt=""/>
+    </noscript>
+
+
+        
+        	<script></script>
+
+
+        
+        
+    <script crossorigin="anonymous">
+            if (window.asMetrics && window.asMetrics.initialize) {
+                window.asMetrics.initialize();
+            }
+    </script>
+
+
+    </div>
+
+
+
+
+<script crossorigin="anonymous">
+	if(!/dssid2/.test(document.cookie) || !/as_dc/.test(document.cookie)) {
+		document.addEventListener('DOMContentLoaded', () => {
+			const ie = document.createElement("IMG");
+			ie.src = '/kr/shop/dc';
+			ie.width = 1;
+			ie.height = 1;
+			ie.style.display = "none";
+			ie.alt = "";
+			document.body.appendChild(ie);
+		});
+	}
+</script>
+
+
+
+
+        <div id="page">
+
+            
+
+
+    <script id="aos-gn-links" type="application/json">
+    {  "educationrouting" : "https://www.apple.com/kr/shop/browse/home/education_routing",  "special_deals" : "https://www.apple.com/kr/shop/refurbished",  "buy_iphone/iphone_se" : "https://www.apple.com/kr/iphone",  "buy_mac" : "https://www.apple.com/kr/shop/buy-mac",  "edu_store" : "https://www.apple.com/kr-edu/store",  "order/list" : "https://secure.store.apple.com/kr/shop/order/list",  "buy_airtag/airtag" : "https://www.apple.com/kr/shop/browse/home/shop_airtag/family/airtag",  "buy_watch" : "https://www.apple.com/kr/shop/buy-watch",  "ipad/keyboards" : "https://www.apple.com/kr/shop/ipad/accessories/keyboards",  "ipad/accessories" : "https://www.apple.com/kr/shop/ipad/accessories",  "accessories/all_accessories/made_by_apple" : "https://www.apple.com/kr/shop/accessories/all/made-by-apple",  "watch/bands" : "https://www.apple.com/kr/shop/watch/bands",  "buy_homepod/homepod_mini" : "https://www.apple.com/kr/shop/homepod/family/homepod-mini",  "eppstore/veteransandmilitary" : "https://www.apple.com/kr/",  "studio/apple_watch" : "https://www.apple.com/kr/shop/studio/apple-watch",  "payment_plan" : "https://www.apple.com/kr/shop/browse/finance/PaypalFinancingLandingPage",  "buy_homepod/homepod" : "https://www.apple.com/kr/shop/homepod/family/homepod",  "buy_tv/apple_tv_4k" : "https://www.apple.com/kr/shop/tv/family/apple-tv-4k",  "trade_in" : "https://www.apple.com/kr/shop/trade-in",  "mac/accessories" : "https://www.apple.com/kr/shop/mac/accessories",  "accessories/all_accessories/beats_featured" : "https://www.apple.com/kr/shop/beats/accessories",  "buy_iphone/carrier_offers" : "https://www.apple.com/kr/shop/buy-iphone/carrier-offers",  "buy_home" : "https://www.apple.com/kr/shop/buy-home",  "store" : "https://www.apple.com/kr/store",  "watch/accessories" : "https://www.apple.com/kr/shop/watch/accessories",  "buy_ipad" : "https://www.apple.com/kr/shop/buy-ipad",  "buy_iphone" : "https://www.apple.com/kr/shop/buy-iphone",  "smart_home/accessories" : "https://www.apple.com/kr/shop/smart-home/accessories",  "buy_iphone/iphone_12" : "https://www.apple.com/kr/iphone",  "buy_iphone/iphone_13" : "https://www.apple.com/kr/iphone",  "iphone/accessories" : "https://www.apple.com/kr/shop/iphone/accessories",  "buy_accessories" : "https://www.apple.com/kr/shop/accessories/all"}
+    </script>
+
+
+            <meta name="aos-gn-template" content="2.25.1-SNAPSHOT - Wed Oct 14 2026 18:59:46 GMT-0700 (Pacific Daylight Time)" />
+            <meta name="globalnav-store-key" content="SJHJUH4YFCTTPD4F4" />
+            <meta name="globalnav-search-field[action]" content="/kr/search" />
+            <meta name="globalnav-submenus-enabled" content="true" data-ff-enabled data-cms />
+                <meta name="globalmessage-segment-redirect" content="true" data-cms />
+            <meta name="globalnav-search-suggestions-enabled" content="true" data-cms />
+            <meta name="globalnav-bag-flyout-enabled" content="true" data-cms />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="globalheader">
+  <aside id="globalmessage-segment" lang="ko-KR" dir="ltr" class="globalmessage-segment">
+    <ul data-strings="{&quot;view&quot;:&quot;{%STOREFRONT%} 스토어 홈&quot;,&quot;segments&quot;:{&quot;smb&quot;:&quot;비즈니스 스토어 홈&quot;,&quot;eduInd&quot;:&quot;교육 스토어 홈&quot;,&quot;other&quot;:&quot;스토어 홈&quot;},&quot;exit&quot;:&quot;나가기&quot;}" class="globalmessage-segment-content"></ul>
+  </aside>
+  <nav id="globalnav" lang="ko-KR" dir="ltr" aria-label="글로벌" data-analytics-element-engagement-start="globalnav:onFlyoutOpen" data-analytics-element-engagement-end="globalnav:onFlyoutClose" data-store-api="https://www.apple.com/kr/shop/bag/status" data-analytics-activitymap-region-id="global nav" data-analytics-region="global nav" class="globalnav no-js">
+    <div class="globalnav-content">
+      <div class="globalnav-item globalnav-menuback">
+        <button aria-label="메인 메뉴" class="globalnav-menuback-button">
+          <span aria-hidden="true" class="globalnav-chevron-icon"><svg height="48" viewbox="0 0 9 48" width="9" xmlns="http://www.w3.org/2000/svg">
+              <path d="m1.5618 24.0621 6.5581-6.4238c.2368-.2319.2407-.6118.0088-.8486-.2324-.2373-.6123-.2407-.8486-.0088l-7 6.8569c-.1157.1138-.1807.2695-.1802.4316.001.1621.0674.3174.1846.4297l7 6.7241c.1162.1118.2661.1675.4155.1675.1577 0 .3149-.062.4326-.1846.2295-.2388.2222-.6187-.0171-.8481z"></path></svg></span>
+        </button>
+      </div>
+      <ul id="globalnav-list" role="none" class="globalnav-list">
+        <li data-analytics-element-engagement="globalnav hover - apple" class="globalnav-item globalnav-item-apple">
+          <a href="https://www.apple.com/kr/" data-globalnav-item-name="apple" data-analytics-title="apple home" aria-label="Apple" class="globalnav-link globalnav-link-apple" data-autom="gn_apple"><span aria-hidden="true" class="globalnav-image-regular globalnav-link-image"><svg height="44" viewbox="0 0 14 44" width="14" xmlns="http://www.w3.org/2000/svg">
+                <path d="m13.0729 17.6825a3.61 3.61 0 0 0 -1.7248 3.0365 3.5132 3.5132 0 0 0 2.1379 3.2223 8.394 8.394 0 0 1 -1.0948 2.2618c-.6816.9812-1.3943 1.9623-2.4787 1.9623s-1.3633-.63-2.613-.63c-1.2187 0-1.6525.6507-2.644.6507s-1.6834-.9089-2.4787-2.0243a9.7842 9.7842 0 0 1 -1.6628-5.2776c0-3.0984 2.014-4.7405 3.9969-4.7405 1.0535 0 1.9314.6919 2.5924.6919.63 0 1.6112-.7333 2.8092-.7333a3.7579 3.7579 0 0 1 3.1604 1.5802zm-3.7284-2.8918a3.5615 3.5615 0 0 0 .8469-2.22 1.5353 1.5353 0 0 0 -.031-.32 3.5686 3.5686 0 0 0 -2.3445 1.2084 3.4629 3.4629 0 0 0 -.8779 2.1585 1.419 1.419 0 0 0 .031.2892 1.19 1.19 0 0 0 .2169.0207 3.0935 3.0935 0 0 0 2.1586-1.1368z"></path></svg></span><span aria-hidden="true" class="globalnav-image-compact globalnav-link-image"><svg height="48" viewbox="0 0 17 48" width="17" xmlns="http://www.w3.org/2000/svg">
+                <path d="m15.5752 19.0792a4.2055 4.2055 0 0 0 -2.01 3.5376 4.0931 4.0931 0 0 0 2.4908 3.7542 9.7779 9.7779 0 0 1 -1.2755 2.6351c-.7941 1.1431-1.6244 2.2862-2.8878 2.2862s-1.5883-.734-3.0443-.734c-1.42 0-1.9252.7581-3.08.7581s-1.9611-1.0589-2.8876-2.3584a11.3987 11.3987 0 0 1 -1.9373-6.1487c0-3.61 2.3464-5.523 4.6566-5.523 1.2274 0 2.25.8062 3.02.8062.734 0 1.8771-.8543 3.2729-.8543a4.3778 4.3778 0 0 1 3.6822 1.841zm-6.8586-2.0456a1.3865 1.3865 0 0 1 -.2527-.024 1.6557 1.6557 0 0 1 -.0361-.337 4.0341 4.0341 0 0 1 1.0228-2.5148 4.1571 4.1571 0 0 1 2.7314-1.4078 1.7815 1.7815 0 0 1 .0361.373 4.1487 4.1487 0 0 1 -.9867 2.587 3.6039 3.6039 0 0 1 -2.5148 1.3236z"></path></svg></span><span class="globalnav-link-text">Apple</span></a>
+        </li>
+        <li data-topnav-flyout-item="menu" data-topnav-flyout-label="Menu" role="none" class="globalnav-item globalnav-menu">
+          <div data-topnav-flyout="menu" class="globalnav-flyout">
+            <div class="globalnav-menu-list">
+              <div data-analytics-element-engagement="globalnav hover - store" class="globalnav-item globalnav-item-store globalnav-item-menu">
+                <ul role="none" class="globalnav-submenu-trigger-group">
+                  <li class="globalnav-submenu-trigger-item">
+                    <a href="/kr/store" data-globalnav-item-name="store" data-topnav-flyout-trigger-compact="true" data-analytics-title="store" data-analytics-element-engagement="hover - store" aria-label="스토어" class="globalnav-link globalnav-submenu-trigger-link globalnav-link-store" data-autom="gn_store"><span class="globalnav-link-text-container"><span aria-hidden="true" class="globalnav-image-regular globalnav-link-image"><svg height="44" viewbox="0 0 30 44" width="30" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m1.5818 25.3223v-.8262h8.9531v.8262zm8.584-3.75-.4629.8203c-1.4766-.3867-3.1816-1.4707-3.6562-2.8242-.4746 1.3535-2.1445 2.4375-3.6445 2.8242l-.4746-.8203c1.7285-.334 3.5801-1.6582 3.5801-3.3691v-.6914h1.0781v.6914c-.0001 1.7109 1.8515 3.0234 3.58 3.3691zm9.7241 3.8028h-8.9531v-.8145h3.9668v-1.8984h-2.8125v-5.1621h6.7031v.8203h-5.6953v1.3477h5.4727v.8145h-5.4727v1.3711h5.748v.8086h-2.9297v1.8984h3.9727zm3.0088-.9317c-1.4824 0-2.4668-1.418-2.4668-3.4863 0-2.0801.9844-3.4922 2.4668-3.4922 1.5 0 2.4668 1.4062 2.4668 3.4922 0 2.0567-.9668 3.4863-2.4668 3.4863zm0-.8906c.8438 0 1.5117-.9492 1.5117-2.5957 0-1.6523-.668-2.6016-1.5117-2.6016-.8262 0-1.4824.9492-1.4824 2.6016 0 1.6465.6562 2.5957 1.4824 2.5957zm4.4941 3.1172v-5.3379h-1.6641v-.873h1.6641v-3.7148h1.0254v9.9257z"></path></svg></span><span class="globalnav-link-text">스토어</span></span></a>
+                  </li>
+                </ul>
+              </div>
+              <div data-analytics-element-engagement="globalnav hover - mac" class="globalnav-item globalnav-item-mac globalnav-item-menu">
+                <ul role="none" class="globalnav-submenu-trigger-group">
+                  <li class="globalnav-submenu-trigger-item">
+                    <a href="https://www.apple.com/kr/mac/" data-globalnav-item-name="mac" data-topnav-flyout-trigger-compact="true" data-analytics-title="mac" data-analytics-element-engagement="hover - mac" aria-label="Mac" class="globalnav-link globalnav-submenu-trigger-link globalnav-link-mac" data-autom="gn_mac"><span class="globalnav-link-text-container"><span aria-hidden="true" class="globalnav-image-regular globalnav-link-image"><svg height="44" viewbox="0 0 23 44" width="23" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m8.1558 25.9987v-6.457h-.0703l-2.666 6.457h-.8907l-2.666-6.457h-.0703v6.457h-.9844v-8.4551h1.2246l2.8945 7.0547h.0938l2.8945-7.0547h1.2246v8.4551zm2.5166-1.7696c0-1.1309.832-1.7812 2.3027-1.8691l1.8223-.1113v-.5742c0-.7793-.4863-1.207-1.4297-1.207-.7559 0-1.2832.2871-1.4238.7852h-1.0195c.1348-1.0137 1.1309-1.6816 2.4785-1.6816 1.541 0 2.4023.791 2.4023 2.1035v4.3242h-.9609v-.9318h-.0938c-.4102.6738-1.1016 1.043-1.9453 1.043-1.2246 0-2.1328-.7266-2.1328-1.8809zm4.125-.5859v-.5801l-1.6992.1113c-.9609.0645-1.3828.3984-1.3828 1.0312 0 .6445.5449 1.0195 1.2773 1.0195 1.0371.0001 1.8047-.6796 1.8047-1.5819zm6.958-2.0273c-.1641-.627-.7207-1.1367-1.6289-1.1367-1.1367 0-1.8516.9082-1.8516 2.3379 0 1.459.7266 2.3848 1.8516 2.3848.8496 0 1.4414-.3926 1.6289-1.1074h1.0195c-.1816 1.1602-1.125 2.0156-2.6426 2.0156-1.7695 0-2.9004-1.2832-2.9004-3.293 0-1.9688 1.125-3.2461 2.8945-3.2461 1.5352 0 2.4727.9199 2.6484 2.0449z"></path></svg></span><span class="globalnav-link-text">Mac</span></span></a>
+                  </li>
+                </ul>
+              </div>
+              <div data-analytics-element-engagement="globalnav hover - ipad" class="globalnav-item globalnav-item-ipad globalnav-item-menu">
+                <ul role="none" class="globalnav-submenu-trigger-group">
+                  <li class="globalnav-submenu-trigger-item">
+                    <a href="https://www.apple.com/kr/ipad/" data-globalnav-item-name="ipad" data-topnav-flyout-trigger-compact="true" data-analytics-title="ipad" data-analytics-element-engagement="hover - ipad" aria-label="iPad" class="globalnav-link globalnav-submenu-trigger-link globalnav-link-ipad" data-autom="gn_ipad"><span class="globalnav-link-text-container"><span aria-hidden="true" class="globalnav-image-regular globalnav-link-image"><svg height="44" viewbox="0 0 24 44" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m14.9575 23.7002c0 .902-.768 1.582-1.805 1.582-.732 0-1.277-.375-1.277-1.02 0-.632.422-.966 1.383-1.031l1.699-.111zm-1.395-4.072c-1.347 0-2.343.668-2.478 1.681h1.019c.141-.498.668-.785 1.424-.785.944 0 1.43.428 1.43 1.207v.574l-1.822.112c-1.471.088-2.303.738-2.303 1.869 0 1.154.908 1.881 2.133 1.881.844 0 1.535-.369 1.945-1.043h.094v.931h.961v-4.324c0-1.312-.862-2.103-2.403-2.103zm6.769 5.575c-1.155 0-1.846-.885-1.846-2.361 0-1.471.697-2.362 1.846-2.362 1.142 0 1.857.914 1.857 2.362 0 1.459-.709 2.361-1.857 2.361zm1.834-8.027v3.503h-.088c-.358-.691-1.102-1.107-1.981-1.107-1.605 0-2.654 1.289-2.654 3.27 0 1.986 1.037 3.269 2.654 3.269.873 0 1.623-.416 2.022-1.119h.093v1.008h.961v-8.824zm-15.394 4.869h-1.863v-3.563h1.863c1.225 0 1.899.639 1.899 1.799 0 1.119-.697 1.764-1.899 1.764zm.276-4.5h-3.194v8.455h1.055v-3.018h2.127c1.588 0 2.719-1.119 2.719-2.701 0-1.611-1.108-2.736-2.707-2.736zm-6.064 8.454h1.008v-6.316h-1.008zm-.199-8.237c0-.387.316-.704.703-.704s.703.317.703.704c0 .386-.316.703-.703.703s-.703-.317-.703-.703z"></path></svg></span><span class="globalnav-link-text">iPad</span></span></a>
+                  </li>
+                </ul>
+              </div>
+              <div data-analytics-element-engagement="globalnav hover - iphone" class="globalnav-item globalnav-item-iphone globalnav-item-menu">
+                <ul role="none" class="globalnav-submenu-trigger-group">
+                  <li class="globalnav-submenu-trigger-item">
+                    <a href="https://www.apple.com/kr/iphone/" data-globalnav-item-name="iphone" data-topnav-flyout-trigger-compact="true" data-analytics-title="iphone" data-analytics-element-engagement="hover - iphone" aria-label="iPhone" class="globalnav-link globalnav-submenu-trigger-link globalnav-link-iphone" data-autom="gn_iphone"><span class="globalnav-link-text-container"><span aria-hidden="true" class="globalnav-image-regular globalnav-link-image"><svg height="44" viewbox="0 0 38 44" width="38" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m32.7129 22.3203h3.48c-.023-1.119-.691-1.857-1.693-1.857-1.008 0-1.711.738-1.787 1.857zm4.459 2.045c-.293 1.078-1.277 1.746-2.66 1.746-1.752 0-2.848-1.266-2.848-3.264 0-1.986 1.113-3.275 2.848-3.275 1.705 0 2.742 1.213 2.742 3.176v.386h-4.541v.047c.053 1.248.75 2.039 1.822 2.039.815 0 1.366-.298 1.629-.855zm-12.282-4.682h.961v.996h.094c.316-.697.932-1.107 1.898-1.107 1.418 0 2.209.838 2.209 2.338v4.09h-1.007v-3.844c0-1.137-.481-1.676-1.489-1.676s-1.658.674-1.658 1.781v3.739h-1.008zm-2.499 3.158c0-1.5-.674-2.361-1.869-2.361-1.196 0-1.87.861-1.87 2.361 0 1.495.674 2.362 1.87 2.362 1.195 0 1.869-.867 1.869-2.362zm-4.782 0c0-2.033 1.114-3.269 2.913-3.269 1.798 0 2.912 1.236 2.912 3.269 0 2.028-1.114 3.27-2.912 3.27-1.799 0-2.913-1.242-2.913-3.27zm-6.636-5.666h1.008v3.504h.093c.317-.697.979-1.107 1.946-1.107 1.336 0 2.179.855 2.179 2.338v4.09h-1.007v-3.844c0-1.119-.504-1.676-1.459-1.676-1.131 0-1.752.715-1.752 1.781v3.739h-1.008zm-6.015 4.87h1.863c1.202 0 1.899-.645 1.899-1.764 0-1.16-.674-1.799-1.899-1.799h-1.863zm2.139-4.5c1.599 0 2.707 1.125 2.707 2.736 0 1.582-1.131 2.701-2.719 2.701h-2.127v3.018h-1.055v-8.455zm-6.114 8.454h1.008v-6.316h-1.008zm-.2-8.238c0-.386.317-.703.703-.703.387 0 .704.317.704.703 0 .387-.317.704-.704.704-.386 0-.703-.317-.703-.704z"></path></svg></span><span class="globalnav-link-text">iPhone</span></span></a>
+                  </li>
+                </ul>
+              </div>
+              <div data-analytics-element-engagement="globalnav hover - watch" class="globalnav-item globalnav-item-watch globalnav-item-menu">
+                <ul role="none" class="globalnav-submenu-trigger-group">
+                  <li class="globalnav-submenu-trigger-item">
+                    <a href="https://www.apple.com/kr/watch/" data-globalnav-item-name="watch" data-topnav-flyout-trigger-compact="true" data-analytics-title="watch" data-analytics-element-engagement="hover - watch" aria-label="Watch" class="globalnav-link globalnav-submenu-trigger-link globalnav-link-watch" data-autom="gn_watch"><span class="globalnav-link-text-container"><span aria-hidden="true" class="globalnav-image-regular globalnav-link-image"><svg height="44" viewbox="0 0 35 44" width="35" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m28.9819 17.1758h1.008v3.504h.094c.316-.697.978-1.108 1.945-1.108 1.336 0 2.18.856 2.18 2.338v4.09h-1.008v-3.844c0-1.119-.504-1.675-1.459-1.675-1.131 0-1.752.715-1.752 1.781v3.738h-1.008zm-2.42 4.441c-.164-.627-.721-1.136-1.629-1.136-1.137 0-1.852.908-1.852 2.338 0 1.459.727 2.384 1.852 2.384.849 0 1.441-.392 1.629-1.107h1.019c-.182 1.16-1.125 2.016-2.642 2.016-1.77 0-2.901-1.284-2.901-3.293 0-1.969 1.125-3.247 2.895-3.247 1.535 0 2.472.92 2.648 2.045zm-6.533-3.568v1.635h1.407v.844h-1.407v3.574c0 .744.282 1.06.938 1.06.182 0 .281-.006.469-.023v.85c-.2.035-.393.058-.592.058-1.301 0-1.822-.48-1.822-1.687v-3.832h-1.02v-.844h1.02v-1.635zm-4.2 5.596v-.58l-1.699.111c-.961.064-1.383.398-1.383 1.031 0 .645.545 1.02 1.277 1.02 1.038 0 1.805-.68 1.805-1.582zm-4.125.586c0-1.131.832-1.782 2.303-1.869l1.822-.112v-.574c0-.779-.486-1.207-1.43-1.207-.755 0-1.283.287-1.423.785h-1.02c.135-1.014 1.131-1.682 2.479-1.682 1.541 0 2.402.792 2.402 2.104v4.324h-.961v-.931h-.094c-.41.673-1.101 1.043-1.945 1.043-1.225 0-2.133-.727-2.133-1.881zm-7.684 1.769h-.996l-2.303-8.455h1.101l1.682 6.873h.07l1.893-6.873h1.066l1.893 6.873h.07l1.682-6.873h1.101l-2.302 8.455h-.996l-1.946-6.674h-.07z"></path></svg></span><span class="globalnav-link-text">Watch</span></span></a>
+                  </li>
+                </ul>
+              </div>
+              <div data-analytics-element-engagement="globalnav hover - vision" class="globalnav-item globalnav-item-vision globalnav-item-menu">
+                <ul role="none" class="globalnav-submenu-trigger-group">
+                  <li class="globalnav-submenu-trigger-item">
+                    <a href="https://www.apple.com/kr/apple-vision-pro/" data-globalnav-item-name="vision" data-topnav-flyout-trigger-compact="true" data-analytics-title="vision" data-analytics-element-engagement="hover - vision" aria-label="Vision" class="globalnav-link globalnav-submenu-trigger-link globalnav-link-vision" data-autom="gn_vision"><span class="globalnav-link-text-container"><span aria-hidden="true" class="globalnav-image-regular globalnav-link-image"><svg xmlns="http://www.w3.org/2000/svg" width="34" height="44" viewbox="0 0 34 44">
+                            <path d="m.4043,17.5449h1.1074l2.4844,7.0898h.0938l2.4844-7.0898h1.1074l-3.1172,8.4551h-1.043L.4043,17.5449Zm8.3467.2168c0-.3867.3164-.7031.7031-.7031s.7031.3164.7031.7031-.3164.7031-.7031.7031-.7031-.3164-.7031-.7031Zm.1875,1.9219h1.0195v6.3164h-1.0195v-6.3164Zm2.499,4.7051h1.043c.1699.5273.6738.873,1.4824.873.8496,0,1.4531-.4043,1.4531-.9785v-.0117c0-.4277-.3223-.7266-1.1016-.9141l-.9785-.2344c-1.1836-.2812-1.7168-.7969-1.7168-1.7051v-.0059c0-1.0488,1.0078-1.8398,2.3496-1.8398,1.3242,0,2.2441.6621,2.3848,1.6934h-1.002c-.1348-.498-.627-.8438-1.3887-.8438-.75,0-1.3008.3867-1.3008.9434v.0117c0,.4277.3164.6973,1.0605.8789l.9727.2344c1.1895.2871,1.7637.8027,1.7637,1.7051v.0117c0,1.125-1.0957,1.9043-2.5312,1.9043-1.4062,0-2.373-.6797-2.4902-1.7227Zm6.3203-6.627c0-.3867.3164-.7031.7031-.7031s.7031.3164.7031.7031-.3164.7031-.7031.7031-.7031-.3164-.7031-.7031Zm.1875,1.9219h1.0195v6.3164h-1.0195v-6.3164Zm2.5049,3.1641v-.0117c0-2.0273,1.1133-3.2637,2.9121-3.2637s2.9121,1.2363,2.9121,3.2637v.0117c0,2.0215-1.1133,3.2637-2.9121,3.2637s-2.9121-1.2422-2.9121-3.2637Zm4.7812,0v-.0117c0-1.4941-.6738-2.3613-1.8691-2.3613s-1.8691.8672-1.8691,2.3613v.0117c0,1.4883.6738,2.3613,1.8691,2.3613s1.8691-.873,1.8691-2.3613Zm2.5049-3.1641h1.0195v.9492h.0938c.3164-.668.9082-1.0605,1.8398-1.0605,1.418,0,2.209.8379,2.209,2.3379v4.0898h-1.0195v-3.8438c0-1.1367-.4688-1.6816-1.4766-1.6816s-1.6465.6797-1.6465,1.7871v3.7383h-1.0195v-6.3164Z"></path>
+                          </svg> </span><span class="globalnav-link-text">Vision</span></span></a>
+                  </li>
+                </ul>
+              </div>
+              <div data-analytics-element-engagement="globalnav hover - airpods" class="globalnav-item globalnav-item-airpods globalnav-item-menu">
+                <ul role="none" class="globalnav-submenu-trigger-group">
+                  <li class="globalnav-submenu-trigger-item">
+                    <a href="https://www.apple.com/kr/airpods/" data-globalnav-item-name="airpods" data-topnav-flyout-trigger-compact="true" data-analytics-title="airpods" data-analytics-element-engagement="hover - airpods" aria-label="AirPods" class="globalnav-link globalnav-submenu-trigger-link globalnav-link-airpods" data-autom="gn_airpods"><span class="globalnav-link-text-container"><span aria-hidden="true" class="globalnav-image-regular globalnav-link-image"><svg height="44" viewbox="0 0 43 44" width="43" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m11.7153 19.6836h.961v.937h.094c.187-.615.914-1.048 1.752-1.048.164 0 .375.011.504.029v1.008c-.082-.024-.446-.059-.645-.059-.961 0-1.658.645-1.658 1.535v3.914h-1.008zm28.135-.111c1.324 0 2.244.656 2.379 1.693h-.996c-.135-.504-.627-.838-1.389-.838-.75 0-1.336.381-1.336.943 0 .434.352.704 1.096.885l.973.235c1.189.287 1.763.802 1.763 1.711 0 1.13-1.095 1.91-2.531 1.91-1.406 0-2.373-.674-2.484-1.723h1.037c.17.533.674.873 1.482.873.85 0 1.459-.404 1.459-.984 0-.434-.328-.727-1.002-.891l-1.084-.264c-1.183-.287-1.722-.796-1.722-1.71 0-1.049 1.013-1.84 2.355-1.84zm-6.665 5.631c-1.155 0-1.846-.885-1.846-2.362 0-1.471.697-2.361 1.846-2.361 1.142 0 1.857.914 1.857 2.361 0 1.459-.709 2.362-1.857 2.362zm1.834-8.028v3.504h-.088c-.358-.691-1.102-1.107-1.981-1.107-1.605 0-2.654 1.289-2.654 3.269 0 1.987 1.037 3.27 2.654 3.27.873 0 1.623-.416 2.022-1.119h.094v1.007h.961v-8.824zm-9.001 8.028c-1.195 0-1.869-.868-1.869-2.362 0-1.5.674-2.361 1.869-2.361 1.196 0 1.869.861 1.869 2.361 0 1.494-.673 2.362-1.869 2.362zm0-5.631c-1.799 0-2.912 1.236-2.912 3.269 0 2.028 1.113 3.27 2.912 3.27s2.912-1.242 2.912-3.27c0-2.033-1.113-3.269-2.912-3.269zm-17.071 6.427h1.008v-6.316h-1.008zm-.199-8.238c0-.387.317-.703.703-.703.387 0 .703.316.703.703s-.316.703-.703.703c-.386 0-.703-.316-.703-.703zm-6.137 4.922 1.324-3.773h.093l1.325 3.773zm1.892-5.139h-1.043l-3.117 8.455h1.107l.85-2.42h3.363l.85 2.42h1.107zm14.868 4.5h-1.864v-3.562h1.864c1.224 0 1.898.639 1.898 1.799 0 1.119-.697 1.763-1.898 1.763zm.275-4.5h-3.193v8.455h1.054v-3.017h2.127c1.588 0 2.719-1.119 2.719-2.701 0-1.612-1.107-2.737-2.707-2.737z"></path></svg></span><span class="globalnav-link-text">AirPods</span></span></a>
+                  </li>
+                </ul>
+              </div>
+              <div data-analytics-element-engagement="globalnav hover - tv-home" class="globalnav-item globalnav-item-tv-home globalnav-item-menu">
+                <ul role="none" class="globalnav-submenu-trigger-group">
+                  <li class="globalnav-submenu-trigger-item">
+                    <a href="https://www.apple.com/kr/home/" data-globalnav-item-name="tv-home" data-topnav-flyout-trigger-compact="true" data-analytics-title="home" data-analytics-element-engagement="hover - home" aria-label="홈" class="globalnav-link globalnav-submenu-trigger-link globalnav-link-tv-home"><span class="globalnav-link-text-container"><span aria-hidden="true" class="globalnav-image-regular globalnav-link-image"><svg height="44" viewbox="0 0 10 44" width="10" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m0 0h10v44h-10z" fill="none"></path>
+                            <path d="m9.48 23.37h-8.96v-.8h3.97v-.56c-1.58-.09-2.54-.62-2.54-1.36 0-.83 1.18-1.39 3.06-1.39s3.05.56 3.05 1.39c0 .75-.96 1.27-2.55 1.36v.56h3.98v.8zm-8.41-4.48v-.77h7.83v.77zm7.24 5.07v2.64h-6.6v-2.64zm-1.01 1.9v-1.14h-4.57v1.14h4.56zm-2.29-4.55c1.17 0 2.01-.23 2.01-.66s-.84-.66-2.01-.66-2.03.23-2.03.66.86.66 2.03.66zm-1.74-3.74v-.75h3.44v.75z"></path></svg></span><span class="globalnav-link-text">홈</span></span></a>
+                  </li>
+                </ul>
+              </div>
+              <div data-analytics-element-engagement="globalnav hover - entertainment" class="globalnav-item globalnav-item-entertainment globalnav-item-menu">
+                <ul role="none" class="globalnav-submenu-trigger-group">
+                  <li class="globalnav-submenu-trigger-item">
+                    <a href="https://www.apple.com/kr/services/" data-globalnav-item-name="entertainment" data-topnav-flyout-trigger-compact="true" data-analytics-title="entertainment" data-analytics-element-engagement="hover - entertainment" aria-label="엔터테인먼트" class="globalnav-link globalnav-submenu-trigger-link globalnav-link-entertainment" data-autom="gn_entertainment"><span class="globalnav-link-text-container"><span aria-hidden="true" class="globalnav-image-regular globalnav-link-image"><svg id="a" xmlns="http://www.w3.org/2000/svg" width="59" height="44" viewbox="0 0 59 44">
+                            <path id="d" d="M3.8525,22.3242c-1.4004,0-2.2617-1.0605-2.2617-2.3906,0-1.3418,.8613-2.3965,2.2617-2.3965,1.248,0,2.0566,.8203,2.2324,1.9277h.9375v-2.5195h.9375v6.8672h-.9375v-3.5215h-.9258c-.1348,1.166-.9551,2.0332-2.2441,2.0332Zm0-.8965c.8145,0,1.3008-.6562,1.3008-1.4941s-.4863-1.5-1.3008-1.5c-.8086,0-1.2891,.6621-1.2891,1.5s.4805,1.4941,1.2891,1.4941Zm6.2988,4.957H3.2256v-3.0996h1.0254v2.2852h5.9004v.8145Zm-1.2246-2.3379v-7.3008h.9551v7.3008h-.9551Zm3.4746-5.5723v1.9453h3.1055v.8145h-3.1055v2.168c1.2773,.0234,3.0645-.0645,4.125-.2695l.1055,.7969c-1.5527,.2871-3.2812,.3164-5.2324,.3164v-6.5801h4.5059v.8086h-3.5039Zm5.6895,8.1973v-5.3672h-1.8984v-.8672h1.8984v-3.6914h1.0137v9.9258h-1.0137Zm3.6855-7.9863v1.8223h2.2793v.8203h-2.2793v2.0391c1.1836,0,2.2266-.0879,3.0352-.2461l.0879,.791c-.9082,.1816-2.4141,.2754-4.084,.2695v-6.2988h3.6445v.8027h-2.6836Zm4.1367,7.4883v-4.8457h-1.3359v-.8496h1.3359v-3.5156h.9609v9.2109h-.9609Zm1.9512,.4922v-9.9141h.9727v9.9141h-.9727Zm4.9746-4.3359c-1.4766,0-2.6191-1.002-2.6191-2.3965,0-1.3887,1.1426-2.3906,2.6191-2.3906,1.4824,0,2.6309,1.002,2.6309,2.3906,0,1.3945-1.1484,2.3965-2.6309,2.3965Zm0-.8613c.9434,0,1.6406-.6328,1.6406-1.5352s-.6973-1.541-1.6406-1.541c-.9375,0-1.6289,.6387-1.6289,1.541s.6914,1.5352,1.6289,1.5352Zm5.4844,4.0781v.8145h-6.7734v-3.1172h1.0195v2.3027h5.7539Zm-1.2832-1.582v-7.2188h1.0254v7.2188h-1.0254Zm2.8066-1.7402v-4.6348h4.5v4.6348h-4.5Zm3.498-3.8203h-2.4961v3.0117h2.4961v-3.0117Zm4.4121,7.1426v.8145h-6.7207v-3.041h1.0312v2.2266h5.6895Zm-1.2246-1.5879v-3.6445h-1.752v-.8203h1.752v-2.7539h1.0195v7.2188h-1.0195Zm2.3555,1.377v-.8145h8.9531v.8145h-8.9531Zm2.1973-6.8789v1.3359h5.3613v.8086h-5.3613v1.3887h5.7188v.8145h-6.7324v-5.1562h6.627v.8086h-5.6133Z"></path></svg></span><span class="globalnav-link-text">엔터테인먼트</span></span></a>
+                  </li>
+                </ul>
+              </div>
+              <div data-analytics-element-engagement="globalnav hover - accessories" class="globalnav-item globalnav-item-accessories globalnav-item-menu">
+                <ul role="none" class="globalnav-submenu-trigger-group">
+                  <li class="globalnav-submenu-trigger-item">
+                    <a href="/kr/shop/accessories/all" data-globalnav-item-name="accessories" data-topnav-flyout-trigger-compact="true" data-analytics-title="accessories" data-analytics-element-engagement="hover - accessories" aria-label="액세서리" class="globalnav-link globalnav-submenu-trigger-link globalnav-link-accessories" data-autom="gn_accessories"><span class="globalnav-link-text-container"><span aria-hidden="true" class="globalnav-image-regular globalnav-link-image"><svg height="44" viewbox="0 0 40 44" width="40" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m4.8467 22.0566c-1.3887 0-2.2559-1.0312-2.2559-2.3145 0-1.2891.8672-2.3086 2.2559-2.3086 1.4238 0 2.2676 1.0195 2.2676 2.3086 0 1.2833-.8438 2.3145-2.2676 2.3145zm0-.8671c.8203 0 1.3066-.6562 1.3066-1.4473 0-.8145-.4863-1.4414-1.3066-1.4414-.7969 0-1.2832.627-1.2832 1.4414 0 .791.4863 1.4473 1.2832 1.4473zm6.0117 5.4843h-1.0078v-2.7305h-5.8125v-.8145h6.8203zm-3.0586-4.1543v-5.5898h.9434v2.332h1.1543v-2.5078h.9551v5.8477h-.9551v-2.5196h-1.1543v2.4375zm9.0738.92-.6035.791c-.8262-.5391-1.7051-1.6875-1.9395-2.6836-.2227 1.002-1.002 2.2559-2.0801 2.918l-.5918-.7559c1.3477-.8086 2.1621-2.3496 2.1621-4.418v-1.5527h1.0137v1.5352c0 2.121.8672 3.4335 2.0391 4.166zm.4511 2.7363v-5.1504h-1.5352v-.8613h1.5352v-3.1992h.9375v9.2109zm1.9512.4863v-9.9082h.9609v9.9082zm7.8779-3.1465-.5859.7617c-.9961-.5508-2.1562-1.793-2.4375-2.8594-.2695 1.1367-1.3594 2.4609-2.4434 3.1055l-.627-.7383c1.5996-.9551 2.5312-2.6074 2.5312-4.5117v-1.6582h1.0488v1.623c.0002 1.9395 1.0607 3.4923 2.5138 4.2774zm1.166 3.1524v-5.5488h-2.1504v-.8613h2.1504v-3.5039h1.0195v9.9141h-1.0195zm3.8409-5.5078v2.2734c1.248.0234 3.2988-.0527 4.5117-.3047l.1113.8203c-1.4941.293-3.6152.3398-5.6426.3281v-3.9258h3.4277v-1.8867h-3.4453v-.8086h4.4648v3.5039h-3.4276zm5.4961 5.5078v-9.9141h1.0078v9.9141z"></path></svg></span><span class="globalnav-link-text">액세서리</span></span></a>
+                  </li>
+                </ul>
+              </div>
+              <div data-analytics-element-engagement="globalnav hover - support" class="globalnav-item globalnav-item-support globalnav-item-menu">
+                <ul role="none" class="globalnav-submenu-trigger-group">
+                  <li class="globalnav-submenu-trigger-item">
+                    <a href="https://www.apple.com/kr/support/" data-globalnav-item-name="support" data-topnav-flyout-trigger-compact="true" data-analytics-title="support" data-analytics-element-engagement="hover - support" data-analytics-exit-link="true" aria-label="지원" class="globalnav-link globalnav-submenu-trigger-link globalnav-link-support" data-autom="gn_support"><span class="globalnav-link-text-container"><span aria-hidden="true" class="globalnav-image-regular globalnav-link-image"><svg height="44" viewbox="0 0 39 44" width="39" xmlns="http://www.w3.org/2000/svg">
+                            <path d="m10.0283 25.291h-8.9531v-.8145h3.4102v-3.498h1.0136v3.498h4.5293zm-7.9687-6.7207v-.8262h6.8379c.0352 2.0801-.0938 4.0723-.3984 5.4727l-.9551-.1172c.2402-1.043.3516-2.6426.3457-3.5742v-.9551zm9.0644 4.0664-.5684-.7969c1.8223-.6621 3.1699-2.0625 3.2812-3.5508h-2.7832v-.8145h3.8379c.0177 2.4903-1.5233 4.2189-3.7675 5.1622zm7.7989 4.0371h-1.0079v-2.7656h-5.6777v-.8262h6.6855v3.5918zm-3.0997-4.2129v-5.5312h.9551v2.291h1.1836v-2.4668h.9551v5.8184h-.9551v-2.5254h-1.1836v2.4141h-.9551zm10.2481 1.0664-.5625.8027c-.9434-.5391-2.1328-1.8574-2.4316-2.9297-.3047 1.166-1.3711 2.5254-2.4785 3.1699l-.5977-.7792c1.5879-.9375 2.5371-2.543 2.5371-4.5234v-.668h-2.1211v-.8555h5.2852v.8555h-2.1094v.6328c0 1.9746 1.0429 3.5332 2.4785 4.2949zm2.0801 3.1407h-1.0254v-9.9141h1.0254zm1.4004-4.4414-.1348-.8203c2.2031.0059 4.7051-.0645 6.4629-.2754l.082.7617c-.7383.0938-1.623.1641-2.5547.2168v1.8105h-1.0078v-1.7637c-.9844.0411-1.9687.0645-2.8476.0704zm.6621-3.2461c0-1.0781 1.0137-1.8223 2.4668-1.8223 1.459 0 2.4668.7441 2.4668 1.8223 0 1.0723-1.0078 1.8105-2.4668 1.8105-1.4532 0-2.4668-.7324-2.4668-1.8105zm7.7109 7.4062h-7.1543v-2.8184h1.0195v2.0098h6.1348zm-6.6914-7.4062c0 .6152.6035 1.0371 1.4473 1.0371.8496 0 1.4473-.4219 1.4473-1.0371s-.5977-1.0547-1.4473-1.0547c-.8438 0-1.4473.4453-1.4473 1.0547zm5.4668 3.6855v-5.918h1.0078v7.6172h-1.0078v-.9785h-1.9453v-.7207z"></path></svg></span><span class="globalnav-link-text">고객지원</span></span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li data-topnav-flyout-label="apple.com 검색하기" data-analytics-title="open - search field" class="globalnav-item globalnav-search" data-autom="globalnav-search">
+          <a role="button" id="globalnav-menubutton-link-search" href="/kr/search" data-topnav-flyout-trigger-regular="true" data-topnav-flyout-trigger-compact="true" aria-label="apple.com 검색하기" aria-expanded="false" aria-controls="globalnav-submenu-search" data-analytics-title="open - search field" class="globalnav-link globalnav-link-search"><span aria-hidden="true" class="globalnav-image-regular"><svg xmlns="http://www.w3.org/2000/svg" width="15px" height="44px" viewbox="0 0 15 44">
+                <path d="M14.298,27.202l-3.87-3.87c0.701-0.929,1.122-2.081,1.122-3.332c0-3.06-2.489-5.55-5.55-5.55c-3.06,0-5.55,2.49-5.55,5.55 c0,3.061,2.49,5.55,5.55,5.55c1.251,0,2.403-0.421,3.332-1.122l3.87,3.87c0.151,0.151,0.35,0.228,0.548,0.228 s0.396-0.076,0.548-0.228C14.601,27.995,14.601,27.505,14.298,27.202z M1.55,20c0-2.454,1.997-4.45,4.45-4.45 c2.454,0,4.45,1.997,4.45,4.45S8.454,24.45,6,24.45C3.546,24.45,1.55,22.454,1.55,20z"></path>
+              </svg> </span><span aria-hidden="true" class="globalnav-image-compact"><svg height="48" viewbox="0 0 17 48" width="17" xmlns="http://www.w3.org/2000/svg">
+                <path d="m16.2294 29.9556-4.1755-4.0821a6.4711 6.4711 0 1 0 -1.2839 1.2625l4.2005 4.1066a.9.9 0 1 0 1.2588-1.287zm-14.5294-8.0017a5.2455 5.2455 0 1 1 5.2455 5.2527 5.2549 5.2549 0 0 1 -5.2455-5.2527z"></path></svg></span></a>
+          <div id="globalnav-submenu-search" role="search" aria-labelledby="globalnav-menubutton-link-search" class="globalnav-flyout globalnav-submenu">
+            <div class="globalnav-flyout-scroll-container">
+              <div class="globalnav-flyout-content globalnav-submenu-content">
+                <form action="/kr/search" method="get" class="globalnav-searchfield">
+                  <div class="globalnav-searchfield-wrapper">
+                    <input placeholder="apple.com 검색하기" aria-label="apple.com 검색하기" autocorrect="off" autocapitalize="off" autocomplete="off" class="globalnav-searchfield-input"></input><input id="globalnav-searchfield-src" type="hidden" name="src" value=""></input><input type="hidden" name="type" value=""></input><input type="hidden" name="page" value=""></input><input type="hidden" name="locale" value=""></input><button aria-label="검색 결과 지우기" tabindex="-1" type="button" class="globalnav-searchfield-reset">
+                      <span aria-hidden="true" class="globalnav-image-regular"><svg height="14" viewbox="0 0 14 14" width="14" xmlns="http://www.w3.org/2000/svg">
+                          <path d="m7 .0339a6.9661 6.9661 0 1 0 6.9661 6.9661 6.9661 6.9661 0 0 0 -6.9661-6.9661zm2.798 8.9867a.55.55 0 0 1 -.778.7774l-2.02-2.02-2.02 2.02a.55.55 0 0 1 -.7784-.7774l2.0206-2.0206-2.0204-2.02a.55.55 0 0 1 .7782-.7778l2.02 2.02 2.02-2.02a.55.55 0 0 1 .778.7778l-2.0203 2.02z"></path></svg></span><span aria-hidden="true" class="globalnav-image-compact"><svg height="16" viewbox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+                          <path d="m0 8a8.0474 8.0474 0 0 1 7.9922-8 8.0609 8.0609 0 0 1 8.0078 8 8.0541 8.0541 0 0 1 -8 8 8.0541 8.0541 0 0 1 -8-8zm5.6549 3.2863 2.3373-2.353 2.3451 2.353a.6935.6935 0 0 0 .4627.1961.6662.6662 0 0 0 .6667-.6667.6777.6777 0 0 0 -.1961-.4706l-2.3451-2.3373 2.3529-2.3607a.5943.5943 0 0 0 .1961-.4549.66.66 0 0 0 -.6667-.6589.6142.6142 0 0 0 -.447.1961l-2.3686 2.3606-2.353-2.3527a.6152.6152 0 0 0 -.447-.1883.6529.6529 0 0 0 -.6667.651.6264.6264 0 0 0 .1961.4549l2.3451 2.3529-2.3451 2.353a.61.61 0 0 0 -.1961.4549.6661.6661 0 0 0 .6667.6667.6589.6589 0 0 0 .4627-.1961z"></path></svg></span></button><button aria-label="검색어 제출" tabindex="-1" aria-hidden="true" type="submit" class="globalnav-searchfield-submit">
+                      <span aria-hidden="true" class="globalnav-image-regular"><svg height="32" viewbox="0 0 30 32" width="30" xmlns="http://www.w3.org/2000/svg">
+                          <path d="m23.3291 23.3066-4.35-4.35c-.0105-.0105-.0247-.0136-.0355-.0235a6.8714 6.8714 0 1 0 -1.5736 1.4969c.0214.0256.03.0575.0542.0815l4.35 4.35a1.1 1.1 0 1 0 1.5557-1.5547zm-15.4507-8.582a5.6031 5.6031 0 1 1 5.603 5.61 5.613 5.613 0 0 1 -5.603-5.61z"></path></svg></span><span aria-hidden="true" class="globalnav-image-compact"><svg width="38" height="40" viewbox="0 0 38 40" xmlns="http://www.w3.org/2000/svg">
+                          <path d="m28.6724 27.8633-5.07-5.07c-.0095-.0095-.0224-.0122-.032-.0213a7.9967 7.9967 0 1 0 -1.8711 1.7625c.0254.03.0357.0681.0642.0967l5.07 5.07a1.3 1.3 0 0 0 1.8389-1.8379zm-18.0035-10.0033a6.5447 6.5447 0 1 1 6.545 6.5449 6.5518 6.5518 0 0 1 -6.545-6.5449z"></path></svg></span>
+                    </button>
+                  </div>
+                  <div role="status" aria-live="polite" data-topnav-searchresults-label="총 검색 결과" data-topnav-searchresults-single-available="{%NUMBER1%} {%HEADING1%} 지원" data-topnav-searchresults-multi-available="{%NUMBER1%} {%HEADING1%} 및 {%NUMBER2%} {%HEADING2%} 지원" data-topnav-searchresults-conjunction="및" data-topnav-searchresults-availability="지원" class="globalnav-searchresults-count"></div>
+                </form>
+                <div class="globalnav-searchresults"></div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li id="globalnav-bag" data-topnav-flyout-label="쇼핑백" data-analytics-region="bag" class="globalnav-item globalnav-bag">
+          <div class="globalnav-bag-wrapper">
+            <a id="globalnav-menubutton-link-bag" href="/kr/shop/bag" aria-label="쇼핑백" aria-expanded="false" aria-controls="globalnav-submenu-bag" data-globalnav-item-name="bag" role="button" data-topnav-flyout-trigger-regular="true" data-topnav-flyout-trigger-compact="true" data-analytics-title="open - bag" class="globalnav-link globalnav-link-bag" data-autom="gn_bag"><span aria-hidden="true" class="globalnav-image-regular"><svg height="44" viewbox="0 0 14 44" width="14" xmlns="http://www.w3.org/2000/svg">
+                  <path d="m11.3535 16.0283h-1.0205a3.4229 3.4229 0 0 0 -3.333-2.9648 3.4229 3.4229 0 0 0 -3.333 2.9648h-1.02a2.1184 2.1184 0 0 0 -2.117 2.1162v7.7155a2.1186 2.1186 0 0 0 2.1162 2.1167h8.707a2.1186 2.1186 0 0 0 2.1168-2.1167v-7.7155a2.1184 2.1184 0 0 0 -2.1165-2.1162zm-4.3535-1.8652a2.3169 2.3169 0 0 1 2.2222 1.8652h-4.4444a2.3169 2.3169 0 0 1 2.2222-1.8652zm5.37 11.6969a1.0182 1.0182 0 0 1 -1.0166 1.0171h-8.7069a1.0182 1.0182 0 0 1 -1.0165-1.0171v-7.7155a1.0178 1.0178 0 0 1 1.0166-1.0166h8.707a1.0178 1.0178 0 0 1 1.0164 1.0166z"></path></svg></span><span aria-hidden="true" class="globalnav-image-compact"><svg height="48" viewbox="0 0 17 48" width="17" xmlns="http://www.w3.org/2000/svg">
+                  <path d="m13.4575 16.9268h-1.1353a3.8394 3.8394 0 0 0 -7.6444 0h-1.1353a2.6032 2.6032 0 0 0 -2.6 2.6v8.9232a2.6032 2.6032 0 0 0 2.6 2.6h9.915a2.6032 2.6032 0 0 0 2.6-2.6v-8.9231a2.6032 2.6032 0 0 0 -2.6-2.6001zm-4.9575-2.2768a2.658 2.658 0 0 1 2.6221 2.2764h-5.2442a2.658 2.658 0 0 1 2.6221-2.2764zm6.3574 13.8a1.4014 1.4014 0 0 1 -1.4 1.4h-9.9149a1.4014 1.4014 0 0 1 -1.4-1.4v-8.9231a1.4014 1.4014 0 0 1 1.4-1.4h9.915a1.4014 1.4014 0 0 1 1.4 1.4z"></path></svg></span><span aria-hidden="true" data-analytics-title="open - bag" class="globalnav-bag-badge"><span class="globalnav-bag-badge-separator"></span><span class="globalnav-bag-badge-number">0</span><span class="globalnav-bag-badge-unit">+</span></span></a>
+          </div>
+          <div id="globalnav-submenu-bag" class="globalnav-flyout globalnav-submenu">
+            <div class="globalnav-flyout-scroll-container">
+              <div class="globalnav-flyout-content globalnav-submenu-content"></div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="globalnav-menutrigger">
+        <button id="globalnav-menutrigger-button" aria-controls="globalnav-list" aria-label="Menu" data-topnav-menu-label-open="Menu" data-topnav-menu-label-close="Close" data-topnav-flyout-trigger-compact="menu" class="globalnav-menutrigger-button">
+          <svg width="18" height="18" viewbox="0 0 18 18" aria-hidden="true">
+            <polyline id="globalnav-menutrigger-bread-bottom" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" points="2 12, 16 12" class="globalnav-menutrigger-bread globalnav-menutrigger-bread-bottom">
+              <animate id="globalnav-anim-menutrigger-bread-bottom-open" attributename="points" keytimes="0;0.5;1" dur="0.24s" begin="indefinite" fill="freeze" calcmode="spline" keysplines="0.42, 0, 1, 1;0, 0, 0.58, 1" values=" 2 12, 16 12; 2 9, 16 9; 3.5 15, 15 3.5"></animate>
+              <animate id="globalnav-anim-menutrigger-bread-bottom-close" attributename="points" keytimes="0;0.5;1" dur="0.24s" begin="indefinite" fill="freeze" calcmode="spline" keysplines="0.42, 0, 1, 1;0, 0, 0.58, 1" values=" 3.5 15, 15 3.5; 2 9, 16 9; 2 12, 16 12"></animate>
+            </polyline>
+            <polyline id="globalnav-menutrigger-bread-top" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" points="2 5, 16 5" class="globalnav-menutrigger-bread globalnav-menutrigger-bread-top">
+              <animate id="globalnav-anim-menutrigger-bread-top-open" attributename="points" keytimes="0;0.5;1" dur="0.24s" begin="indefinite" fill="freeze" calcmode="spline" keysplines="0.42, 0, 1, 1;0, 0, 0.58, 1" values=" 2 5, 16 5; 2 9, 16 9; 3.5 3.5, 15 15"></animate>
+              <animate id="globalnav-anim-menutrigger-bread-top-close" attributename="points" keytimes="0;0.5;1" dur="0.24s" begin="indefinite" fill="freeze" calcmode="spline" keysplines="0.42, 0, 1, 1;0, 0, 0.58, 1" values=" 3.5 3.5, 15 15; 2 9, 16 9; 2 5, 16 5"></animate>
+            </polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div id="globalnav-curtain" class="globalnav-curtain"></div>
+  <div id="globalnav-placeholder" class="globalnav-placeholder"></div>
+</div>
+<script id="__ACGH_DATA__" type="application/json">{"props":{"globalNavData":{"locale":"ko_KR","ariaLabel":"글로벌","analyticsAttributes":[{"name":"data-analytics-activitymap-region-id","value":"global nav"},{"name":"data-analytics-region","value":"global nav"}],"links":[{"id":"6112a38fcc3322dcc964ca25b4e92682d13d2d6e8d16a06388d26c9b699946c6","name":"apple","text":"Apple","url":"https://www.apple.com/kr/","ariaLabel":"Apple","submenuAriaLabel":"Apple 메뉴","images":[{"name":"regular","assetInline":"<svg height=\"44\" viewBox=\"0 0 14 44\" width=\"14\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m13.0729 17.6825a3.61 3.61 0 0 0 -1.7248 3.0365 3.5132 3.5132 0 0 0 2.1379 3.2223 8.394 8.394 0 0 1 -1.0948 2.2618c-.6816.9812-1.3943 1.9623-2.4787 1.9623s-1.3633-.63-2.613-.63c-1.2187 0-1.6525.6507-2.644.6507s-1.6834-.9089-2.4787-2.0243a9.7842 9.7842 0 0 1 -1.6628-5.2776c0-3.0984 2.014-4.7405 3.9969-4.7405 1.0535 0 1.9314.6919 2.5924.6919.63 0 1.6112-.7333 2.8092-.7333a3.7579 3.7579 0 0 1 3.1604 1.5802zm-3.7284-2.8918a3.5615 3.5615 0 0 0 .8469-2.22 1.5353 1.5353 0 0 0 -.031-.32 3.5686 3.5686 0 0 0 -2.3445 1.2084 3.4629 3.4629 0 0 0 -.8779 2.1585 1.419 1.419 0 0 0 .031.2892 1.19 1.19 0 0 0 .2169.0207 3.0935 3.0935 0 0 0 2.1586-1.1368z\"/></svg>"},{"name":"compact","assetInline":"<svg height=\"48\" viewBox=\"0 0 17 48\" width=\"17\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m15.5752 19.0792a4.2055 4.2055 0 0 0 -2.01 3.5376 4.0931 4.0931 0 0 0 2.4908 3.7542 9.7779 9.7779 0 0 1 -1.2755 2.6351c-.7941 1.1431-1.6244 2.2862-2.8878 2.2862s-1.5883-.734-3.0443-.734c-1.42 0-1.9252.7581-3.08.7581s-1.9611-1.0589-2.8876-2.3584a11.3987 11.3987 0 0 1 -1.9373-6.1487c0-3.61 2.3464-5.523 4.6566-5.523 1.2274 0 2.25.8062 3.02.8062.734 0 1.8771-.8543 3.2729-.8543a4.3778 4.3778 0 0 1 3.6822 1.841zm-6.8586-2.0456a1.3865 1.3865 0 0 1 -.2527-.024 1.6557 1.6557 0 0 1 -.0361-.337 4.0341 4.0341 0 0 1 1.0228-2.5148 4.1571 4.1571 0 0 1 2.7314-1.4078 1.7815 1.7815 0 0 1 .0361.373 4.1487 4.1487 0 0 1 -.9867 2.587 3.6039 3.6039 0 0 1 -2.5148 1.3236z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"apple home"}]},{"id":"6c3f72370c958108b452adc5d383457a2d922565bf0bdab16ecf5b3b4bead687","name":"store","text":"스토어","url":"/kr/store","ariaLabel":"스토어","submenuAriaLabel":"스토어 메뉴","images":[{"name":"regular","assetInline":"<svg height=\"44\" viewBox=\"0 0 30 44\" width=\"30\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m1.5818 25.3223v-.8262h8.9531v.8262zm8.584-3.75-.4629.8203c-1.4766-.3867-3.1816-1.4707-3.6562-2.8242-.4746 1.3535-2.1445 2.4375-3.6445 2.8242l-.4746-.8203c1.7285-.334 3.5801-1.6582 3.5801-3.3691v-.6914h1.0781v.6914c-.0001 1.7109 1.8515 3.0234 3.58 3.3691zm9.7241 3.8028h-8.9531v-.8145h3.9668v-1.8984h-2.8125v-5.1621h6.7031v.8203h-5.6953v1.3477h5.4727v.8145h-5.4727v1.3711h5.748v.8086h-2.9297v1.8984h3.9727zm3.0088-.9317c-1.4824 0-2.4668-1.418-2.4668-3.4863 0-2.0801.9844-3.4922 2.4668-3.4922 1.5 0 2.4668 1.4062 2.4668 3.4922 0 2.0567-.9668 3.4863-2.4668 3.4863zm0-.8906c.8438 0 1.5117-.9492 1.5117-2.5957 0-1.6523-.668-2.6016-1.5117-2.6016-.8262 0-1.4824.9492-1.4824 2.6016 0 1.6465.6562 2.5957 1.4824 2.5957zm4.4941 3.1172v-5.3379h-1.6641v-.873h1.6641v-3.7148h1.0254v9.9257z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"store"},{"name":"data-analytics-element-engagement","value":"hover - store"}]},{"id":"14df6f6aedc25dc9522695b3ce71148f91d65ec2b3ac7bb1bc948dc5281764b7","name":"mac","text":"Mac","url":"https://www.apple.com/kr/mac/","ariaLabel":"Mac","submenuAriaLabel":"Mac 메뉴","images":[{"name":"regular","assetInline":"<svg height=\"44\" viewBox=\"0 0 23 44\" width=\"23\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m8.1558 25.9987v-6.457h-.0703l-2.666 6.457h-.8907l-2.666-6.457h-.0703v6.457h-.9844v-8.4551h1.2246l2.8945 7.0547h.0938l2.8945-7.0547h1.2246v8.4551zm2.5166-1.7696c0-1.1309.832-1.7812 2.3027-1.8691l1.8223-.1113v-.5742c0-.7793-.4863-1.207-1.4297-1.207-.7559 0-1.2832.2871-1.4238.7852h-1.0195c.1348-1.0137 1.1309-1.6816 2.4785-1.6816 1.541 0 2.4023.791 2.4023 2.1035v4.3242h-.9609v-.9318h-.0938c-.4102.6738-1.1016 1.043-1.9453 1.043-1.2246 0-2.1328-.7266-2.1328-1.8809zm4.125-.5859v-.5801l-1.6992.1113c-.9609.0645-1.3828.3984-1.3828 1.0312 0 .6445.5449 1.0195 1.2773 1.0195 1.0371.0001 1.8047-.6796 1.8047-1.5819zm6.958-2.0273c-.1641-.627-.7207-1.1367-1.6289-1.1367-1.1367 0-1.8516.9082-1.8516 2.3379 0 1.459.7266 2.3848 1.8516 2.3848.8496 0 1.4414-.3926 1.6289-1.1074h1.0195c-.1816 1.1602-1.125 2.0156-2.6426 2.0156-1.7695 0-2.9004-1.2832-2.9004-3.293 0-1.9688 1.125-3.2461 2.8945-3.2461 1.5352 0 2.4727.9199 2.6484 2.0449z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"mac"},{"name":"data-analytics-element-engagement","value":"hover - mac"}]},{"id":"2c9702271c3c4c1fc247df09e3c41eab6264e87ee998f7c7c0767ca5ae1ca3b0","name":"ipad","text":"iPad","url":"https://www.apple.com/kr/ipad/","ariaLabel":"iPad","submenuAriaLabel":"iPad 메뉴","images":[{"name":"regular","assetInline":"<svg height=\"44\" viewBox=\"0 0 24 44\" width=\"24\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m14.9575 23.7002c0 .902-.768 1.582-1.805 1.582-.732 0-1.277-.375-1.277-1.02 0-.632.422-.966 1.383-1.031l1.699-.111zm-1.395-4.072c-1.347 0-2.343.668-2.478 1.681h1.019c.141-.498.668-.785 1.424-.785.944 0 1.43.428 1.43 1.207v.574l-1.822.112c-1.471.088-2.303.738-2.303 1.869 0 1.154.908 1.881 2.133 1.881.844 0 1.535-.369 1.945-1.043h.094v.931h.961v-4.324c0-1.312-.862-2.103-2.403-2.103zm6.769 5.575c-1.155 0-1.846-.885-1.846-2.361 0-1.471.697-2.362 1.846-2.362 1.142 0 1.857.914 1.857 2.362 0 1.459-.709 2.361-1.857 2.361zm1.834-8.027v3.503h-.088c-.358-.691-1.102-1.107-1.981-1.107-1.605 0-2.654 1.289-2.654 3.27 0 1.986 1.037 3.269 2.654 3.269.873 0 1.623-.416 2.022-1.119h.093v1.008h.961v-8.824zm-15.394 4.869h-1.863v-3.563h1.863c1.225 0 1.899.639 1.899 1.799 0 1.119-.697 1.764-1.899 1.764zm.276-4.5h-3.194v8.455h1.055v-3.018h2.127c1.588 0 2.719-1.119 2.719-2.701 0-1.611-1.108-2.736-2.707-2.736zm-6.064 8.454h1.008v-6.316h-1.008zm-.199-8.237c0-.387.316-.704.703-.704s.703.317.703.704c0 .386-.316.703-.703.703s-.703-.317-.703-.703z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"ipad"},{"name":"data-analytics-element-engagement","value":"hover - ipad"}]},{"id":"57fc04e8eb099e7f78ccd7c740336406ead3f2a9051f8ccf467da5d8e8c97528","name":"iphone","text":"iPhone","url":"https://www.apple.com/kr/iphone/","ariaLabel":"iPhone","submenuAriaLabel":"iPhone 메뉴","images":[{"name":"regular","assetInline":"<svg height=\"44\" viewBox=\"0 0 38 44\" width=\"38\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m32.7129 22.3203h3.48c-.023-1.119-.691-1.857-1.693-1.857-1.008 0-1.711.738-1.787 1.857zm4.459 2.045c-.293 1.078-1.277 1.746-2.66 1.746-1.752 0-2.848-1.266-2.848-3.264 0-1.986 1.113-3.275 2.848-3.275 1.705 0 2.742 1.213 2.742 3.176v.386h-4.541v.047c.053 1.248.75 2.039 1.822 2.039.815 0 1.366-.298 1.629-.855zm-12.282-4.682h.961v.996h.094c.316-.697.932-1.107 1.898-1.107 1.418 0 2.209.838 2.209 2.338v4.09h-1.007v-3.844c0-1.137-.481-1.676-1.489-1.676s-1.658.674-1.658 1.781v3.739h-1.008zm-2.499 3.158c0-1.5-.674-2.361-1.869-2.361-1.196 0-1.87.861-1.87 2.361 0 1.495.674 2.362 1.87 2.362 1.195 0 1.869-.867 1.869-2.362zm-4.782 0c0-2.033 1.114-3.269 2.913-3.269 1.798 0 2.912 1.236 2.912 3.269 0 2.028-1.114 3.27-2.912 3.27-1.799 0-2.913-1.242-2.913-3.27zm-6.636-5.666h1.008v3.504h.093c.317-.697.979-1.107 1.946-1.107 1.336 0 2.179.855 2.179 2.338v4.09h-1.007v-3.844c0-1.119-.504-1.676-1.459-1.676-1.131 0-1.752.715-1.752 1.781v3.739h-1.008zm-6.015 4.87h1.863c1.202 0 1.899-.645 1.899-1.764 0-1.16-.674-1.799-1.899-1.799h-1.863zm2.139-4.5c1.599 0 2.707 1.125 2.707 2.736 0 1.582-1.131 2.701-2.719 2.701h-2.127v3.018h-1.055v-8.455zm-6.114 8.454h1.008v-6.316h-1.008zm-.2-8.238c0-.386.317-.703.703-.703.387 0 .704.317.704.703 0 .387-.317.704-.704.704-.386 0-.703-.317-.703-.704z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"iphone"},{"name":"data-analytics-element-engagement","value":"hover - iphone"}]},{"id":"1ad7209ea09091af64fc9ed5041241ce36767cbb5a7834b05290290c94adfb18","name":"watch","text":"Watch","url":"https://www.apple.com/kr/watch/","ariaLabel":"Watch","submenuAriaLabel":"Watch 메뉴","images":[{"name":"regular","assetInline":"<svg height=\"44\" viewBox=\"0 0 35 44\" width=\"35\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m28.9819 17.1758h1.008v3.504h.094c.316-.697.978-1.108 1.945-1.108 1.336 0 2.18.856 2.18 2.338v4.09h-1.008v-3.844c0-1.119-.504-1.675-1.459-1.675-1.131 0-1.752.715-1.752 1.781v3.738h-1.008zm-2.42 4.441c-.164-.627-.721-1.136-1.629-1.136-1.137 0-1.852.908-1.852 2.338 0 1.459.727 2.384 1.852 2.384.849 0 1.441-.392 1.629-1.107h1.019c-.182 1.16-1.125 2.016-2.642 2.016-1.77 0-2.901-1.284-2.901-3.293 0-1.969 1.125-3.247 2.895-3.247 1.535 0 2.472.92 2.648 2.045zm-6.533-3.568v1.635h1.407v.844h-1.407v3.574c0 .744.282 1.06.938 1.06.182 0 .281-.006.469-.023v.85c-.2.035-.393.058-.592.058-1.301 0-1.822-.48-1.822-1.687v-3.832h-1.02v-.844h1.02v-1.635zm-4.2 5.596v-.58l-1.699.111c-.961.064-1.383.398-1.383 1.031 0 .645.545 1.02 1.277 1.02 1.038 0 1.805-.68 1.805-1.582zm-4.125.586c0-1.131.832-1.782 2.303-1.869l1.822-.112v-.574c0-.779-.486-1.207-1.43-1.207-.755 0-1.283.287-1.423.785h-1.02c.135-1.014 1.131-1.682 2.479-1.682 1.541 0 2.402.792 2.402 2.104v4.324h-.961v-.931h-.094c-.41.673-1.101 1.043-1.945 1.043-1.225 0-2.133-.727-2.133-1.881zm-7.684 1.769h-.996l-2.303-8.455h1.101l1.682 6.873h.07l1.893-6.873h1.066l1.893 6.873h.07l1.682-6.873h1.101l-2.302 8.455h-.996l-1.946-6.674h-.07z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"watch"},{"name":"data-analytics-element-engagement","value":"hover - watch"}]},{"id":"877e05e39adedf23abb62b053bd92e1ff8feac08b18e93834b6abc64643ca1d6","name":"vision","text":"Vision","url":"https://www.apple.com/kr/apple-vision-pro/","ariaLabel":"Vision","submenuAriaLabel":"Vision menu","images":[{"name":"regular","assetInline":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"34\" height=\"44\" viewBox=\"0 0 34 44\"><path d=\"m.4043,17.5449h1.1074l2.4844,7.0898h.0938l2.4844-7.0898h1.1074l-3.1172,8.4551h-1.043L.4043,17.5449Zm8.3467.2168c0-.3867.3164-.7031.7031-.7031s.7031.3164.7031.7031-.3164.7031-.7031.7031-.7031-.3164-.7031-.7031Zm.1875,1.9219h1.0195v6.3164h-1.0195v-6.3164Zm2.499,4.7051h1.043c.1699.5273.6738.873,1.4824.873.8496,0,1.4531-.4043,1.4531-.9785v-.0117c0-.4277-.3223-.7266-1.1016-.9141l-.9785-.2344c-1.1836-.2812-1.7168-.7969-1.7168-1.7051v-.0059c0-1.0488,1.0078-1.8398,2.3496-1.8398,1.3242,0,2.2441.6621,2.3848,1.6934h-1.002c-.1348-.498-.627-.8438-1.3887-.8438-.75,0-1.3008.3867-1.3008.9434v.0117c0,.4277.3164.6973,1.0605.8789l.9727.2344c1.1895.2871,1.7637.8027,1.7637,1.7051v.0117c0,1.125-1.0957,1.9043-2.5312,1.9043-1.4062,0-2.373-.6797-2.4902-1.7227Zm6.3203-6.627c0-.3867.3164-.7031.7031-.7031s.7031.3164.7031.7031-.3164.7031-.7031.7031-.7031-.3164-.7031-.7031Zm.1875,1.9219h1.0195v6.3164h-1.0195v-6.3164Zm2.5049,3.1641v-.0117c0-2.0273,1.1133-3.2637,2.9121-3.2637s2.9121,1.2363,2.9121,3.2637v.0117c0,2.0215-1.1133,3.2637-2.9121,3.2637s-2.9121-1.2422-2.9121-3.2637Zm4.7812,0v-.0117c0-1.4941-.6738-2.3613-1.8691-2.3613s-1.8691.8672-1.8691,2.3613v.0117c0,1.4883.6738,2.3613,1.8691,2.3613s1.8691-.873,1.8691-2.3613Zm2.5049-3.1641h1.0195v.9492h.0938c.3164-.668.9082-1.0605,1.8398-1.0605,1.418,0,2.209.8379,2.209,2.3379v4.0898h-1.0195v-3.8438c0-1.1367-.4688-1.6816-1.4766-1.6816s-1.6465.6797-1.6465,1.7871v3.7383h-1.0195v-6.3164Z\"></path></svg>\n"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"vision"},{"name":"data-analytics-element-engagement","value":"hover - vision"}]},{"id":"ac4482beb42b2f87a92ab6f1f70ad4635734438e298eefaddd16e3a4c7f096a0","name":"airpods","text":"AirPods","url":"https://www.apple.com/kr/airpods/","ariaLabel":"AirPods","submenuAriaLabel":"AirPods 메뉴","images":[{"name":"regular","assetInline":"<svg height=\"44\" viewBox=\"0 0 43 44\" width=\"43\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m11.7153 19.6836h.961v.937h.094c.187-.615.914-1.048 1.752-1.048.164 0 .375.011.504.029v1.008c-.082-.024-.446-.059-.645-.059-.961 0-1.658.645-1.658 1.535v3.914h-1.008zm28.135-.111c1.324 0 2.244.656 2.379 1.693h-.996c-.135-.504-.627-.838-1.389-.838-.75 0-1.336.381-1.336.943 0 .434.352.704 1.096.885l.973.235c1.189.287 1.763.802 1.763 1.711 0 1.13-1.095 1.91-2.531 1.91-1.406 0-2.373-.674-2.484-1.723h1.037c.17.533.674.873 1.482.873.85 0 1.459-.404 1.459-.984 0-.434-.328-.727-1.002-.891l-1.084-.264c-1.183-.287-1.722-.796-1.722-1.71 0-1.049 1.013-1.84 2.355-1.84zm-6.665 5.631c-1.155 0-1.846-.885-1.846-2.362 0-1.471.697-2.361 1.846-2.361 1.142 0 1.857.914 1.857 2.361 0 1.459-.709 2.362-1.857 2.362zm1.834-8.028v3.504h-.088c-.358-.691-1.102-1.107-1.981-1.107-1.605 0-2.654 1.289-2.654 3.269 0 1.987 1.037 3.27 2.654 3.27.873 0 1.623-.416 2.022-1.119h.094v1.007h.961v-8.824zm-9.001 8.028c-1.195 0-1.869-.868-1.869-2.362 0-1.5.674-2.361 1.869-2.361 1.196 0 1.869.861 1.869 2.361 0 1.494-.673 2.362-1.869 2.362zm0-5.631c-1.799 0-2.912 1.236-2.912 3.269 0 2.028 1.113 3.27 2.912 3.27s2.912-1.242 2.912-3.27c0-2.033-1.113-3.269-2.912-3.269zm-17.071 6.427h1.008v-6.316h-1.008zm-.199-8.238c0-.387.317-.703.703-.703.387 0 .703.316.703.703s-.316.703-.703.703c-.386 0-.703-.316-.703-.703zm-6.137 4.922 1.324-3.773h.093l1.325 3.773zm1.892-5.139h-1.043l-3.117 8.455h1.107l.85-2.42h3.363l.85 2.42h1.107zm14.868 4.5h-1.864v-3.562h1.864c1.224 0 1.898.639 1.898 1.799 0 1.119-.697 1.763-1.898 1.763zm.275-4.5h-3.193v8.455h1.054v-3.017h2.127c1.588 0 2.719-1.119 2.719-2.701 0-1.612-1.107-2.737-2.707-2.737z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"airpods"},{"name":"data-analytics-element-engagement","value":"hover - airpods"}]},{"id":"61ad34ac528446ecbb0d7d69eb21dd334ed33ad2ac3a6ee0abfc9e08ed406687","name":"tv-home","text":"홈","url":"/kr/home/","ariaLabel":"홈","submenuAriaLabel":"홈 메뉴","images":[{"name":"regular","assetInline":"<svg height=\"44\" viewBox=\"0 0 10 44\" width=\"10\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m0 0h10v44h-10z\" fill=\"none\"/><path d=\"m9.48 23.37h-8.96v-.8h3.97v-.56c-1.58-.09-2.54-.62-2.54-1.36 0-.83 1.18-1.39 3.06-1.39s3.05.56 3.05 1.39c0 .75-.96 1.27-2.55 1.36v.56h3.98v.8zm-8.41-4.48v-.77h7.83v.77zm7.24 5.07v2.64h-6.6v-2.64zm-1.01 1.9v-1.14h-4.57v1.14h4.56zm-2.29-4.55c1.17 0 2.01-.23 2.01-.66s-.84-.66-2.01-.66-2.03.23-2.03.66.86.66 2.03.66zm-1.74-3.74v-.75h3.44v.75z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"home"},{"name":"data-analytics-element-engagement","value":"hover - home"}]},{"id":"134542d6e1c6e85742dc1041cba5e5f5967e72f2457944752f889e78c55cad34","name":"entertainment","text":"엔터테인먼트","url":"https://www.apple.com/kr/services/","ariaLabel":"엔터테인먼트","submenuAriaLabel":"엔터테인먼트 메뉴","images":[{"name":"regular","assetInline":"<svg id=\"a\" xmlns=\"http://www.w3.org/2000/svg\" width=\"59\" height=\"44\" viewBox=\"0 0 59 44\"><path id=\"d\" d=\"M3.8525,22.3242c-1.4004,0-2.2617-1.0605-2.2617-2.3906,0-1.3418,.8613-2.3965,2.2617-2.3965,1.248,0,2.0566,.8203,2.2324,1.9277h.9375v-2.5195h.9375v6.8672h-.9375v-3.5215h-.9258c-.1348,1.166-.9551,2.0332-2.2441,2.0332Zm0-.8965c.8145,0,1.3008-.6562,1.3008-1.4941s-.4863-1.5-1.3008-1.5c-.8086,0-1.2891,.6621-1.2891,1.5s.4805,1.4941,1.2891,1.4941Zm6.2988,4.957H3.2256v-3.0996h1.0254v2.2852h5.9004v.8145Zm-1.2246-2.3379v-7.3008h.9551v7.3008h-.9551Zm3.4746-5.5723v1.9453h3.1055v.8145h-3.1055v2.168c1.2773,.0234,3.0645-.0645,4.125-.2695l.1055,.7969c-1.5527,.2871-3.2812,.3164-5.2324,.3164v-6.5801h4.5059v.8086h-3.5039Zm5.6895,8.1973v-5.3672h-1.8984v-.8672h1.8984v-3.6914h1.0137v9.9258h-1.0137Zm3.6855-7.9863v1.8223h2.2793v.8203h-2.2793v2.0391c1.1836,0,2.2266-.0879,3.0352-.2461l.0879,.791c-.9082,.1816-2.4141,.2754-4.084,.2695v-6.2988h3.6445v.8027h-2.6836Zm4.1367,7.4883v-4.8457h-1.3359v-.8496h1.3359v-3.5156h.9609v9.2109h-.9609Zm1.9512,.4922v-9.9141h.9727v9.9141h-.9727Zm4.9746-4.3359c-1.4766,0-2.6191-1.002-2.6191-2.3965,0-1.3887,1.1426-2.3906,2.6191-2.3906,1.4824,0,2.6309,1.002,2.6309,2.3906,0,1.3945-1.1484,2.3965-2.6309,2.3965Zm0-.8613c.9434,0,1.6406-.6328,1.6406-1.5352s-.6973-1.541-1.6406-1.541c-.9375,0-1.6289,.6387-1.6289,1.541s.6914,1.5352,1.6289,1.5352Zm5.4844,4.0781v.8145h-6.7734v-3.1172h1.0195v2.3027h5.7539Zm-1.2832-1.582v-7.2188h1.0254v7.2188h-1.0254Zm2.8066-1.7402v-4.6348h4.5v4.6348h-4.5Zm3.498-3.8203h-2.4961v3.0117h2.4961v-3.0117Zm4.4121,7.1426v.8145h-6.7207v-3.041h1.0312v2.2266h5.6895Zm-1.2246-1.5879v-3.6445h-1.752v-.8203h1.752v-2.7539h1.0195v7.2188h-1.0195Zm2.3555,1.377v-.8145h8.9531v.8145h-8.9531Zm2.1973-6.8789v1.3359h5.3613v.8086h-5.3613v1.3887h5.7188v.8145h-6.7324v-5.1562h6.627v.8086h-5.6133Z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"entertainment"},{"name":"data-analytics-element-engagement","value":"hover - entertainment"}]},{"id":"133a929b1de021597b76f425f2062c9b9c68c4c1fe4ebbbced35179abddbb056","name":"accessories","text":"액세서리","url":"/kr/shop/accessories/all","ariaLabel":"액세서리","submenuAriaLabel":"액세서리 메뉴","images":[{"name":"regular","assetInline":"<svg height=\"44\" viewBox=\"0 0 40 44\" width=\"40\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m4.8467 22.0566c-1.3887 0-2.2559-1.0312-2.2559-2.3145 0-1.2891.8672-2.3086 2.2559-2.3086 1.4238 0 2.2676 1.0195 2.2676 2.3086 0 1.2833-.8438 2.3145-2.2676 2.3145zm0-.8671c.8203 0 1.3066-.6562 1.3066-1.4473 0-.8145-.4863-1.4414-1.3066-1.4414-.7969 0-1.2832.627-1.2832 1.4414 0 .791.4863 1.4473 1.2832 1.4473zm6.0117 5.4843h-1.0078v-2.7305h-5.8125v-.8145h6.8203zm-3.0586-4.1543v-5.5898h.9434v2.332h1.1543v-2.5078h.9551v5.8477h-.9551v-2.5196h-1.1543v2.4375zm9.0738.92-.6035.791c-.8262-.5391-1.7051-1.6875-1.9395-2.6836-.2227 1.002-1.002 2.2559-2.0801 2.918l-.5918-.7559c1.3477-.8086 2.1621-2.3496 2.1621-4.418v-1.5527h1.0137v1.5352c0 2.121.8672 3.4335 2.0391 4.166zm.4511 2.7363v-5.1504h-1.5352v-.8613h1.5352v-3.1992h.9375v9.2109zm1.9512.4863v-9.9082h.9609v9.9082zm7.8779-3.1465-.5859.7617c-.9961-.5508-2.1562-1.793-2.4375-2.8594-.2695 1.1367-1.3594 2.4609-2.4434 3.1055l-.627-.7383c1.5996-.9551 2.5312-2.6074 2.5312-4.5117v-1.6582h1.0488v1.623c.0002 1.9395 1.0607 3.4923 2.5138 4.2774zm1.166 3.1524v-5.5488h-2.1504v-.8613h2.1504v-3.5039h1.0195v9.9141h-1.0195zm3.8409-5.5078v2.2734c1.248.0234 3.2988-.0527 4.5117-.3047l.1113.8203c-1.4941.293-3.6152.3398-5.6426.3281v-3.9258h3.4277v-1.8867h-3.4453v-.8086h4.4648v3.5039h-3.4276zm5.4961 5.5078v-9.9141h1.0078v9.9141z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"accessories"},{"name":"data-analytics-element-engagement","value":"hover - accessories"}]},{"id":"593bfa2ba4d9129269deb8ae1ae152807fe039e4c014ca6c671360c02c9b83fe","name":"support","text":"고객지원","url":"https://www.apple.com/kr/support/","ariaLabel":"지원","submenuAriaLabel":"지원 메뉴","images":[{"name":"regular","assetInline":"<svg height=\"44\" viewBox=\"0 0 39 44\" width=\"39\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m10.0283 25.291h-8.9531v-.8145h3.4102v-3.498h1.0136v3.498h4.5293zm-7.9687-6.7207v-.8262h6.8379c.0352 2.0801-.0938 4.0723-.3984 5.4727l-.9551-.1172c.2402-1.043.3516-2.6426.3457-3.5742v-.9551zm9.0644 4.0664-.5684-.7969c1.8223-.6621 3.1699-2.0625 3.2812-3.5508h-2.7832v-.8145h3.8379c.0177 2.4903-1.5233 4.2189-3.7675 5.1622zm7.7989 4.0371h-1.0079v-2.7656h-5.6777v-.8262h6.6855v3.5918zm-3.0997-4.2129v-5.5312h.9551v2.291h1.1836v-2.4668h.9551v5.8184h-.9551v-2.5254h-1.1836v2.4141h-.9551zm10.2481 1.0664-.5625.8027c-.9434-.5391-2.1328-1.8574-2.4316-2.9297-.3047 1.166-1.3711 2.5254-2.4785 3.1699l-.5977-.7792c1.5879-.9375 2.5371-2.543 2.5371-4.5234v-.668h-2.1211v-.8555h5.2852v.8555h-2.1094v.6328c0 1.9746 1.0429 3.5332 2.4785 4.2949zm2.0801 3.1407h-1.0254v-9.9141h1.0254zm1.4004-4.4414-.1348-.8203c2.2031.0059 4.7051-.0645 6.4629-.2754l.082.7617c-.7383.0938-1.623.1641-2.5547.2168v1.8105h-1.0078v-1.7637c-.9844.0411-1.9687.0645-2.8476.0704zm.6621-3.2461c0-1.0781 1.0137-1.8223 2.4668-1.8223 1.459 0 2.4668.7441 2.4668 1.8223 0 1.0723-1.0078 1.8105-2.4668 1.8105-1.4532 0-2.4668-.7324-2.4668-1.8105zm7.7109 7.4062h-7.1543v-2.8184h1.0195v2.0098h6.1348zm-6.6914-7.4062c0 .6152.6035 1.0371 1.4473 1.0371.8496 0 1.4473-.4219 1.4473-1.0371s-.5977-1.0547-1.4473-1.0547c-.8438 0-1.4473.4453-1.4473 1.0547zm5.4668 3.6855v-5.918h1.0078v7.6172h-1.0078v-.9785h-1.9453v-.7207z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"support"},{"name":"data-analytics-element-engagement","value":"hover - support"},{"name":"data-analytics-exit-link","value":"true"}]}],"bag":{"analyticsAttributes":[{"name":"data-analytics-region","value":"bag"}],"open":{"url":"/kr/shop/goto/bag","images":[{"name":"regular","assetInline":"<svg height=\"44\" viewBox=\"0 0 14 44\" width=\"14\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m11.3535 16.0283h-1.0205a3.4229 3.4229 0 0 0 -3.333-2.9648 3.4229 3.4229 0 0 0 -3.333 2.9648h-1.02a2.1184 2.1184 0 0 0 -2.117 2.1162v7.7155a2.1186 2.1186 0 0 0 2.1162 2.1167h8.707a2.1186 2.1186 0 0 0 2.1168-2.1167v-7.7155a2.1184 2.1184 0 0 0 -2.1165-2.1162zm-4.3535-1.8652a2.3169 2.3169 0 0 1 2.2222 1.8652h-4.4444a2.3169 2.3169 0 0 1 2.2222-1.8652zm5.37 11.6969a1.0182 1.0182 0 0 1 -1.0166 1.0171h-8.7069a1.0182 1.0182 0 0 1 -1.0165-1.0171v-7.7155a1.0178 1.0178 0 0 1 1.0166-1.0166h8.707a1.0178 1.0178 0 0 1 1.0164 1.0166z\"/></svg>"},{"name":"compact","assetInline":"<svg height=\"48\" viewBox=\"0 0 17 48\" width=\"17\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m13.4575 16.9268h-1.1353a3.8394 3.8394 0 0 0 -7.6444 0h-1.1353a2.6032 2.6032 0 0 0 -2.6 2.6v8.9232a2.6032 2.6032 0 0 0 2.6 2.6h9.915a2.6032 2.6032 0 0 0 2.6-2.6v-8.9231a2.6032 2.6032 0 0 0 -2.6-2.6001zm-4.9575-2.2768a2.658 2.658 0 0 1 2.6221 2.2764h-5.2442a2.658 2.658 0 0 1 2.6221-2.2764zm6.3574 13.8a1.4014 1.4014 0 0 1 -1.4 1.4h-9.9149a1.4014 1.4014 0 0 1 -1.4-1.4v-8.9231a1.4014 1.4014 0 0 1 1.4-1.4h9.915a1.4014 1.4014 0 0 1 1.4 1.4z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-title","value":"open - bag"}],"ariaLabel":"쇼핑백"},"close":{"analyticsAttributes":[{"name":"data-analytics-click","value":"prop3:close - bag"},{"name":"data-analytics-title","value":"close - bag"}],"ariaLabel":"닫기"},"badge":{"ariaLabel":"장바구니에 담긴 품목 수: {%BAGITEMCOUNT%}"},"storeApiUrl":"/[storefront]/shop/bag/status"},"search":{"analyticsAttributes":[{"name":"data-analytics-region","value":"search"}],"open":{"url":"/kr/search","images":[{"name":"regular","assetInline":"<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"15px\" height=\"44px\" viewBox=\"0 0 15 44\">\n<path d=\"M14.298,27.202l-3.87-3.87c0.701-0.929,1.122-2.081,1.122-3.332c0-3.06-2.489-5.55-5.55-5.55c-3.06,0-5.55,2.49-5.55,5.55 c0,3.061,2.49,5.55,5.55,5.55c1.251,0,2.403-0.421,3.332-1.122l3.87,3.87c0.151,0.151,0.35,0.228,0.548,0.228 s0.396-0.076,0.548-0.228C14.601,27.995,14.601,27.505,14.298,27.202z M1.55,20c0-2.454,1.997-4.45,4.45-4.45 c2.454,0,4.45,1.997,4.45,4.45S8.454,24.45,6,24.45C3.546,24.45,1.55,22.454,1.55,20z\"/>\n</svg>\n"},{"name":"compact","assetInline":"<svg height=\"48\" viewBox=\"0 0 17 48\" width=\"17\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m16.2294 29.9556-4.1755-4.0821a6.4711 6.4711 0 1 0 -1.2839 1.2625l4.2005 4.1066a.9.9 0 1 0 1.2588-1.287zm-14.5294-8.0017a5.2455 5.2455 0 1 1 5.2455 5.2527 5.2549 5.2549 0 0 1 -5.2455-5.2527z\"/></svg>"}],"ariaLabel":"apple.com 검색하기","analyticsAttributes":[{"name":"data-analytics-title","value":"open - search field"}]},"close":{"ariaLabel":"닫기"},"input":{"placeholderTextRegular":"apple.com 검색하기","placeholderTextCompact":"검색","ariaLabel":"apple.com 검색하기"},"submit":{"images":[{"name":"regular","assetInline":"<svg height=\"32\" viewBox=\"0 0 30 32\" width=\"30\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m23.3291 23.3066-4.35-4.35c-.0105-.0105-.0247-.0136-.0355-.0235a6.8714 6.8714 0 1 0 -1.5736 1.4969c.0214.0256.03.0575.0542.0815l4.35 4.35a1.1 1.1 0 1 0 1.5557-1.5547zm-15.4507-8.582a5.6031 5.6031 0 1 1 5.603 5.61 5.613 5.613 0 0 1 -5.603-5.61z\"/></svg>"},{"name":"compact","assetInline":"<svg width=\"38\" height=\"40\" viewBox=\"0 0 38 40\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m28.6724 27.8633-5.07-5.07c-.0095-.0095-.0224-.0122-.032-.0213a7.9967 7.9967 0 1 0 -1.8711 1.7625c.0254.03.0357.0681.0642.0967l5.07 5.07a1.3 1.3 0 0 0 1.8389-1.8379zm-18.0035-10.0033a6.5447 6.5447 0 1 1 6.545 6.5449 6.5518 6.5518 0 0 1 -6.545-6.5449z\"/></svg>"}],"ariaLabel":"검색어 제출"},"reset":{"images":[{"name":"regular","assetInline":"<svg height=\"14\" viewBox=\"0 0 14 14\" width=\"14\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m7 .0339a6.9661 6.9661 0 1 0 6.9661 6.9661 6.9661 6.9661 0 0 0 -6.9661-6.9661zm2.798 8.9867a.55.55 0 0 1 -.778.7774l-2.02-2.02-2.02 2.02a.55.55 0 0 1 -.7784-.7774l2.0206-2.0206-2.0204-2.02a.55.55 0 0 1 .7782-.7778l2.02 2.02 2.02-2.02a.55.55 0 0 1 .778.7778l-2.0203 2.02z\"/></svg>"},{"name":"compact","assetInline":"<svg height=\"16\" viewBox=\"0 0 16 16\" width=\"16\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m0 8a8.0474 8.0474 0 0 1 7.9922-8 8.0609 8.0609 0 0 1 8.0078 8 8.0541 8.0541 0 0 1 -8 8 8.0541 8.0541 0 0 1 -8-8zm5.6549 3.2863 2.3373-2.353 2.3451 2.353a.6935.6935 0 0 0 .4627.1961.6662.6662 0 0 0 .6667-.6667.6777.6777 0 0 0 -.1961-.4706l-2.3451-2.3373 2.3529-2.3607a.5943.5943 0 0 0 .1961-.4549.66.66 0 0 0 -.6667-.6589.6142.6142 0 0 0 -.447.1961l-2.3686 2.3606-2.353-2.3527a.6152.6152 0 0 0 -.447-.1883.6529.6529 0 0 0 -.6667.651.6264.6264 0 0 0 .1961.4549l2.3451 2.3529-2.3451 2.353a.61.61 0 0 0 -.1961.4549.6661.6661 0 0 0 .6667.6667.6589.6589 0 0 0 .4627-.1961z\" /></svg>"}],"ariaLabel":"검색 결과 지우기"},"results":{"ariaLabel":"총 검색 결과","singleAvailable":"{%NUMBER1%} {%HEADING1%} 지원","multiAvailable":"{%NUMBER1%} {%HEADING1%} 및 {%NUMBER2%} {%HEADING2%} 지원","conjunction":"및","availability":"지원"},"defaultLinks":{"title":"빠른 링크","images":[{"name":"regular","assetInline":"<svg height=\"16\" viewBox=\"0 0 9 16\" width=\"9\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m8.6124 8.1035-2.99 2.99a.5.5 0 0 1 -.7071-.7071l2.1366-2.1364h-6.316a.5.5 0 0 1 0-1h6.316l-2.1368-2.1367a.5.5 0 0 1 .7071-.7071l2.99 2.99a.5.5 0 0 1 .0002.7073z\"/></svg>"},{"name":"compact","assetInline":"<svg height=\"25\" viewBox=\"0 0 13 25\" width=\"13\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m12.3577 13.4238-4.4444 4.4444a.6.6 0 0 1 -.8486-.8477l3.37-3.37h-9.3231a.65.65 0 0 1 0-1.3008h9.3232l-3.37-3.37a.6.6 0 0 1 .8486-.8477l4.4444 4.4444a.5989.5989 0 0 1 -.0001.8474z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-region","value":"defaultlinks search"}]},"defaultLinksApiUrl":"/search-services/suggestions/defaultlinks/","suggestedLinks":{"title":"추천 링크","images":[{"name":"regular","assetInline":"<svg height=\"16\" viewBox=\"0 0 9 16\" width=\"9\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m8.6124 8.1035-2.99 2.99a.5.5 0 0 1 -.7071-.7071l2.1366-2.1364h-6.316a.5.5 0 0 1 0-1h6.316l-2.1368-2.1367a.5.5 0 0 1 .7071-.7071l2.99 2.99a.5.5 0 0 1 .0002.7073z\"/></svg>"},{"name":"compact","assetInline":"<svg height=\"25\" viewBox=\"0 0 13 25\" width=\"13\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m12.3577 13.4238-4.4444 4.4444a.6.6 0 0 1 -.8486-.8477l3.37-3.37h-9.3231a.65.65 0 0 1 0-1.3008h9.3232l-3.37-3.37a.6.6 0 0 1 .8486-.8477l4.4444 4.4444a.5989.5989 0 0 1 -.0001.8474z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-region","value":"suggested links"}]},"suggestedSearches":{"title":"검색 제안","images":[{"name":"regular","assetInline":"<svg height=\"16\" viewBox=\"0 0 9 16\" width=\"9\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m8.6235 11.2266-2.2141-2.2142a3.43 3.43 0 0 0 .7381-2.1124 3.469 3.469 0 1 0 -1.5315 2.8737l2.23 2.23a.55.55 0 0 0 .7773-.7773zm-7.708-4.3266a2.7659 2.7659 0 1 1 2.7657 2.766 2.7694 2.7694 0 0 1 -2.7657-2.766z\"/></svg>"},{"name":"compact","assetInline":"<svg height=\"25\" viewBox=\"0 0 13 25\" width=\"13\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m12.3936 17.7969-3.1231-3.1231a4.83 4.83 0 0 0 1.023-2.9541 4.89 4.89 0 1 0 -2.1806 4.059v.0006l3.1484 3.1484a.8.8 0 0 0 1.1319-1.1308zm-10.9536-6.0769a3.9768 3.9768 0 1 1 3.976 3.9773 3.981 3.981 0 0 1 -3.976-3.9773z\"/></svg>"}],"analyticsAttributes":[{"name":"data-analytics-region","value":"suggested search"}]},"suggestionsApiUrl":"/search-services/suggestions/"},"segmentbar":{"dataStrings":{"view":"{%STOREFRONT%} 스토어 홈","exit":"나가기","segments":{"smb":"비즈니스 스토어 홈","eduInd":"교육 스토어 홈","other":"스토어 홈"}}},"menu":{"open":{"ariaLabel":"메뉴"},"close":{"ariaLabel":"닫기"},"back":{"ariaLabel":"메인 메뉴","images":[{"name":"compact","assetInline":"<svg height=\"48\" viewBox=\"0 0 9 48\" width=\"9\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m1.5618 24.0621 6.5581-6.4238c.2368-.2319.2407-.6118.0088-.8486-.2324-.2373-.6123-.2407-.8486-.0088l-7 6.8569c-.1157.1138-.1807.2695-.1802.4316.001.1621.0674.3174.1846.4297l7 6.7241c.1162.1118.2661.1675.4155.1675.1577 0 .3149-.062.4326-.1846.2295-.2388.2222-.6187-.0171-.8481z\"/></svg>"}]}},"submenu":{"open":{"images":[{"name":"regular","assetInline":"<svg height=\"10\" viewBox=\"0 0 10 10\" width=\"10\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m4.6725 6.635-2.655-2.667a.445.445 0 0 1 -.123-.304.4331.4331 0 0 1 .427-.439h.006a.447.447 0 0 1 .316.135l2.357 2.365 2.356-2.365a.458.458 0 0 1 .316-.135.433.433 0 0 1 .433.433v.006a.4189.4189 0 0 1 -.123.3l-2.655 2.671a.4451.4451 0 0 1 -.327.14.464.464 0 0 1 -.328-.14z\"/></svg>"},{"name":"compact","assetInline":"<svg height=\"48\" viewBox=\"0 0 9 48\" width=\"9\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"m7.4382 24.0621-6.5581-6.4238c-.2368-.2319-.2407-.6118-.0088-.8486.2324-.2373.6123-.2407.8486-.0088l7 6.8569c.1157.1138.1807.2695.1802.4316-.001.1621-.0674.3174-.1846.4297l-7 6.7242c-.1162.1118-.2661.1675-.4155.1675-.1577 0-.3149-.062-.4326-.1846-.2295-.2388-.2222-.6187.0171-.8481l6.5537-6.2959z\"/></svg>"}]}},"hasAbsoluteUrls":"true","hasShopRedirectUrls":true,"analyticsType":"aos","storeApiKey":"","wwwDomain":"www.apple.com","textDirection":"ltr","searchUrlPath":"/kr/search","storeRootPath":"/kr","storeUrlPath":"/kr","submenuApiUrl":"https://www.apple.com/api-www/global-elements/global-header/v1/flyouts","useRelativeSearchRequest":"true"},"config":{"version":"ac-globalheader-24-20260716-182805"}}}</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="as-localnav-pattern-background "></div>
+        <input type="checkbox" id="as-localnav-menustate" class="as-localnav-menustate" aria-hidden="true"/>
+        <nav id="as-localnav" class="as-localnav as-localnav-border as-localnav-scrim  large-as-localnav-collapsible" role="navigation" data-sticky aria-label="Local" data-analytics-region="localnav">
+            <div class="as-localnav-wrapper">
+                <div class="as-localnav-background"></div>
+                <div class="as-localnav-content">
+
+                            <div class="as-localnav-title as-localnav-title-compact" data-autom="localnavHeader">
+                                <a href="/kr/shop/help" data-feature-name="local nav" data-display-name="쇼핑 도움말" class="localnav-title">쇼핑 도움말</a>
+                            </div>
+                            <div class="as-localnav-menu">
+    <a href="#as-localnav-menustate" role="button" class="as-localnav-menucta-anchor as-localnav-menucta-anchor-open" id="as-localnav-menustate-open" aria-labelledby="as-localnav-browseall-button-label">
+        <span class="as-localnav-menucta-anchor-label">Local Nav 메뉴 열기</span>
+    </a>
+    <a href="#" role="button" class="as-localnav-menucta-anchor as-localnav-menucta-anchor-close" id="as-localnav-menustate-close" aria-labelledby="as-localnav-browseall-button-label">
+        <span class="as-localnav-menucta-anchor-label">Local Nav 메뉴 닫기</span>
+    </a>
+
+    <div class="as-localnav-menu-tray" aria-hidden="true">  
+        <div class="as-localnav-browseall as-localnav-tray-content" id="as-localnav-tray-content" >
+        <div class="as-localnav-browseall-listcontainer as-localnav-categorylist-container as-localnav-helpexplore" data-autom="categorylistcontainer">
+                <ul class="as-localnav-browseall-list as-localnav-categorylist as-localnav-display4rows" id="as-localnav-categorylist" role="list" style="--r-localnav-flyout-list-size: 10; --r-localnav-flyout-maxrows: 4;">
+                        <li class="as-localnav-browseall-listitem" role="listitem" style="--r-localnav-flyout-categorylist-item: 0;">
+<a href="                                        /kr/shop/help/shipping_delivery
+"    data-feature-name="local nav" data-display-name="배송 및 픽업"    
+   class="as-localnav-browseall-link ">배송 및 픽업</a>                        </li>
+                        <li class="as-localnav-browseall-listitem" role="listitem" style="--r-localnav-flyout-categorylist-item: 1;">
+<a href="                                        /kr/shop/help/your_account
+"    data-feature-name="local nav" data-display-name="계정"    
+   class="as-localnav-browseall-link ">계정</a>                        </li>
+                        <li class="as-localnav-browseall-listitem" role="listitem" style="--r-localnav-flyout-categorylist-item: 2;">
+<a href="                                        /kr/shop/help/payments
+"    data-feature-name="local nav" data-display-name="지불"    
+   class="as-localnav-browseall-link ">지불</a>                        </li>
+                        <li class="as-localnav-browseall-listitem" role="listitem" style="--r-localnav-flyout-categorylist-item: 3;">
+<a href="                                        /kr/shop/help/returns_refund
+"    data-feature-name="local nav" data-display-name="반품 및 환불"    
+   class="as-localnav-browseall-link  current">반품 및 환불</a>                        </li>
+                        <li class="as-localnav-browseall-listitem" role="listitem" style="--r-localnav-flyout-categorylist-item: 4;">
+<a href="                                        /kr/shop/help/viewing_changing_orders
+"    data-feature-name="local nav" data-display-name="주문 확인 및 변경"    
+   class="as-localnav-browseall-link ">주문 확인 및 변경</a>                        </li>
+                        <li class="as-localnav-browseall-listitem" role="listitem" style="--r-localnav-flyout-categorylist-item: 5;">
+<a href="                                        /kr/shop/help/online_store_exclusives
+"    data-feature-name="local nav" data-display-name="온라인 스토어 독점 서비스"    
+   class="as-localnav-browseall-link ">온라인 스토어 독점 서비스</a>                        </li>
+                        <li class="as-localnav-browseall-listitem" role="listitem" style="--r-localnav-flyout-categorylist-item: 6;">
+<a href="                                        /kr/shop/help/shopping_experience
+"    data-feature-name="local nav" data-display-name="주문"    
+   class="as-localnav-browseall-link ">주문</a>                        </li>
+                        <li class="as-localnav-browseall-listitem" role="listitem" style="--r-localnav-flyout-categorylist-item: 7;">
+<a href="                                        /kr/shop/help/policies
+"    data-feature-name="local nav" data-display-name="정책"    
+   class="as-localnav-browseall-link ">정책</a>                        </li>
+                        <li class="as-localnav-browseall-listitem" role="listitem" style="--r-localnav-flyout-categorylist-item: 8;">
+<a href="                                        /kr/shop/help/informed
+"    data-feature-name="local nav" data-display-name="공지사항"    
+   class="as-localnav-browseall-link ">공지사항</a>                        </li>
+                        <li class="as-localnav-browseall-listitem" role="listitem" style="--r-localnav-flyout-categorylist-item: 9;">
+<a href="                                        /kr/shop/help/invoice
+"    data-feature-name="local nav" data-display-name="청구서"    
+   class="as-localnav-browseall-link ">청구서</a>                        </li>
+                </ul>
+        </div>
+</div>
+    </div>
+
+    <div class="as-localnav-actions">
+        <div class="as-localnav-action as-localnav-action-menucta" aria-hidden="true">
+            <label for="as-localnav-menustate" class="as-localnav-menucta as-localnav-browseall-menucta" id="as-localnav-browseall-button-label">
+                <span class="as-localnav-browseall-menu-title nowrap">
+                    
+                    모든 항목 보기
+                </span>
+                <span class="as-localnav-menucta-chevron"></span>
+            </label>
+        </div>
+    </div>
+</div>
+                </div>
+            </div>
+        </nav>
+        <label class="as-localnav-curtain" id="as-localnav-curtain" for="as-localnav-menustate" data-original-aria-hidden aria-hidden="true"></label>
+
+
+            <div role="main">
+                <div id="root"></div>
+
+                
+                <noscript>
+  <div class="as-l-container">
+    <div class="rf-help-page" data-autom="help-page">
+                      
+                          <div class="rf-helpdetails-header row">
+                              <div class="rf-helpdetails-leftheader column large-9 small-12">
+                                <div><h1 class="rf-helpdetails-headertitle">반품 및 환불</h1>
+<p class="rf-helpdetails-headerdescription">Apple은 고객께서 구입하신 새로운 제품에 대해 만족하셨기를 바랍니다. 제품이 만족스럽지 못하여 반품해야 할 경우, 다음을 참조하십시오.</p></div>
+                              </div>
+                              <div class="rf-helpdetails-rightheader column large-3 small-12">
+                                  <div class="rf-helpdetails-topicarea">
+                                      <p class="rf-helpdetails-topictitle">항목 선택:</p>
+                                      <ul class="rf-helpdetails-topiclist">
+                                              <li class="rf-helpdetails-topiclistitem">
+<a href="#policy" 
+   data-autom="helpTopic_0" class="rf-helpdetails-anchors">제품 반품</a>                                              </li>
+                                              <li class="rf-helpdetails-topiclistitem">
+<a href="#terms" 
+   data-autom="helpTopic_1" class="rf-helpdetails-anchors">사용 약관</a>                                              </li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="rf-helpdetails-categorysection">
+                                  <div class="rf-helpdetails-categorylist row" id="policy">
+                                      <div class="rf-helpdetails-categoryleftpanel column large-3 small-12">
+                                          <h2 class="rf-helpdetails-categorytitle">제품 반품</h2>
+                                      </div>
+                                      <div class="rf-helpdetails-categoryrightpanel column large-9 small-12">
+                                          <div class="rf-helpdetails-categorydescription">
+
+<p class="rf-helpdetails-categorysummary">구입하신 제품이 만족스럽지 못하다면, 해당 제품을 반품하여 환불 받을 수 있습니다.</p>
+
+<p class="rf-helpdetails-categorysummary">구입한 Apple 제품을 반품하시려면, Apple 온라인 스토어 고객 서비스 080-330-8877(월요일~금요일, 오전 9시~오후 9시, 토요일~일요일, 오전 10시~오후 9시)로 문의하여 주십시오. ZEISS Optical Inserts를 반품하려면 해당 제품을 구입한 ZEISS Optical Inserts Professionals에 문의하십시오.</p>
+
+
+
+<p class="rf-helpdetails-categorysummary">반품은 <button type="button" data-ase-overlay="help-info-overlay" data-ase-click="show" class="rf-help-helpoverlaylink as-buttonlink">Apple Online Store 이용 약관</button> 에 따라 처리됩니다. 대상 제품의 경우 해당 제품을 받은 날짜로부터 최대 14일 이내에 반품을 시작해야 합니다.</p>
+
+
+
+
+
+
+
+<a name="policy"></a>
+
+
+
+
+
+
+<p class="rf-helpdetails-categorysummary">반품을 신청하면, 반품 세부사항이 담긴 확인 메일이 발송됩니다. 컴퓨터를 반품할 경우에는 원래 배송되었던 포장 그대로 반품할 것을 적극 권장합니다.</p>
+
+<p class="rf-helpdetails-categorysummary">해당 제품은 반품을 신청하고 14일 이내에 Apple 반품 센터에 도착해야 합니다.</p>
+
+<p class="rf-helpdetails-categorysummary">제품이 도착하면 반품 처리절차에 들어가며, 환불이 진행됩니다.</p>
+
+<a name="refund"></a><h3 class="rf-helpdetails-categorysummarytitle">환불 방식</h3>
+
+<p class="rf-helpdetails-categorysummary"> Apple&nbsp;반품&nbsp;센터에&nbsp;반품하신&nbsp;제품이&nbsp;접수되면&nbsp;환불&nbsp;절차에&nbsp;들어갑니다.&nbsp;환불&nbsp;처리는&nbsp;구입&nbsp;당시&nbsp;사용한&nbsp;지불방식에&nbsp;따라&nbsp;다릅니다. </p>
+
+<p class="rf-helpdetails-categorysummary">Apple Store에 반품</p>
+
+<p class="rf-helpdetails-categorysummary">언제든 Apple 리테일 매장에 제품을 반품할 수 있습니다. Apple 스페셜리스트가 반품을 도와 드립니다. 환불 역시 같이 처리됩니다.</p>
+
+<a name="banks"></a><h3 id="override-default">은행 코드</h3>
+
+<ul type="circle" class="rf-helpdetails-categorysummarylist">
+<li class="rf-helpdetails-categorylistitem"> 신용 카드로 결제하신 경우 업무일 기준으로 3일 이내에 고객님의 카드 발급 은행으로 환불 금액이 입금됩니다. </li>
+<li class="rf-helpdetails-categorylistitem"> 계좌 이체로 결제하신 경우 다음과 같은 은행 상세 정보를 제공해 주셔야 합니다. 
+<br />
+<br />주문 번호: 
+<br />예금주 이름:
+<br />은행 이름:
+<br />은행 계좌 번호:
+<br />은행 코드:
+<br />이메일 주소: 
+<br />환불 금액은 예금주 이름이 주문 시 작성한 청구 연락처의 이름과 동일한 경우에만 국내 은행 계좌로 송금할 수 있다는 점 참고하시기 바랍니다.보내주신 정보가 확인되면 업무일 기준으로 3일 이내에 고객님의 은행 계좌로 환불 금액이 입금됩니다.
+<br />
+<br />환불과 관련하여 궁금하신 점이 더 있으신 경우 은행에 문의해 주십시오.
+</li>
+<br />
+
+<li class="rf-helpdetails-categorylistitem">
+<p class="rf-helpdetails-categorysummary">은행 송금 환불의 경우,  아래 은행 코드 번호를 참조하십시오 </p>
+
+<TABLE BORDER="0" cellspacing="10" style="margin-top:-10px">
+<TR>
+<TH style="font-weight:bold;width:75px"> 은행 코드</TH>
+<TH style="font-weight:bold;padding-left:11em" id="bank-name">은행 명</TH>
+</TR>
+<TR>
+<TD>001</TD>
+<TD style="padding-left:11em" id="bank-name">한국은행</TD>
+</TR>
+<TR>
+<TD>002</TD>
+<TD style="padding-left:11em" id="bank-name">산업은행</TD>
+</TR>
+<TR>
+<TD>003</TD>
+<TD style="padding-left:11em" id="bank-name">기업은행</TD>
+</TR>
+<TR>
+<TD>004</TD>
+<TD style="padding-left:11em" id="bank-name">국민은행</TD>
+</TR>
+<TR>
+<TD>005</TD>
+<TD style="padding-left:11em" id="bank-name">KEB 하나은행</TD>
+</TR>
+<TR>
+<TD>007</TD>
+<TD style="padding-left:11em" id="bank-name">수협은행</TD>
+</TR>
+<TR>
+<TD>008</TD>
+<TD style="padding-left:11em" id="bank-name">수출입은행</TD>
+</TR>
+<TR>
+<TD>011</TD>
+<TD style="padding-left:11em" id="bank-name">농협은행</TD>
+</TR>
+<TR>
+<TD>020</TD>
+<TD style="padding-left:11em" id="bank-name">우리은행</TD>
+</TR>
+<TR>
+<TD>023</TD>
+<TD style="padding-left:11em" id="bank-name">스탠다드차타드은행(제일은행)</TD>
+</TR>
+<TR>
+<TD>027</TD>
+<TD style="padding-left:11em" id="bank-name">시티은행</TD>
+</TR>
+<TR>
+<TD>081</TD>
+<TD style="padding-left:11em" id="bank-name">KEB 하나은행</TD>
+</TR>
+<TR>
+<TD>088</TD>
+<TD style="padding-left:11em" id="bank-name">신한은행</TD>
+</TR>
+<TR>
+<TD>031</TD>
+<TD style="padding-left:11em" id="bank-name">대구은행</TD>
+</TR>
+<TR>
+<TD>032</TD>
+<TD style="padding-left:11em" id="bank-name">부산은행</TD>
+</TR>
+<TR>
+<TD>034</TD>
+<TD style="padding-left:11em" id="bank-name">광주은행</TD>
+</TR>
+<TR>
+<TD>035</TD>
+<TD style="padding-left:11em" id="bank-name">제주은행</TD>
+</TR>
+<TR>
+<TD>037</TD>
+<TD style="padding-left:11em" id="bank-name">전북은행</TD>
+</TR>
+<TR>
+<TD>039</TD>
+<TD style="padding-left:11em" id="bank-name">경남은행</TD>
+</TR>
+<TR>
+<TD>045</TD>
+<TD style="padding-left:11em" id="bank-name">새마을금고</TD>
+</TR>
+<TR>
+<TD>048</TD>
+<TD style="padding-left:11em" id="bank-name">신협</TD>
+</TR>
+<TR>
+<TD>050</TD>
+<TD style="padding-left:11em" id="bank-name">상호저축은행중앙회</TD>
+</TR>
+<TR>
+<TD>071</TD>
+<TD style="padding-left:11em" id="bank-name">우체국</TD>
+</TR>
+<TR>
+<TD>054</TD>
+<TD style="padding-left:11em" id="bank-name">Hongkong and Shanghai Banking Corporation Limited</TD>
+</TR>
+<TR>
+<TD>055</TD>
+<TD style="padding-left:11em" id="bank-name">Deutsche Bank Aktiengesellschaft</TD>
+</TR>
+<TR>
+<TD>039</TD>
+<TD style="padding-left:11em" id="bank-name">경남은행</TD>
+</TR>
+<TR>
+<TD>055</TD>
+<TD style="padding-left:11em" id="bank-name">Deutsche Bank Aktiengesellschaft</TD>
+</TR>
+<TR>
+<TD>056</TD>
+<TD style="padding-left:11em" id="bank-name">The Royal Bank of Scotland N.V.</TD>
+</TR>
+<TR>
+<TD>057</TD>
+<TD style="padding-left:11em" id="bank-name">JPMorgan Chase Bank, National Association</TD>
+</TR>
+<TR>
+<TD>058</TD>
+<TD style="padding-left:11em" id="bank-name">Mizuho Corporate Bank, Limited</TD>
+</TR>
+<TR>
+<TD>059</TD>
+<TD style="padding-left:11em" id="bank-name">The Bank of Tokyo Mitsubishi UFJ, Ltd</TD>
+</TR>
+<TR>
+<TD>060</TD>
+<TD style="padding-left:11em" id="bank-name">Bank of America, National Association</TD>
+</TR>
+<TR>  
+<TD>090</TD>   
+<TD style="padding-left:11em" id="bank-name">KakaoBank of Korea Corp.</TD>
+</TR> 
+</TABLE>
+
+</li>
+</ul>
+
+<a name="status"></a><h3 class="rf-helpdetails-categorysummarytitle">환불 상태</h3>
+
+<p class="rf-helpdetails-categorysummary">온라인 <a href="https://secure.store.apple.com/kr/shop/order/list" data-slot-name="MainSection" data-feature-name="Astro Link" data-display-name="AOS: OrderStatus" target="_blank">셀프 서비스</a>를 방문하십시오.</p>
+
+<a name="incorrect"></a><h3 class="rf-helpdetails-categorysummarytitle">제품 결함 또는 손상</h3>
+
+<p class="rf-helpdetails-categorysummary">구입한 제품에 문제가 있거나 배송 중 손상된 경우, Apple 온라인 스토어 고객 서비스 080-330-8877(월요일~금요일, 오전 9시~오후 9시, 토요일~일요일, 오전 10시~오후 9시)로 문의하여 주십시오.</p>
+
+<a name="problems"></a><h3 class="rf-helpdetails-categorysummarytitle">제품 관련 문제</h3>
+
+<p class="rf-helpdetails-categorysummary">새로 구입한 Apple 제품에 문제가 있는 경우에는, 온라인 <a href="https://www.apple.com/kr/support" data-slot-name="MainSection" data-feature-name="Astro Link" data-display-name="AOS: support">제품 지원</a>&nbsp;또는&nbsp;<a href="http://www.apple.com/support/contact/phone_contacts.html">Apple 기술 지원</a>을 방문하십시오. 비Apple 제품에 문제가 있는 경우, 해당 제조업체의 보증 관련하여 해당 제조업체로 직접 문의하여 주십시오.</p></div>
+                                      </div>
+                                  </div>
+                                  <div class="rf-helpdetails-categorylist row rf-helpdetails-categorylastlist" id="terms">
+                                      <div class="rf-helpdetails-categoryleftpanel column large-3 small-12">
+                                          <h2 class="rf-helpdetails-categorytitle">사용 약관</h2>
+                                      </div>
+                                      <div class="rf-helpdetails-categoryrightpanel column large-9 small-12">
+                                          <div class="rf-helpdetails-categorydescription"><p class="rf-helpdetails-categorysummary">Apple의 모든 판매 및 환불 정책을 확인하려면, 아래 링크를 방문하십시오.</p>
+
+<p class="rf-helpdetails-categorysummary"><button type="button" data-ase-overlay="help-info-overlay" data-ase-click="show" class="rf-help-helpoverlaylink as-buttonlink">Apple 개인 사용 약관</button>을 참조하십시오.</p></div>
+                                      </div>
+                                  </div>
+                          </div>
+
+                      
+    </div>
+  </div>
+</noscript>
+
+            </div>
+
+                <footer class="as-globalfooter" id="global-footersection" role="contentinfo" aria-labelledby="footer-label">
+        <div class="as-globalfooter-content">
+                <h2 class="as-globalfooter-label" id="footer-label">각주</h2>
+                <h3 class="visuallyhidden">각주</h3>
+
+            
+<div class="as-globalfooter-sosumi " data-nosnippet data-autom="page-legal-footnotes">
+    
+    
+    <div id="footnotes-portal"></div>
+
+    
+
+    
+
+    
+
+
+        
+
+
+
+    <div class="footnotes">
+        <div id="generic-footnotes-portal"></div>
+        
+
+        
+        
+
+        
+    </div>
+
+</div>
+
+            <nav class="as-globalfooter-breadcrumbs" aria-label="이동 경로" role="navigation">
+<a href="https://www.apple.com/kr/"    data-feature-name="Breadcrumb" data-display-name="Apple"    
+   class="home as-globalfooter-breadcrumbs-home" data-autom="footer">                    <span class="as-globalfooter-breadcrumbs-home-icon" aria-hidden="true"></span>
+                    <span class="as-globalfooter-breadcrumbs-home-label">Apple</span>
+</a>
+    <div class="as-globalfooter-breadcrumbs-path">
+        <ol class="as-globalfooter-breadcrumbs-list" typeof="BreadcrumbList">
+                    <li class="as-globalfooter-breadcrumbs-item" property="itemListElement" typeof="ListItem">
+<a href="/kr/shop/help"    data-feature-name="Breadcrumb" data-display-name="도움말"    
+   class="as-globalfooter-breadcrumbs-link" data-autom="footer">도움말</a>
+                    </li>
+                    <li class="as-globalfooter-breadcrumbs-item" property="itemListElement" typeof="ListItem">
+
+                                <span property="item">반품 및 환불</span>
+                                <meta property="position" content="2" />
+                    </li>
+        </ol>
+    </div>
+</nav>
+
+
+            <nav role="navigation" aria-label="Apple Store のその他のリンク" class="as-globalfooter-directory with-5-columns">
+                    <div class="as-globalfooter-directory-column">
+    <div class="as-globalfooter-directory-column-section">
+        <h3 class="as-globalfooter-directory-column-section-title">
+            <span class="as-globalfooter-directory-column-section-title-text">쇼핑 및 알아보기</span>
+            <button class="as-globalfooter-directory-column-section-title-button" disabled>
+                <span class="as-globalfooter-directory-column-section-title-text">쇼핑 및 알아보기</span>
+                <span class="as-globalfooter-directory-column-section-title-icon" aria-hidden="true">+</span>
+            </button>
+        </h3>
+
+        <ul id="as-globalfooter-directory-column-section-state-section-one-0" class="as-globalfooter-directory-column-section-list" role="list">
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/shop/goto/store"   data-slot-name="section1" data-feature-name="Footer Navigation" data-display-name="Store"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Store-footer-link">                    Store
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/mac/"   data-slot-name="section1" data-feature-name="Footer Navigation" data-display-name="Mac"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Mac-footer-link">                    Mac
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/ipad/"   data-slot-name="section1" data-feature-name="Footer Navigation" data-display-name="iPad"    
+   class="as-globalfooter-directory-column-section-link" data-autom="iPad-footer-link">                    iPad
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/iphone/"   data-slot-name="section1" data-feature-name="Footer Navigation" data-display-name="iPhone"    
+   class="as-globalfooter-directory-column-section-link" data-autom="iPhone-footer-link">                    iPhone
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/watch/"   data-slot-name="section1" data-feature-name="Footer Navigation" data-display-name="Watch"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Watch-footer-link">                    Watch
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/apple-vision-pro/"   data-slot-name="section1" data-feature-name="Footer Navigation" data-display-name="Vision"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Vision-footer-link">                    Vision
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/airpods/"   data-slot-name="section1" data-feature-name="Footer Navigation" data-display-name="AirPods"    
+   class="as-globalfooter-directory-column-section-link" data-autom="AirPods-footer-link">                    AirPods
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/tv/"   data-slot-name="section1" data-feature-name="Footer Navigation" data-display-name="TV 및 홈"    
+   class="as-globalfooter-directory-column-section-link" data-autom="TV 및 홈-footer-link">                    TV 및 홈
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/airtag/"   data-slot-name="section1" data-feature-name="Footer Navigation" data-display-name="AirTag"    
+   class="as-globalfooter-directory-column-section-link" data-autom="AirTag-footer-link">                    AirTag
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="/kr/shop/accessories/all"   data-slot-name="section1" data-feature-name="Footer Navigation" data-display-name="액세서리"    
+   class="as-globalfooter-directory-column-section-link" data-autom="액세서리-footer-link">                    액세서리
+</a>            </li>
+        </ul>
+    </div>
+    <div class="as-globalfooter-directory-column-section">
+        <h3 class="as-globalfooter-directory-column-section-title">
+            <span class="as-globalfooter-directory-column-section-title-text">Apple 지갑</span>
+            <button class="as-globalfooter-directory-column-section-title-button" disabled>
+                <span class="as-globalfooter-directory-column-section-title-text">Apple 지갑</span>
+                <span class="as-globalfooter-directory-column-section-title-icon" aria-hidden="true">+</span>
+            </button>
+        </h3>
+
+        <ul id="as-globalfooter-directory-column-section-state-section-one-1" class="as-globalfooter-directory-column-section-list" role="list">
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/wallet/"   data-slot-name="section1" data-feature-name="Footer Navigation" data-display-name="지갑"    
+   class="as-globalfooter-directory-column-section-link" data-autom="지갑-footer-link">                    지갑
+</a>            </li>
+        </ul>
+    </div>
+                    </div>
+                    <div class="as-globalfooter-directory-column">
+    <div class="as-globalfooter-directory-column-section">
+        <h3 class="as-globalfooter-directory-column-section-title">
+            <span class="as-globalfooter-directory-column-section-title-text">계정</span>
+            <button class="as-globalfooter-directory-column-section-title-button" disabled>
+                <span class="as-globalfooter-directory-column-section-title-text">계정</span>
+                <span class="as-globalfooter-directory-column-section-title-icon" aria-hidden="true">+</span>
+            </button>
+        </h3>
+
+        <ul id="as-globalfooter-directory-column-section-state-section-two-0" class="as-globalfooter-directory-column-section-list" role="list">
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://appleid.apple.com/"   data-slot-name="section2" data-feature-name="Footer Navigation" data-display-name="Apple 계정 관리"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple 계정 관리-footer-link">                    Apple 계정 관리
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://secure.store.apple.com/kr/shop/account/home"   data-slot-name="section2" data-feature-name="Footer Navigation" data-display-name="Apple Store 계정"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple Store 계정-footer-link">                    Apple Store 계정
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.icloud.com"   data-slot-name="section2" data-feature-name="Footer Navigation" data-display-name="iCloud.com"    
+   class="as-globalfooter-directory-column-section-link" data-autom="iCloud.com-footer-link">                    iCloud.com
+</a>            </li>
+        </ul>
+    </div>
+    <div class="as-globalfooter-directory-column-section">
+        <h3 class="as-globalfooter-directory-column-section-title">
+            <span class="as-globalfooter-directory-column-section-title-text">엔터테인먼트</span>
+            <button class="as-globalfooter-directory-column-section-title-button" disabled>
+                <span class="as-globalfooter-directory-column-section-title-text">엔터테인먼트</span>
+                <span class="as-globalfooter-directory-column-section-title-icon" aria-hidden="true">+</span>
+            </button>
+        </h3>
+
+        <ul id="as-globalfooter-directory-column-section-state-section-two-1" class="as-globalfooter-directory-column-section-list" role="list">
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/apple-one/"   data-slot-name="section2" data-feature-name="Footer Navigation" data-display-name="Apple One"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple One-footer-link">                    Apple One
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/apple-tv-plus/"   data-slot-name="section2" data-feature-name="Footer Navigation" data-display-name="Apple TV"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple TV-footer-link">                    Apple TV
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/apple-music/"   data-slot-name="section2" data-feature-name="Footer Navigation" data-display-name="Apple Music"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple Music-footer-link">                    Apple Music
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/apple-arcade/"   data-slot-name="section2" data-feature-name="Footer Navigation" data-display-name="Apple Arcade"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple Arcade-footer-link">                    Apple Arcade
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/apple-podcasts/"   data-slot-name="section2" data-feature-name="Footer Navigation" data-display-name="Apple Podcasts"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple Podcasts-footer-link">                    Apple Podcasts
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/apple-books/"   data-slot-name="section2" data-feature-name="Footer Navigation" data-display-name="Apple Books"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple Books-footer-link">                    Apple Books
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/app-store/"   data-slot-name="section2" data-feature-name="Footer Navigation" data-display-name="App Store"    
+   class="as-globalfooter-directory-column-section-link" data-autom="App Store-footer-link">                    App Store
+</a>            </li>
+        </ul>
+    </div>
+                    </div>
+                    <div class="as-globalfooter-directory-column">
+    <div class="as-globalfooter-directory-column-section">
+        <h3 class="as-globalfooter-directory-column-section-title">
+            <span class="as-globalfooter-directory-column-section-title-text">Apple Store</span>
+            <button class="as-globalfooter-directory-column-section-title-button" disabled>
+                <span class="as-globalfooter-directory-column-section-title-text">Apple Store</span>
+                <span class="as-globalfooter-directory-column-section-title-icon" aria-hidden="true">+</span>
+            </button>
+        </h3>
+
+        <ul id="as-globalfooter-directory-column-section-state-section-three" class="as-globalfooter-directory-column-section-list" role="list">
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/retail/"   data-slot-name="section3" data-feature-name="Footer Navigation" data-display-name="매장 찾기"    
+   class="as-globalfooter-directory-column-section-link" data-autom="매장 찾기-footer-link">                    매장 찾기
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/retail/geniusbar/"   data-slot-name="section3" data-feature-name="Footer Navigation" data-display-name="Genius Bar"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Genius Bar-footer-link">                    Genius Bar
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/today/"   data-slot-name="section3" data-feature-name="Footer Navigation" data-display-name="Today at Apple"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Today at Apple-footer-link">                    Today at Apple
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/today/camp/"   data-slot-name="section3" data-feature-name="Footer Navigation" data-display-name="Apple 캠프"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple 캠프-footer-link">                    Apple 캠프
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://itunes.apple.com/kr/app/apple-store/id375380948?mt=8"   data-slot-name="section3" data-feature-name="Footer Navigation" data-display-name="Apple Store 앱"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple Store 앱-footer-link">                    Apple Store 앱
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="/kr/shop/refurbished"   data-slot-name="section3" data-feature-name="Footer Navigation" data-display-name="인증 리퍼비쉬 제품"    
+   class="as-globalfooter-directory-column-section-link" data-autom="인증 리퍼비쉬 제품-footer-link">                    인증 리퍼비쉬 제품
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/trade-in"   data-slot-name="section3" data-feature-name="Footer Navigation" data-display-name="Apple Trade In"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple Trade In-footer-link">                    Apple Trade In
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="/kr/shop/browse/financing"   data-slot-name="section3" data-feature-name="Footer Navigation" data-display-name="할부 방식"    
+   class="as-globalfooter-directory-column-section-link" data-autom="할부 방식-footer-link">                    할부 방식
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://secure.store.apple.com/kr/shop/order/list"   data-slot-name="section3" data-feature-name="Footer Navigation" data-display-name="주문 상태"    
+   class="as-globalfooter-directory-column-section-link" data-autom="주문 상태-footer-link">                    주문 상태
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="/kr/shop/help"   data-slot-name="section3" data-feature-name="Footer Navigation" data-display-name="쇼핑 도움말"    
+   class="as-globalfooter-directory-column-section-link" data-autom="쇼핑 도움말-footer-link">                    쇼핑 도움말
+</a>            </li>
+        </ul>
+    </div>
+                    </div>
+                    <div class="as-globalfooter-directory-column">
+    <div class="as-globalfooter-directory-column-section">
+        <h3 class="as-globalfooter-directory-column-section-title">
+            <span class="as-globalfooter-directory-column-section-title-text">비즈니스</span>
+            <button class="as-globalfooter-directory-column-section-title-button" disabled>
+                <span class="as-globalfooter-directory-column-section-title-text">비즈니스</span>
+                <span class="as-globalfooter-directory-column-section-title-icon" aria-hidden="true">+</span>
+            </button>
+        </h3>
+
+        <ul id="as-globalfooter-directory-column-section-state-section-four-0" class="as-globalfooter-directory-column-section-list" role="list">
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/business/"   data-slot-name="section4" data-feature-name="Footer Navigation" data-display-name="Apple과 비즈니스"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple과 비즈니스-footer-link">                    Apple과 비즈니스
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/retail/business/"   data-slot-name="section4" data-feature-name="Footer Navigation" data-display-name="비즈니스를 위한 제품 쇼핑하기"    
+   class="as-globalfooter-directory-column-section-link" data-autom="비즈니스를 위한 제품 쇼핑하기-footer-link">                    비즈니스를 위한 제품 쇼핑하기
+</a>            </li>
+        </ul>
+    </div>
+    <div class="as-globalfooter-directory-column-section">
+        <h3 class="as-globalfooter-directory-column-section-title">
+            <span class="as-globalfooter-directory-column-section-title-text">교육</span>
+            <button class="as-globalfooter-directory-column-section-title-button" disabled>
+                <span class="as-globalfooter-directory-column-section-title-text">교육</span>
+                <span class="as-globalfooter-directory-column-section-title-icon" aria-hidden="true">+</span>
+            </button>
+        </h3>
+
+        <ul id="as-globalfooter-directory-column-section-state-section-four-1" class="as-globalfooter-directory-column-section-list" role="list">
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/education/"   data-slot-name="section4" data-feature-name="Footer Navigation" data-display-name="Apple 그리고 교육"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple 그리고 교육-footer-link">                    Apple 그리고 교육
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/education/k12/how-to-buy/"   data-slot-name="section4" data-feature-name="Footer Navigation" data-display-name="초중고용 제품 쇼핑하기"    
+   class="as-globalfooter-directory-column-section-link" data-autom="초중고용 제품 쇼핑하기-footer-link">                    초중고용 제품 쇼핑하기
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="/kr/shop/browse/home/education_routing"   data-slot-name="section4" data-feature-name="Footer Navigation" data-display-name="대학 생활을 위한 제품 쇼핑하기"    
+   class="as-globalfooter-directory-column-section-link" data-autom="대학 생활을 위한 제품 쇼핑하기-footer-link">                    대학 생활을 위한 제품 쇼핑하기
+</a>            </li>
+        </ul>
+    </div>
+                    </div>
+                    <div class="as-globalfooter-directory-column">
+    <div class="as-globalfooter-directory-column-section">
+        <h3 class="as-globalfooter-directory-column-section-title">
+            <span class="as-globalfooter-directory-column-section-title-text">Apple의 가치관</span>
+            <button class="as-globalfooter-directory-column-section-title-button" disabled>
+                <span class="as-globalfooter-directory-column-section-title-text">Apple의 가치관</span>
+                <span class="as-globalfooter-directory-column-section-title-icon" aria-hidden="true">+</span>
+            </button>
+        </h3>
+
+        <ul id="as-globalfooter-directory-column-section-state-section-five-0" class="as-globalfooter-directory-column-section-list" role="list">
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/accessibility/"   data-slot-name="section5" data-feature-name="Footer Navigation" data-display-name="손쉬운 사용"    
+   class="as-globalfooter-directory-column-section-link" data-autom="손쉬운 사용-footer-link">                    손쉬운 사용
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/environment/"   data-slot-name="section5" data-feature-name="Footer Navigation" data-display-name="환경"    
+   class="as-globalfooter-directory-column-section-link" data-autom="환경-footer-link">                    환경
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/privacy/"   data-slot-name="section5" data-feature-name="Footer Navigation" data-display-name="개인정보 보호"    
+   class="as-globalfooter-directory-column-section-link" data-autom="개인정보 보호-footer-link">                    개인정보 보호
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/supply-chain/"   data-slot-name="section5" data-feature-name="Footer Navigation" data-display-name="공급망"    
+   class="as-globalfooter-directory-column-section-link" data-autom="공급망-footer-link">                    공급망
+</a>            </li>
+        </ul>
+    </div>
+    <div class="as-globalfooter-directory-column-section">
+        <h3 class="as-globalfooter-directory-column-section-title">
+            <span class="as-globalfooter-directory-column-section-title-text">Apple 정보</span>
+            <button class="as-globalfooter-directory-column-section-title-button" disabled>
+                <span class="as-globalfooter-directory-column-section-title-text">Apple 정보</span>
+                <span class="as-globalfooter-directory-column-section-title-icon" aria-hidden="true">+</span>
+            </button>
+        </h3>
+
+        <ul id="as-globalfooter-directory-column-section-state-section-five-1" class="as-globalfooter-directory-column-section-list" role="list">
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/newsroom/"   data-slot-name="section5" data-feature-name="Footer Navigation" data-display-name="Newsroom"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Newsroom-footer-link">                    Newsroom
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/leadership/"   data-slot-name="section5" data-feature-name="Footer Navigation" data-display-name="Apple 리더십"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple 리더십-footer-link">                    Apple 리더십
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/jobs/kr/"   data-slot-name="section5" data-feature-name="Footer Navigation" data-display-name="채용 안내"    
+   class="as-globalfooter-directory-column-section-link" data-autom="채용 안내-footer-link">                    채용 안내
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/compliance"   data-slot-name="section5" data-feature-name="Footer Navigation" data-display-name="윤리 및 규정 준수"    
+   class="as-globalfooter-directory-column-section-link" data-autom="윤리 및 규정 준수-footer-link">                    윤리 및 규정 준수
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/apple-events/"   data-slot-name="section5" data-feature-name="Footer Navigation" data-display-name="이벤트"    
+   class="as-globalfooter-directory-column-section-link" data-autom="이벤트-footer-link">                    이벤트
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/job-creation/"   data-slot-name="section5" data-feature-name="Footer Navigation" data-display-name="일자리 창출"    
+   class="as-globalfooter-directory-column-section-link" data-autom="일자리 창출-footer-link">                    일자리 창출
+</a>            </li>
+            <li class="as-globalfooter-directory-column-section-item" role="listitem">
+<a href="https://www.apple.com/kr/contact/"   data-slot-name="section5" data-feature-name="Footer Navigation" data-display-name="Apple 연락처"    
+   class="as-globalfooter-directory-column-section-link" data-autom="Apple 연락처-footer-link">                    Apple 연락처
+</a>            </li>
+        </ul>
+    </div>
+                    </div>
+</nav>
+
+            <div class="as-globalfooter-mini" data-nosnippet data-autom="global-footer-mini" typeof="Organization">
+    <div class="as-globalfooter-mini-shop"  x-ms-format-detection="none">
+                <p>다양한 쇼핑 방법: <span class="nowrap"><a href="https://www.apple.com/kr/retail" data-slot-name="footerConfig" data-feature-name="Footer Navigation" data-display-name="Apple Store를 방문">Apple Store를 방문</a></span>하거나, <a href="https://locate.apple.com/kr/ko" data-slot-name="footerConfig" data-feature-name="Footer Navigation" data-display-name="리셀러">리셀러</a>를 찾아보거나, <span>080-330-8877</span>번으로 전화하세요.</p>
+    </div>
+    <div class="as-globalfooter-mini-end">
+        <div class="as-globalfooter-mini-locale as-globalfooter-mini-locale-small">
+<a href="https://www.apple.com/choose-your-country"   data-slot-name="footerConfig" data-feature-name="Footer Navigation" data-display-name="Country Selector"    
+   class="as-globalfooter-mini-locale-link" data-autom="footer">                                대한민국
+</a>        </div>
+        <div class="as-globalfooter-mini-legal">
+                    <div class="as-globalfooter-mini-legal-copyright">
+                        Copyright &copy; 2026 Apple Inc.  모든 권리 보유.
+                    </div>
+            <ul class="as-globalfooter-mini-legal-links">
+                            <li class="as-globalfooter-mini-legal-links-item">
+<a href="https://www.apple.com/kr/privacy/privacy-policy"   data-slot-name="footerConfig" data-feature-name="Footer Navigation" data-display-name="개인정보 처리방침"    
+   class="as-globalfooter-mini-legal-link" data-autom="footer">개인정보 처리방침</a>                            </li>
+                            <li class="as-globalfooter-mini-legal-links-item">
+<a href="https://www.apple.com/kr/legal/internet-services/terms/site.html"   data-slot-name="footerConfig" data-feature-name="Footer Navigation" data-display-name="약관"    
+   class="as-globalfooter-mini-legal-link"  data-autom="footer">약관</a>                            </li>
+                            <li class="as-globalfooter-mini-legal-links-item">
+<a href="/kr/shop/open/salespolicies"   data-slot-name="footerConfig" data-feature-name="Footer Navigation" data-display-name="판매 및 환불"    
+   class="as-globalfooter-mini-legal-link"  target="new" data-autom="footer">판매 및 환불</a>                            </li>
+                            <li class="as-globalfooter-mini-legal-links-item">
+<a href="https://www.apple.com/kr/legal"   data-slot-name="footerConfig" data-feature-name="Footer Navigation" data-display-name="법적 고지"    
+   class="as-globalfooter-mini-legal-link"  data-autom="footer">법적 고지</a>                            </li>
+                        <li class="as-globalfooter-mini-legal-links-item">
+<a href="/kr/shop/browse/sitemap"   data-slot-name="footerConfig" data-feature-name="Footer Navigation" data-display-name="Sitemap"    
+   class="as-globalfooter-mini-legal-link"  data-autom="footer">사이트 맵</a>                        </li>
+            </ul>
+        </div>
+        <div class="as-globalfooter-mini-locale as-globalfooter-mini-locale-large">
+<a href="https://www.apple.com/choose-your-country"   data-slot-name="footerConfig" data-feature-name="Footer Navigation" data-display-name="Country Selector"    
+   class="as-globalfooter-mini-locale-link" data-autom="footer">                                대한민국
+</a>        </div>
+    </div>
+</div>
+
+        </div>
+    </footer>
+
+        </div>
+
+        <script>
+            window.pageLevelData = window.pageLevelData || {};
+
+                window.pageLevelData.helpData = {"sectionTitle":"항목 선택:","tiles":{"topics":{"items":[{"index":0,"value":{"link":null,"header":"제품 반품","description":"\n\n<p class=\"rf-helpdetails-categorysummary\">구입하신 제품이 만족스럽지 못하다면, 해당 제품을 반품하여 환불 받을 수 있습니다.</p>\n\n<p class=\"rf-helpdetails-categorysummary\">구입한 Apple 제품을 반품하시려면, Apple 온라인 스토어 고객 서비스 080-330-8877(월요일~금요일, 오전 9시~오후 9시, 토요일~일요일, 오전 10시~오후 9시)로 문의하여 주십시오. ZEISS Optical Inserts를 반품하려면 해당 제품을 구입한 ZEISS Optical Inserts Professionals에 문의하십시오.</p>\n\n\n\n<p class=\"rf-helpdetails-categorysummary\">반품은 <button type=\"button\" data-ase-overlay=\"help-info-overlay\" data-ase-click=\"show\" class=\"rf-help-helpoverlaylink as-buttonlink\">Apple Online Store 이용 약관</button> 에 따라 처리됩니다. 대상 제품의 경우 해당 제품을 받은 날짜로부터 최대 14일 이내에 반품을 시작해야 합니다.</p>\n\n\n\n\n\n\n\n<a name=\"policy\"></a>\n\n\n\n\n\n\n<p class=\"rf-helpdetails-categorysummary\">반품을 신청하면, 반품 세부사항이 담긴 확인 메일이 발송됩니다. 컴퓨터를 반품할 경우에는 원래 배송되었던 포장 그대로 반품할 것을 적극 권장합니다.</p>\n\n<p class=\"rf-helpdetails-categorysummary\">해당 제품은 반품을 신청하고 14일 이내에 Apple 반품 센터에 도착해야 합니다.</p>\n\n<p class=\"rf-helpdetails-categorysummary\">제품이 도착하면 반품 처리절차에 들어가며, 환불이 진행됩니다.</p>\n\n<a name=\"refund\"></a><h3 class=\"rf-helpdetails-categorysummarytitle\">환불 방식</h3>\n\n<p class=\"rf-helpdetails-categorysummary\"> Apple&nbsp;반품&nbsp;센터에&nbsp;반품하신&nbsp;제품이&nbsp;접수되면&nbsp;환불&nbsp;절차에&nbsp;들어갑니다.&nbsp;환불&nbsp;처리는&nbsp;구입&nbsp;당시&nbsp;사용한&nbsp;지불방식에&nbsp;따라&nbsp;다릅니다. </p>\n\n<p class=\"rf-helpdetails-categorysummary\">Apple Store에 반품</p>\n\n<p class=\"rf-helpdetails-categorysummary\">언제든 Apple 리테일 매장에 제품을 반품할 수 있습니다. Apple 스페셜리스트가 반품을 도와 드립니다. 환불 역시 같이 처리됩니다.</p>\n\n<a name=\"banks\"></a><h3 id=\"override-default\">은행 코드</h3>\n\n<ul type=\"circle\" class=\"rf-helpdetails-categorysummarylist\">\n<li class=\"rf-helpdetails-categorylistitem\"> 신용 카드로 결제하신 경우 업무일 기준으로 3일 이내에 고객님의 카드 발급 은행으로 환불 금액이 입금됩니다. </li>\n<li class=\"rf-helpdetails-categorylistitem\"> 계좌 이체로 결제하신 경우 다음과 같은 은행 상세 정보를 제공해 주셔야 합니다. \n<br />\n<br />주문 번호: \n<br />예금주 이름:\n<br />은행 이름:\n<br />은행 계좌 번호:\n<br />은행 코드:\n<br />이메일 주소: \n<br />환불 금액은 예금주 이름이 주문 시 작성한 청구 연락처의 이름과 동일한 경우에만 국내 은행 계좌로 송금할 수 있다는 점 참고하시기 바랍니다.보내주신 정보가 확인되면 업무일 기준으로 3일 이내에 고객님의 은행 계좌로 환불 금액이 입금됩니다.\n<br />\n<br />환불과 관련하여 궁금하신 점이 더 있으신 경우 은행에 문의해 주십시오.\n</li>\n<br />\n\n<li class=\"rf-helpdetails-categorylistitem\">\n<p class=\"rf-helpdetails-categorysummary\">은행 송금 환불의 경우,  아래 은행 코드 번호를 참조하십시오 </p>\n\n<TABLE BORDER=\"0\" cellspacing=\"10\" style=\"margin-top:-10px\">\n<TR>\n<TH style=\"font-weight:bold;width:75px\"> 은행 코드</TH>\n<TH style=\"font-weight:bold;padding-left:11em\" id=\"bank-name\">은행 명</TH>\n</TR>\n<TR>\n<TD>001</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">한국은행</TD>\n</TR>\n<TR>\n<TD>002</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">산업은행</TD>\n</TR>\n<TR>\n<TD>003</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">기업은행</TD>\n</TR>\n<TR>\n<TD>004</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">국민은행</TD>\n</TR>\n<TR>\n<TD>005</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">KEB 하나은행</TD>\n</TR>\n<TR>\n<TD>007</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">수협은행</TD>\n</TR>\n<TR>\n<TD>008</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">수출입은행</TD>\n</TR>\n<TR>\n<TD>011</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">농협은행</TD>\n</TR>\n<TR>\n<TD>020</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">우리은행</TD>\n</TR>\n<TR>\n<TD>023</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">스탠다드차타드은행(제일은행)</TD>\n</TR>\n<TR>\n<TD>027</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">시티은행</TD>\n</TR>\n<TR>\n<TD>081</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">KEB 하나은행</TD>\n</TR>\n<TR>\n<TD>088</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">신한은행</TD>\n</TR>\n<TR>\n<TD>031</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">대구은행</TD>\n</TR>\n<TR>\n<TD>032</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">부산은행</TD>\n</TR>\n<TR>\n<TD>034</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">광주은행</TD>\n</TR>\n<TR>\n<TD>035</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">제주은행</TD>\n</TR>\n<TR>\n<TD>037</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">전북은행</TD>\n</TR>\n<TR>\n<TD>039</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">경남은행</TD>\n</TR>\n<TR>\n<TD>045</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">새마을금고</TD>\n</TR>\n<TR>\n<TD>048</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">신협</TD>\n</TR>\n<TR>\n<TD>050</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">상호저축은행중앙회</TD>\n</TR>\n<TR>\n<TD>071</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">우체국</TD>\n</TR>\n<TR>\n<TD>054</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">Hongkong and Shanghai Banking Corporation Limited</TD>\n</TR>\n<TR>\n<TD>055</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">Deutsche Bank Aktiengesellschaft</TD>\n</TR>\n<TR>\n<TD>039</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">경남은행</TD>\n</TR>\n<TR>\n<TD>055</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">Deutsche Bank Aktiengesellschaft</TD>\n</TR>\n<TR>\n<TD>056</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">The Royal Bank of Scotland N.V.</TD>\n</TR>\n<TR>\n<TD>057</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">JPMorgan Chase Bank, National Association</TD>\n</TR>\n<TR>\n<TD>058</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">Mizuho Corporate Bank, Limited</TD>\n</TR>\n<TR>\n<TD>059</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">The Bank of Tokyo Mitsubishi UFJ, Ltd</TD>\n</TR>\n<TR>\n<TD>060</TD>\n<TD style=\"padding-left:11em\" id=\"bank-name\">Bank of America, National Association</TD>\n</TR>\n<TR>  \n<TD>090</TD>   \n<TD style=\"padding-left:11em\" id=\"bank-name\">KakaoBank of Korea Corp.</TD>\n</TR> \n</TABLE>\n\n</li>\n</ul>\n\n<a name=\"status\"></a><h3 class=\"rf-helpdetails-categorysummarytitle\">환불 상태</h3>\n\n<p class=\"rf-helpdetails-categorysummary\">온라인 <a href=\"https://secure.store.apple.com/kr/shop/order/list\" data-slot-name=\"MainSection\" data-feature-name=\"Astro Link\" data-display-name=\"AOS: OrderStatus\" target=\"_blank\">셀프 서비스</a>를 방문하십시오.</p>\n\n<a name=\"incorrect\"></a><h3 class=\"rf-helpdetails-categorysummarytitle\">제품 결함 또는 손상</h3>\n\n<p class=\"rf-helpdetails-categorysummary\">구입한 제품에 문제가 있거나 배송 중 손상된 경우, Apple 온라인 스토어 고객 서비스 080-330-8877(월요일~금요일, 오전 9시~오후 9시, 토요일~일요일, 오전 10시~오후 9시)로 문의하여 주십시오.</p>\n\n<a name=\"problems\"></a><h3 class=\"rf-helpdetails-categorysummarytitle\">제품 관련 문제</h3>\n\n<p class=\"rf-helpdetails-categorysummary\">새로 구입한 Apple 제품에 문제가 있는 경우에는, 온라인 <a href=\"https://www.apple.com/kr/support\" data-slot-name=\"MainSection\" data-feature-name=\"Astro Link\" data-display-name=\"AOS: support\">제품 지원</a>&nbsp;또는&nbsp;<a href=\"http://www.apple.com/support/contact/phone_contacts.html\">Apple 기술 지원</a>을 방문하십시오. 비Apple 제품에 문제가 있는 경우, 해당 제조업체의 보증 관련하여 해당 제조업체로 직접 문의하여 주십시오.</p>","id":"policy"},"even":true,"position":1,"last":false,"first":true},{"index":1,"value":{"link":null,"header":"사용 약관","description":"<p class=\"rf-helpdetails-categorysummary\">Apple의 모든 판매 및 환불 정책을 확인하려면, 아래 링크를 방문하십시오.</p>\n\n<p class=\"rf-helpdetails-categorysummary\"><button type=\"button\" data-ase-overlay=\"help-info-overlay\" data-ase-click=\"show\" class=\"rf-help-helpoverlaylink as-buttonlink\">Apple 개인 사용 약관</button>을 참조하십시오.</p>","id":"terms"},"even":false,"position":2,"last":true,"first":false}],"size":2}}};
+
+                                window.pageLevelData.helpTopSection = {"helpDetailsTopSection":"<div><h1 class=\"rf-helpdetails-headertitle\">반품 및 환불</h1>\n<p class=\"rf-helpdetails-headerdescription\">Apple은 고객께서 구입하신 새로운 제품에 대해 만족하셨기를 바랍니다. 제품이 만족스럽지 못하여 반품해야 할 경우, 다음을 참조하십시오.</p></div>"};
+
+                window.pageLevelData.eolOverlay = "<div class=\"redirect-notification\">\n    <h2 class=\"redirect-notification-header\"><span>무엇을 찾고 계십니까?</span></h2>\n    <div class=\"redirect-notification-body\"><span><p>죄송합니다. 찾으시는 페이지는 이제 apple.com에서 보실 수 없습니다. </p><p>하지만 몇 가지 관련 정보를 확인하실 수 있습니다.</p></span></div>\n    <button type=\"button\" class=\"redirect-notification-button button rect cancel\">\n        <span><span>확인</span></span>\n    </button>\n</div>";
+        </script>
+
+        <div id="help-info-overlay" hidden>
+            
+
+
+	
+
+
+		
+			<h2 class="rf-help-overlaytitle" id="helpOverlayTitle">판매 및 환불 이용 약관('약관')</h2>
+
+
+
+
+<div class="as-shopagreement-item">
+    
+<h2 class="as-shopagreement-subheading"><strong class="rf-helpdetails-strongtext">대한민국 판매 및 환불 정책</strong></h2>
+<p class="as-shopagreement-subcopy">Apple을 이용해 주셔서 감사합니다. Apple이 만든 멋진 제품을 구입해 주신 점에 대해 감사를 드립니다. Apple은 고객이 Apple Online Store에 방문하든 Apple 고객지원센터에 전화 연결을 하든 제품을 알아보고, 평가하고, 구매하는 내내 가치 있는 경험을 할 수 있기를 바랍니다. (고객과 Apple 모두의 입장에서 보다 쉽게 파악할 수 있도록 이 정책에서는 해당 주체를 'Apple Store'라고 지칭합니다.)
+</p><br />
+<p class="as-shopagreement-subcopy">다른 쇼핑 환경과 마찬가지로 Apple Store에는 거래에 적용되는 이용 약관이 있습니다. 여기서는 Apple 법적대리인이 허용하는 수준에서 간단하게 다룰 것입니다. 기억해야 할 주요 사항은 Apple Store에서 주문을 하거나 구매하는 것이 Apple의&nbsp;<a href="https://www.apple.com/kr/privacy" data-slot-name="OverlayContent" data-feature-name="Astro Link" data-display-name="AOS: privacy" target="_blank">개인정보 취급방침 <span class="visuallyhidden">(새 창에서 열림)</span></a>&nbsp;및 <a href="http://www.apple.com/legal/internet-services/terms/site.html" target="_blank">이용 약관<span class="visuallyhidden">(새 창에서 열림)</span></a>에 더불어 아래에 명시된 조건에 동의하는 것을 의미한다는 점입니다.</p>
+</div>
+
+<div class="as-shopagreement-item">
+<h2 class="as-shopagreement-subheading">표준 반품 정책</h2>
+<p class="as-shopagreement-subcopy">Apple은 기본적으로 고객이 Apple Store에서 구입하는 제품에 대해 만족감을 느낄 것이라고 굳게 믿고 있습니다. 사용자가 필요로 하는 제품을 디자인하고 만들기 위해 최선의 노력을 기울이고 있기 때문입니다. 하지만 때로는 제품이 기대와는 다를 수 있다는 점도 이해하고 있습니다. 드물겠지만 만일 제품이 기대와 다른 경우 Apple로부터 제품을 수령한 날짜로부터 14일 이내에 영수증을 동봉하셔서 반품 또는 교환을 접수하실 수 있습니다. Apple은 구입 당시 사용한 지불 방법으로 환불이나 교환을 진행해 드립니다. 제품은 최초 구입 상태 그대로, 포함되어 있던 모든 부품, 액세서리, 제품 상자를 동봉하여 반납하셔야 합니다. 이와 더불어 다음 사항에 유의해 주십시오.</p>
+<br />
+<ul class="as-shopagreement-list">
+<li class="as-shopagreement-listitem">제품은 원래 구입한 국가 또는 지역에서만 반품할 수 있습니다.</li>
+<li class="as-shopagreement-listitem">전자 소프트웨어 다운로드, 소프트웨어 Up-To-Date 프로그램 구독 상품 및 모든 Apple Developer 제품은 반품 대상에서 제외됩니다.</li>
+<li class="as-shopagreement-listitem">패키지 외부에 소프트웨어 사용권이 표시된 상태로 밀봉되어 있고 패키지를 개봉하기 전에 소프트웨어 사용권을 읽을 수 있는 경우, 개봉된 소프트웨어 제품은 반품이 되지 않습니다. 예외적으로 사용권 약관에 동의하지 않으면 Apple 브랜드 소프트웨어를 반품할 수 있지만 고객은 반품된 소프트웨어 사본을 보유하거나 사용할 수 없습니다.</li>
+<li class="as-shopagreement-listitem">Apple은 분실 또는 도난 시 제품을 보호할 수 있는 보안 기능을 제공합니다. &nbsp;이러한 기능이 활성화되어 있고 해당 휴대폰을 소유한 사람이 이 기능을 비활성화할 수 없는 경우 Apple은 반품 또는 교환을 거부할 수 있습니다.</li>
+
+<li class="as-shopagreement-listitem">Apple Store에서 구입한 제품을 반품하는 방법에 대한 전체적인 세부 정보는 <a href="/kr/shop/help/returns_refund" data-slot-name="OverlayContent" data-feature-name="Astro Link" data-display-name="AOS: help/returns_refund" target="_blank">반품 및 환불 <span class="visuallyhidden">(새 창에서 열림)</span></a> 페이지를 방문해 주십시오.</li>
+</ul>
+</div>
+
+
+
+<div class="as-shopagreement-item">
+<h2 class="as-shopagreement-subheading">iPhone 및 iPad 반품 – 무선 서비스 취소</h2>
+<p class="as-shopagreement-subcopy">이동통신사는 각각 다른 서비스 취소 정책을 보유하고 있습니다. iPhone이나 iPad를 반품해도 무선 계정이 자동으로 취소되거나 재설정되지 않을 수도 있습니다. 고객은 고객의 무선 서비스 계약 및 무선 계정과 관련된 해당 요금에 대한 책임이 있습니다.  <strong class="rf-helpdetails-strongtext">자세한 내용은 고객님이 사용하시는 이동통신사에 문의해 주십시오. </strong></p>
+</div>
+
+<div class="as-shopagreement-item">
+<h2 class="as-shopagreement-subheading">Apple Watch 반품</h2>
+<p class="as-shopagreement-subcopy">Apple Watch Edition은 Apple의 외부 시설에서의 조사를 통과한 후 아무런 손상이나 사용 흔적 없이 최초 구입 상태 그대로인 것으로 확인된 경우에만 반품 또는 교환이 가능합니다. 반품한 제품이 원래의 상태를 유지하고 있는 경우에는 업무일 기준 3일 내에 구입 당시 이용한 지불 방법에 따라 계좌 이체 또는 직불/신용카드로 환불 중 하나의 형태로 반품이 처리됩니다.</p>
+</div>
+
+<div class="as-shopagreement-item">
+<h2 class="as-shopagreement-subheading">추가 Apple 제품 약관</h2>
+<p class="as-shopagreement-subcopy">Apple 제품의 구입 및 사용에는 다음 페이지에 있는 추가 이용 약관이 적용됩니다.  <a href="https://www.apple.com/kr/legal/sla" data-slot-name="OverlayContent" data-feature-name="Astro Link" data-display-name="AOS: www.apple.com/kr/legal/sla" target="_blank">https://www.apple.com/kr/legal/sla/ <span class="visuallyhidden">(새 창에서 열림)</span></a> 및 
+    <a href="https://www.apple.com/kr/legal/warranty" data-slot-name="OverlayContent" data-feature-name="Astro Link" data-display-name="AOS: www.apple.com/kr/legal/warranty" target="_blank">
+https://www.apple.com/kr/legal/warranty/
+<span class="visuallyhidden">(새 창에서 열림)</span>
+</a>.</p>
+<br />
+<p class="as-shopagreement-subcopy">iPhone의 소프트웨어를 무단으로 개조하는 행위는 iPhone 소프트웨어 사용권 계약을 위반하는 것입니다. 흔히 iPhone을 무단으로 개조하는 것을 두고 '탈옥'(jail-breaking)이라고 말합니다. 이 용어 중에 두 번째 단어인 'breaking'(고장)에 특히 주목해야 합니다. 바로 이 때문에 Apple에서는 무단 개조를 삼갈 것을 강력하고 단호하게 권고하고 있습니다. 무단 개조 행위를 해서는 안 됩니다. 소프트웨어 무단 개조로 인해 iPhone을 사용할 수 없게 되는 경우 수리에 보증이 적용되지 않습니다.</p>
+</div>
+
+<div class="as-shopagreement-item">
+<h2 class="as-shopagreement-subheading">가격 및 가격 인하/시정 조치</h2>
+<p class="as-shopagreement-subcopy">Apple은 언제든 Apple Store에 표시되는 제품의 가격을 변경할 권리를 가지며 의도와는 달리 발생할 수 있는 가격 책정 오류를 시정할 수 있습니다. 가격 및 판매세에 대한 추가 정보는&nbsp;<a href="/kr/shop/help/payments" data-slot-name="OverlayContent" data-feature-name="Astro Link" data-display-name="AOS: help/payments" target="_blank">지불 <span class="visuallyhidden">(새 창에서 열림)</span></a>&nbsp;페이지에서 확인할 수 있습니다.
+</p><br />
+<p class="as-shopagreement-subcopy">고객이 제품을 수령한 날로부터 14일 이내에 해당 Apple 제품의 가격이 인하된 경우 고객은 Apple 고객지원센터(080-330-8877)에 연락하여 결제한 금액과 현재 판매 가격 간의 차액에 대해 환불이나 크레딧을 요청할 수 있습니다. 환불이나 크레딧을 받으려면 가격이 변경된 날짜로부터 14일 이내에 Apple에 연락해야 합니다. 특별 세일 이벤트와 같이 한시적으로 적용되는 가격 인하는 예외라는 점에 유의하십시오.
+</p><br />
+
+<p class="as-shopagreement-subcopy">가격 보호는 한 특정 제품에 한하여 최대 10개까지 사용할 수 있습니다. 또한 가격 보호에 대한 요청이 있을 시 Apple은 고객이 제품을 직접 가지고 있거나 제품에 대한 소유권이 있다는 증명을 하도록 요청할 수 있습니다.</p>
+<p>가격은 대한민국 원화로 표시됩니다. 국제 Visa, MasterCard, JCB 또는 Diners 신용 카드로 주문 내역을 지불하는 경우 구입 가격은 환율에 따라 변동될 수 있다는 점에 유의해 주십시오. 또한 은행 또는 신용 카드 회사에서 주문에 대해 외환 거래 수수료를 청구할 수도 있으며 이로 인해 전체 구입 비용이 증가할 수 있습니다. 이러한 수수료에 대한 내용은 은행 또는 신용 카드 회사에 문의해 주십시오.</p>
+</div>
+
+<div class="as-shopagreement-item">
+<h2 class="as-shopagreement-subheading">온라인 및 콜 센터 구입에 주문 승인/확인</h2>
+<p class="as-shopagreement-subcopy">Apple은 단독 재량에 따라 주문을 거부하거나 취소하거나 주문 수량을 제한할 수 있습니다. 또한 Apple은 주문을 승인하거나 처리하기 전에 추가적으로 필요한 정보를 요청할 수도 있습니다. 온라인이나 콜 센터에서 주문을 받으면 이메일 주문 확인서를 보내 드립니다. 그러나 주문 확인서는 Apple이 주문을 승인했다는 의미가 아니며 제품을 판매한다는 확인의 의미도 아닙니다. 고객의 주문을 받았다는 확인의 의미만 있습니다. Apple Store는 고객의 주문을 받은 이후에 어떤 이유로든 주문을 승인하거나 거절할 수 있는 권리를 갖습니다. 고객이 이미 청구한 주문을 Apple이 취소하는 경우 Apple은 해당 청구 금액을 환불해 드립니다.</p>
+</div>
+
+<div class="as-shopagreement-item">
+<h2 class="as-shopagreement-subheading">출고 및 배송</h2>
+<p class="as-shopagreement-subcopy"> <a href="/kr/shop/help/shipping_delivery" data-slot-name="OverlayContent" data-feature-name="Astro Link" data-display-name="AOS: help/shipping_delivery" target="_blank">배송 <span class="visuallyhidden">(새 창에서 열림)</span></a>&nbsp;페이지를 검토하여 Apple Store에서 구입한 제품의 수령 방법 및 시기에 대해 알아보시기 바랍니다. Apple 시설 외부로 제품 배송이 시작되면 Apple의 통제를 벗어나는 여러 가지 사건이 주문한 제품의 실제 배송에 영향을 줄 수 있으므로 Apple은 지연 배송에 대해 책임을 지지 않습니다. 하지만 Apple은 원활한 배송을 보장하기 위해 최선을 다할 것입니다.</p>
+<p class="as-shopagreement-subcopy">Apple은 고객이 Apple Store에서 구입한 제품의 발송을 관리하며, 해당 제품의 손실 또는 손상 위험에 대한 책임 및 제품의 소유권은 고객 또는 고객이 지정한 위임인이 제품의 물리적 점유권을 획득하는 순간 고객에게 이전됩니다. 배송과 관련하여 문제가 있는 경우 Apple에 문의하십시오.</p>
+</div>
+
+<div class="topic">
+			<h2 class="as-shopagreement-subheading">매장 픽업 및 반품</h2>
+			<p class="as-shopagreement-subcopy">Online Store에 재고가 있는 대부분의 Apple 제품은 매장 픽업이 가능합니다. 하지만 특정 제품 및 결제 방식의 경우 매장 픽업이 불가능할 수 있습니다. 고객 본인 또는 고객이 지정한 사람만 구입한 제품을 픽업할 수 있습니다. 픽업할 때는 정부에서 발급한 사진이 있는 신분증과 주문 번호가 필요합니다. Apple은 주문이 준비되면 제품을 언제까지 픽업해야 하는지 날짜를 알려드립니다. 또한 고객이 픽업을 잊었을 경우에 대비하여 1~2회의 알림을 보내드립니다. 알림을 받으면 7일 내에 픽업하세요. 7일 내에 제품을 픽업하지 않으면 주문이 자동으로 취소됩니다. 주문을 픽업해가지 않는 경우 Apple이 해당 주문을 취소할 수 있습니다. 매장 픽업에 대한 자세한 내용은 <a href="/kr/shop/help/shipping_delivery" data-slot-name="OverlayContent" data-feature-name="Astro Link" data-display-name="AOS: help/shipping_delivery" target="_blank">배송 및 픽업</a>을 참고하세요.</p>
+
+</div>
+
+<div class="topic">
+			<h2 class="as-shopagreement-subheading">픽업 연락처</h2>
+
+			<p class="as-shopagreement-subcopy">매장 픽업을 선택하는 경우 제품을 대신 픽업할 제3자를 지정할 수 있습니다. 이 제3자의 이름과 이메일 주소를 제공해야 합니다. 특정 제품 및 결제 방식의 경우 제3자에 의한 매장 픽업이 불가능할 수도 있습니다. 제3자가 픽업하려면 정부에서 발급한 사진이 있는 신분증과 주문 번호가 필요합니다. Apple은 제3자가 제품을 픽업해 간 후의 행동에 대해서는 책임을 지지 않습니다.</p>
+
+</div>
+
+<div class="as-shopagreement-item">
+<h2 class="as-shopagreement-subheading">일반 소비자 한정 판매</h2>
+<p class="as-shopagreement-subcopy">Apple Store는 최종 사용자 고객에게만 제품을 판매하고 배송하며, 재판매 목적으로 제품을 구입한다고 의심되는 경우 주문을 거부하거나 취소할 권리가 있습니다.</p>
+</div>
+
+<div class="as-shopagreement-item">
+<h2 class="as-shopagreement-subheading">대한민국 국내 배송</h2>
+    <p>Apple에서 온라인으로 구입한 제품은 대한민국 내 주소로만 배송되며 대한민국과 외국 수출 통제법 및 규정의 적용을 받습니다. Apple은 화물 운송업체로 제품을 배송하지 않습니다. 이러한 수출법과 규정을 준수하여 제품을 구입, 판매, 수출, 재수출, 양도 및 사용해야 합니다.&nbsp;대한민국 외 지역에서 온라인으로 Apple 제품을 구입하려면 <a href="/kr/shop/browse/open/country_selector" data-slot-name="OverlayContent" data-feature-name="Astro Link" data-display-name="AOS: open/country_selector" target="_blank">여기를 클릭</a>하여 해외 매장 정보를 확인해 주십시오.</p>
+</div>
+
+<div class="as-shopagreement-item">
+<h2 class="as-shopagreement-subheading">제품 구입 가능 여부 및 제한</h2>
+<p class="as-shopagreement-subcopy">Apple은 일부 제품의 인기 및/또는 공급의 제약을 고려하여 구입할 수 있는 제품의 수량을 제한해야 할 수 있습니다. 하지만 Apple이 가능한 한 빠르게 제품을 만들어 내고 있다는 점은 믿어 주십시오. Apple은 고객이 주문한 이후에도 언제든 구입 가능 수량을 변경할 수 있는 권리를 가집니다. 또한 Apple에서 주문을 확인했지만 주문한 제품을 공급할 수 없다는 사실을 알게 되는 경우가 있습니다. 고객이 주문한 제품을 공급할 수 없는 경우 Apple은 주문을 취소하고 구매 가격을 전액 환불해 드립니다.</p>
+</div>
+
+<div class="as-shopagreement-item">
+<h3 class="as-help-helpoverlaysubtitle">
+	구입 수량
+</h3>
+<p class="as-help-helpoverlaysummary">
+	Apple 교육 할인 스토어 이용 자격이 있는 분들은 연간 다음 수량만큼 제품을 구입하실 수 있습니다. 일부 제품에는 교육 할인가가 적용되지 않을 수 있습니다.
+</p>
+<ul class="as-help-helpoverlaylist">
+	<li class="as-help-helpoverlaylistitem">데스크탑: 연간 1대</li>
+	<li class="as-help-helpoverlaylistitem">Mac mini: 연간 1대</li>
+	<li class="as-help-helpoverlaylistitem">MacBook: 연간 1대</li>
+	<li class="as-help-helpoverlaylistitem">디스플레이: 연간 1대</li>
+	<li class="as-help-helpoverlaylistitem">iPad: 연간 2대</li>
+	<li class="as-help-helpoverlaylistitem">Apple Watch: 교육 할인가가 적용되는 Apple Watch 연간 1개</li>
+	<li class="as-help-helpoverlaylistitem">액세서리: 교육 할인가가 적용되는 액세서리 연간 2개</li>
+</ul>
+</div>
+
+
+		
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+ <script crossorigin="anonymous">dciddstr = '6cc3a6831abbf7de89ff2c5910b47bfd838d32558e73127f5e9848e3e0f281a87f1c40382b9e94caf7599924503aa4632f41a2883564ece5dc1a37c460ad93d36291afe4f0f967d6c8dcec1938f2a28b5431f2f5b5baaf1a6fe0903444e8bc3aa28f57bab60d840ac4e56dafe23e2626c9bf9d318d386e05f6305148c350431f32cf710fb57ff4ed8d3d3014cb3392a12083c3a1683db971abf9f43497d403e3c7a1adba272b4f2b2128f8776430eccf9a0cc99c476dfe63c0c8f2da7e14252dfc47c473b9de35453c8b70503706e2df48f06e7c8f354e6a93d08d3fb3bb8ae38d5831b6b136feca234f1ee711cbbf6bfae50d644aac05adc63ae5b57b18fc87c72a144023e643fffdba97d86e4188c7b61265306f93ca11097f82a8e6a46ec6e4a0a7ca24592f521fd0243e02d74e95fddc9777b649ccc71c77640a2117fbf48c75f3b842cd4cdbae0a9c8f9d107bfdd78a35b8333c47fd855b18976c1413b2ace452fe7c13767c63d8ae6b3be9e4a0493a9f7138df642b3b7667f119d2f5748e687801bf3395c9cc60e00adc249d519fd1110e6a86d34a3ecba397a518ca368de5e8bf987e3febfeb67734043d9a512192c5ca2e52e32b732e4e72cb40a5ea024b55f880d5194e5a9b6887b7500b5d2cc2b0b893d2eb52bb0c7909ae430541c93006e2bf711ff70be2a2c357122eee74691c0d7c18dc3a8134205d99f8fc3968b38929569e4f39a64dd49f4cca58727669fb00107eb8ca41dfe4035ec255fa215e12f8bc836eb2199f1de659891698d70942ae43b10c02de11d67aa6daee0c8177e2cff2a9844384090a98e4c272451750c02304ec709742790318ebdd7d193a38eb3abdbf39fbfdcde1c43d542089c6f2f79dbfa1b9e52bf7b4dd469a2101551c5e38a89c5b3b5ddb3c95a6cdf0575c136bc476fa9e036dbfc4a675de8d1b5e5c2d01fe65ace919cc26b8b953fec15667878af8fc056e83';</script> 
+
+
+
+
+        <div id="portal"></div>
+    </body>
+</html>
