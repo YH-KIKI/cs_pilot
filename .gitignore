@@ -230,3 +230,7 @@ data/runtime/
 app/static/
 .env.*
 !.env.example
+
+# Personal Python lessons and exercises stay local; keep the shared learning rules.
+/docs/learning/*
+!/docs/learning/README.md
