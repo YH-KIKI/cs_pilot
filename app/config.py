@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     openai_model: str = "gpt-6-luna"
     openai_embedding_model: str = "text-embedding-3-small"
     orders_db_path: Path = ROOT / "data/runtime/orders.sqlite3"
+    rag_allow_api: bool = False
 
     @property
     def db_path(self) -> Path:

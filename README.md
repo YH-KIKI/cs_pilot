@@ -14,11 +14,13 @@ React + TypeScript + Vite / Python 3.12 + FastAPI / SQLite / LangChain + LangGra
 - 정책 원문 3페이지 수집·검수, 조건/예외를 보존한 11규칙 묶음
 - 고정 기준일의 평가 질문 24개와 기대 결과
 - 상담 API 계약(Pydantic·Zod·OpenAPI), 6상태 예시 및 계약 검사
+- 규칙 단위 청킹·임베딩 캐시·Chroma 검색·출처와 관련 조건 반환
+- 실제 정책 벡터 11개와 검색 평가, 고정 벡터 내보내기·API 없는 복원
 
-**1일차 범위는 완료했습니다. RAG 적재·검색·LangGraph 상담 흐름·AI 답변은 다음 단계입니다.**
+**2일차 RAG 기반을 구현했습니다. LangGraph 상담 흐름·AI 답변·상담 화면 연결은 다음 단계입니다.**
 `POST /api/consultations`는 현재 계약만 제공하며 유효 입력에도 명시적으로 501을 반환합니다.
 가상 주문만 조회하며 실제 취소·환불·메시지 발송은 하지 않습니다.
-현재 실행과 테스트는 OpenAI API를 호출하지 않고 비용을 사용하지 않습니다.
+기본 실행과 자동 테스트는 API를 호출하지 않습니다. 실제 신규 질문 임베딩은 키와 명시적 API 허용이 필요합니다. 첫 실제 검색 평가는 완료했으며 [결과와 한계](docs/evaluation.md)를 확인하세요.
 
 ## Windows 최초 설치
 
@@ -113,6 +115,8 @@ docker run --rm -p 8000:8000 cs-pilot
 Docker/원격 배포 검증 여부는 [환경 검증 기록](docs/environment.md)을 확인하세요.
 
 ## 학습 자료
+
+- [RAG 구성과 API 없는 검증](docs/rag.md)
 
 - [Git 운영 규칙](docs/git-workflow.md) · [에이전트 작업 지침](AGENTS.md)
 - [일차별 개발 기록](docs/devlog/README.md) · [주요 판단·문제 해결](docs/decisions.md)

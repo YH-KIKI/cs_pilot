@@ -1,0 +1,15 @@
+{
+  "format_version": "policy-vectors-v1",
+  "corpus_version": "apple-kr-20261023-v1",
+  "chunking_version": "rule-group-v1",
+  "chunks_sha256": "73550f9f7b8a2a5a1330c7b378b9326d5105b5efd4a8c9ce90bc33a69a31c67c",
+  "spec": {
+    "provider": "openai",
+    "model": "text-embedding-3-small",
+    "dimensions": 1536
+  },
+  "fingerprint": "e6e7f6497f032f682ed69317037035eb42a7fb087882c6922b6b5aded7b45ebf",
+  "chunk_count": 11,
+  "vectors_sha256": "d1f1d75740241bf7b30981abb33273ca02731515b03ea48308660e159b3844fd",
+  "distance_metric": "cosine"
+}

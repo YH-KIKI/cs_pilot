@@ -1,0 +1,10 @@
+{
+  "restored_documents": 11,
+  "same_cases_and_order": true,
+  "evaluated_cases": 14,
+  "new_query_vectors": 0,
+  "backend_batches": 0,
+  "document_restore_requires_key": false,
+  "query_cache_note": "14 existing query vectors reused locally; new queries require embedding API",
+  "vectors_sha256": "d1f1d75740241bf7b30981abb33273ca02731515b03ea48308660e159b3844fd"
+}

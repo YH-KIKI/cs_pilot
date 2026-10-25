@@ -1,0 +1,8 @@
+{
+  "corpus_version": "apple-kr-20261023-v1",
+  "chunking_version": "rule-group-v1",
+  "chunks_sha256": "73550f9f7b8a2a5a1330c7b378b9326d5105b5efd4a8c9ce90bc33a69a31c67c",
+  "chunk_count": 11,
+  "curated_sha256": "b163fdea93b57bdb0de47b478d1a2db715c3261d0db08ec86b590e4abe32fe46",
+  "stage": "prepared_no_vectors"
+}

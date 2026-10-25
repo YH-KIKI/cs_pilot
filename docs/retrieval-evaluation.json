@@ -1,0 +1,316 @@
+{
+  "corpus_version": "apple-kr-20261023-v1",
+  "seed_version": "2026-10-22-v1",
+  "reference_time": "2026-10-22T12:00:00+09:00",
+  "model": "text-embedding-3-small",
+  "dimensions": 1536,
+  "index_fingerprint": "e6e7f6497f032f682ed69317037035eb42a7fb087882c6922b6b5aded7b45ebf",
+  "top_k": 4,
+  "evaluated_cases": 14,
+  "seed_recall_at_4": 0.9642857142857143,
+  "expanded_recall_at_4": 1.0,
+  "negative_queries_and_agent_behavior": "not_assessed_by_recall",
+  "cases": [
+    {
+      "case_id": "P01",
+      "expected": [
+        "shipping-options"
+      ],
+      "seed_groups": [
+        "shipping-options",
+        "shipping-eta",
+        "order-tracking",
+        "shipping-estimates"
+      ],
+      "expanded_groups": [
+        "shipping-options",
+        "shipping-eta",
+        "order-tracking",
+        "shipping-estimates"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "P02",
+      "expected": [
+        "order-cancellation"
+      ],
+      "seed_groups": [
+        "order-cancellation",
+        "order-status",
+        "returns-damage",
+        "order-tracking"
+      ],
+      "expanded_groups": [
+        "order-cancellation",
+        "order-status",
+        "returns-damage",
+        "order-tracking"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "P03",
+      "expected": [
+        "returns-process",
+        "returns-standard"
+      ],
+      "seed_groups": [
+        "returns-damage",
+        "returns-process",
+        "returns-standard",
+        "order-status"
+      ],
+      "expanded_groups": [
+        "returns-damage",
+        "returns-process",
+        "returns-standard",
+        "order-status"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "P04",
+      "expected": [
+        "shipping-damage",
+        "returns-damage"
+      ],
+      "seed_groups": [
+        "returns-damage",
+        "shipping-damage",
+        "order-tracking",
+        "returns-process"
+      ],
+      "expanded_groups": [
+        "returns-damage",
+        "shipping-damage",
+        "order-tracking",
+        "returns-process",
+        "returns-standard"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "O01",
+      "expected": [
+        "order-cancellation"
+      ],
+      "seed_groups": [
+        "order-cancellation",
+        "order-status",
+        "order-tracking",
+        "shipping-options"
+      ],
+      "expanded_groups": [
+        "order-cancellation",
+        "order-status",
+        "order-tracking",
+        "shipping-options"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "O02",
+      "expected": [
+        "order-cancellation"
+      ],
+      "seed_groups": [
+        "order-cancellation",
+        "order-status",
+        "shipping-options",
+        "returns-damage"
+      ],
+      "expanded_groups": [
+        "order-cancellation",
+        "order-status",
+        "shipping-options",
+        "returns-damage"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "O03",
+      "expected": [
+        "order-cancellation"
+      ],
+      "seed_groups": [
+        "order-cancellation",
+        "returns-damage",
+        "returns-process",
+        "order-status"
+      ],
+      "expanded_groups": [
+        "order-cancellation",
+        "returns-damage",
+        "returns-process",
+        "order-status",
+        "returns-standard"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "O04",
+      "expected": [
+        "shipping-estimates",
+        "order-tracking"
+      ],
+      "seed_groups": [
+        "shipping-eta",
+        "shipping-estimates",
+        "order-tracking",
+        "order-status"
+      ],
+      "expanded_groups": [
+        "shipping-eta",
+        "shipping-estimates",
+        "order-tracking",
+        "order-status"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "O05",
+      "expected": [
+        "returns-process",
+        "returns-standard"
+      ],
+      "seed_groups": [
+        "returns-damage",
+        "returns-process",
+        "returns-standard",
+        "order-cancellation"
+      ],
+      "expanded_groups": [
+        "returns-damage",
+        "returns-process",
+        "returns-standard",
+        "order-cancellation"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "O07",
+      "expected": [
+        "returns-process",
+        "returns-standard"
+      ],
+      "seed_groups": [
+        "returns-process",
+        "returns-damage",
+        "order-cancellation",
+        "returns-standard"
+      ],
+      "expanded_groups": [
+        "returns-process",
+        "returns-damage",
+        "order-cancellation",
+        "returns-standard"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "O08",
+      "expected": [
+        "returns-process",
+        "returns-standard"
+      ],
+      "seed_groups": [
+        "returns-damage",
+        "returns-process",
+        "order-cancellation",
+        "order-tracking"
+      ],
+      "expanded_groups": [
+        "returns-damage",
+        "returns-process",
+        "order-cancellation",
+        "order-tracking",
+        "returns-standard"
+      ],
+      "seed_recall_at_4": 0.5,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "O09",
+      "expected": [
+        "returns-standard"
+      ],
+      "seed_groups": [
+        "returns-process",
+        "returns-damage",
+        "returns-standard",
+        "order-status"
+      ],
+      "expanded_groups": [
+        "returns-process",
+        "returns-damage",
+        "returns-standard",
+        "order-status"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "O10",
+      "expected": [
+        "returns-standard"
+      ],
+      "seed_groups": [
+        "returns-standard",
+        "returns-process",
+        "returns-damage",
+        "order-cancellation"
+      ],
+      "expanded_groups": [
+        "returns-standard",
+        "returns-process",
+        "returns-damage",
+        "order-cancellation"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    },
+    {
+      "case_id": "F01",
+      "expected": [
+        "order-cancellation"
+      ],
+      "seed_groups": [
+        "order-cancellation",
+        "returns-damage",
+        "order-status",
+        "returns-process"
+      ],
+      "expanded_groups": [
+        "order-cancellation",
+        "returns-damage",
+        "order-status",
+        "returns-process",
+        "returns-standard"
+      ],
+      "seed_recall_at_4": 1.0,
+      "expanded_recall_at_4": 1.0
+    }
+  ],
+  "cache_new_vectors_this_run": 25,
+  "backend_batches_this_run": 15,
+  "executed_at": "2026-10-25T21:37:39.530651+09:00",
+  "evaluation_scope": "positive policy retrieval only; no LLM answers or agent behavior",
+  "actual_token_usage_and_cost": "not_collected; backend batches are not a billing measurement",
+  "repeat_without_api": {
+    "same_results": true,
+    "new_chunks": 0,
+    "new_vectors": 0,
+    "backend_batches": 0
+  }
+}
