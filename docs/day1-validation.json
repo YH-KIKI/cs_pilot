@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-22T15:45:51.083500+00:00",
+  "documents": 3,
+  "rule_groups": 11,
+  "evaluation_cases": 24,
+  "reference_time": "2026-10-22T12:00:00+09:00",
+  "corpus_version": "apple-kr-20261023-v1",
+  "seed_version": "2026-10-22-v1",
+  "policy_provenance_and_dataset_consistency": "passed",
+  "retrieval_accuracy": "not_run_day2",
+  "agent_behavior": "not_run_not_implemented",
+  "paid_api_calls": 0
+}

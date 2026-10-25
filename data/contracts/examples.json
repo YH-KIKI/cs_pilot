@@ -1,0 +1,326 @@
+{
+  "fixture_only": true,
+  "note": "계약 검증 예시이며 실제 AI 실행 결과가 아닙니다.",
+  "requests": [
+    {
+      "question": "표준 배송비를 알려주세요.",
+      "order_id": null,
+      "target_item_id": null
+    },
+    {
+      "question": "반품할 수 있나요?",
+      "order_id": "A05",
+      "target_item_id": "01"
+    }
+  ],
+  "responses": [
+    {
+      "contract_version": "1.0",
+      "request_id": "fixture-answered",
+      "reference_time": "2026-10-22T12:00:00+09:00",
+      "status": "answered",
+      "order_result": {
+        "kind": "not_requested"
+      },
+      "sources": [
+        {
+          "evidence_id": "src-1",
+          "document_id": "apple-kr-shipping",
+          "rule_group_id": "shipping-options",
+          "chunk_id": null,
+          "title": "배송 및 픽업",
+          "heading": "배송 옵션",
+          "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+          "collected_at": "2026-10-22T15:32:45.019279Z",
+          "effective_date": null,
+          "excerpt": "표준 배송은 모든 온라인 주문에 대해 무료입니다. 주문에 포함된 제품 및 배송 주소에 따라 이용 가능한 배송 옵션 및 시간은 결제 단계에 표시됩니다."
+        }
+      ],
+      "applied_policies": [
+        {
+          "text": "표준 배송 안내를 적용합니다.",
+          "evidence_ids": [
+            "src-1"
+          ]
+        }
+      ],
+      "recommendation": {
+        "text": "표준 배송과 주문별 배송 옵션을 구분해 안내하세요.",
+        "evidence_ids": [
+          "src-1"
+        ]
+      },
+      "draft_reply": "표준 배송은 무료이며, 이용 가능한 배송 옵션은 주문 조건에 따라 확인해 주세요.",
+      "missing_fields": [],
+      "tool_events": [
+        {
+          "sequence": 1,
+          "duration_ms": 0,
+          "status": "success",
+          "result_summary": "계약 예시: 표준 배송 정책 근거",
+          "tool_name": "search_policy",
+          "input": {
+            "query": "표준 배송비",
+            "topic": "shipping"
+          },
+          "evidence_ids": [
+            "src-1"
+          ]
+        }
+      ]
+    },
+    {
+      "contract_version": "1.0",
+      "request_id": "fixture-needs-info",
+      "reference_time": "2026-10-22T12:00:00+09:00",
+      "status": "needs_information",
+      "order_result": {
+        "kind": "found",
+        "order": {
+          "order_id": "A05",
+          "is_synthetic": true,
+          "store": "Apple KR Online Store (demo)",
+          "purchase_country": "KR",
+          "ordered_at": "2026-10-01T09:00:00+09:00",
+          "payment_method": "card",
+          "card_brand": "Visa",
+          "items": [
+            {
+              "item_id": "01",
+              "product_name": "iPhone (demo)",
+              "product_type": "hardware",
+              "quantity": 1,
+              "status": "delivered",
+              "shipped_at": null,
+              "estimated_delivery_date": null,
+              "delivered_at": null,
+              "tracking_number": null,
+              "last_tracking_event": null,
+              "snapshot_at": "2026-10-22T12:00:00+09:00",
+              "condition": "unknown",
+              "components_complete": null,
+              "security_lock_disabled": null,
+              "return_requested_at": null
+            }
+          ]
+        },
+        "snapshot_at": "2026-10-22T12:00:00+09:00"
+      },
+      "sources": [],
+      "applied_policies": [],
+      "recommendation": {
+        "text": "추가 확인 후 안내하세요.",
+        "evidence_ids": []
+      },
+      "draft_reply": null,
+      "missing_fields": [
+        {
+          "field": "delivered_at",
+          "item_id": "01",
+          "question": "실제 수령일이 언제인가요?"
+        }
+      ],
+      "tool_events": [
+        {
+          "sequence": 1,
+          "duration_ms": 0,
+          "status": "success",
+          "result_summary": "계약 예시: 수령일 미확인",
+          "tool_name": "lookup_order",
+          "input": {
+            "order_id": "A05"
+          }
+        }
+      ]
+    },
+    {
+      "contract_version": "1.0",
+      "request_id": "fixture-not-found",
+      "reference_time": "2026-10-22T12:00:00+09:00",
+      "status": "order_not_found",
+      "order_result": {
+        "kind": "not_found",
+        "order_id": "A999"
+      },
+      "sources": [],
+      "applied_policies": [],
+      "recommendation": {
+        "text": "추가 확인 후 안내하세요.",
+        "evidence_ids": []
+      },
+      "draft_reply": null,
+      "missing_fields": [],
+      "tool_events": [
+        {
+          "sequence": 1,
+          "duration_ms": 0,
+          "status": "success",
+          "result_summary": "계약 예시: 주문 없음",
+          "tool_name": "lookup_order",
+          "input": {
+            "order_id": "A999"
+          }
+        }
+      ]
+    },
+    {
+      "contract_version": "1.0",
+      "request_id": "fixture-no-evidence",
+      "reference_time": "2026-10-22T12:00:00+09:00",
+      "status": "insufficient_evidence",
+      "order_result": {
+        "kind": "not_requested"
+      },
+      "sources": [],
+      "applied_policies": [],
+      "recommendation": {
+        "text": "추가 확인 후 안내하세요.",
+        "evidence_ids": []
+      },
+      "draft_reply": null,
+      "missing_fields": [],
+      "tool_events": [
+        {
+          "sequence": 1,
+          "duration_ms": 0,
+          "status": "success",
+          "result_summary": "계약 예시: 적용 근거 부족",
+          "tool_name": "search_policy",
+          "input": {
+            "query": "배송 지연 정액 보상",
+            "topic": "shipping"
+          },
+          "evidence_ids": []
+        },
+        {
+          "sequence": 2,
+          "duration_ms": 0,
+          "status": "success",
+          "result_summary": "계약 예시: 적용 근거 부족",
+          "tool_name": "search_policy",
+          "input": {
+            "query": "배송 지연 정액 보상",
+            "topic": "shipping"
+          },
+          "evidence_ids": []
+        }
+      ]
+    },
+    {
+      "contract_version": "1.0",
+      "request_id": "fixture-limit",
+      "reference_time": "2026-10-22T12:00:00+09:00",
+      "status": "limit_reached",
+      "order_result": {
+        "kind": "found",
+        "order": {
+          "order_id": "A04",
+          "is_synthetic": true,
+          "store": "Apple KR Online Store (demo)",
+          "purchase_country": "KR",
+          "ordered_at": "2026-10-20T09:00:00+09:00",
+          "payment_method": "card",
+          "card_brand": "MasterCard",
+          "items": [
+            {
+              "item_id": "01",
+              "product_name": "Mac (demo)",
+              "product_type": "hardware",
+              "quantity": 1,
+              "status": "shipped",
+              "shipped_at": "2026-10-21T10:00:00+09:00",
+              "estimated_delivery_date": "2026-10-23",
+              "delivered_at": null,
+              "tracking_number": "DEMO-A04-01",
+              "last_tracking_event": "가상 기록: 운송 중",
+              "snapshot_at": "2026-10-22T12:00:00+09:00",
+              "condition": "unknown",
+              "components_complete": null,
+              "security_lock_disabled": null,
+              "return_requested_at": null
+            }
+          ]
+        },
+        "snapshot_at": "2026-10-22T12:00:00+09:00"
+      },
+      "sources": [],
+      "applied_policies": [],
+      "recommendation": {
+        "text": "추가 확인 후 안내하세요.",
+        "evidence_ids": []
+      },
+      "draft_reply": null,
+      "missing_fields": [],
+      "tool_events": [
+        {
+          "sequence": 1,
+          "duration_ms": 0,
+          "status": "success",
+          "result_summary": "계약 예시: 출고됨",
+          "tool_name": "lookup_order",
+          "input": {
+            "order_id": "A04"
+          }
+        },
+        {
+          "sequence": 2,
+          "duration_ms": 0,
+          "status": "success",
+          "result_summary": "계약 예시: 적용 근거 부족",
+          "tool_name": "search_policy",
+          "input": {
+            "query": "배송 지연 정액 보상",
+            "topic": "shipping"
+          },
+          "evidence_ids": []
+        },
+        {
+          "sequence": 3,
+          "duration_ms": 0,
+          "status": "success",
+          "result_summary": "계약 예시: 적용 근거 부족",
+          "tool_name": "search_policy",
+          "input": {
+            "query": "배송 지연 정액 보상",
+            "topic": "shipping"
+          },
+          "evidence_ids": []
+        }
+      ]
+    },
+    {
+      "contract_version": "1.0",
+      "request_id": "fixture-system-error",
+      "reference_time": "2026-10-22T12:00:00+09:00",
+      "status": "system_error",
+      "order_result": {
+        "kind": "error",
+        "message": "계약 예시: DB 조회 오류"
+      },
+      "sources": [],
+      "applied_policies": [],
+      "recommendation": {
+        "text": "추가 확인 후 안내하세요.",
+        "evidence_ids": []
+      },
+      "draft_reply": null,
+      "missing_fields": [],
+      "tool_events": [
+        {
+          "sequence": 1,
+          "duration_ms": 0,
+          "status": "error",
+          "result_summary": "계약 예시: DB 오류",
+          "tool_name": "lookup_order",
+          "input": {
+            "order_id": "A05"
+          }
+        }
+      ]
+    }
+  ],
+  "not_implemented": {
+    "code": "not_implemented",
+    "message": "상담 실행은 아직 연결되지 않았습니다."
+  }
+}
