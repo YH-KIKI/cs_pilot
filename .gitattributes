@@ -4,5 +4,6 @@
 *.ps1 text eol=crlf
 *.sh text eol=lf
 *.json text eol=lf
+*.jsonl text eol=lf
 # Preserve byte-for-byte HTTP snapshots and their checksum metadata.
 data/policies/raw/** -text
