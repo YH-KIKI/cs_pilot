@@ -649,3 +649,150 @@ def test_repeated_empty_confirmation_is_not_automatically_answered():
     assert result.missing_fields == []
     assert result.tool_events == []
     assert len(states) == 4
+
+
+def recorded_f01(search_result=None):
+    report = json.loads((ROOT / "docs/agent-evaluation-v8-2026-10-30.json").read_text("utf-8"))
+    recorded = next(row for row in report["cases"] if row["case_id"] == "F01")
+    proposals = [NextAction.model_validate(row["proposal"]) for row in recorded["decisions"]]
+    groups = [source["rule_group_id"] for source in recorded["response"]["sources"]]
+    engine, states = make_engine(proposals, [search_result or policy_result(groups)])
+    return engine, states, recorded, proposals
+
+
+def test_recorded_f01_does_not_publish_the_model_generated_opposite_draft():
+    engine, states, recorded, proposals = recorded_f01()
+    result = engine.run(
+        ConsultationRequest(question=recorded["question"], order_id="A04"),
+        reference_time=REFERENCE,
+    )
+    assert "온라인 취소가 가능합니다" in recorded["response"]["draft_reply"]
+    assert result.status == "answered"
+    assert "온라인으로 취소할 수 없습니다" in result.draft_reply
+    assert "온라인 취소가 가능합니다" not in result.draft_reply
+    assert result.order_result.model_dump(mode="json") == recorded["response"]["order_result"]
+    assert result.sources == states[-1]["sources"]
+    assert len(states) == 3 and len(result.tool_events) == 2
+    assert engine.response_normalizations == ["answer.reviewed_online_cancellation_denial"]
+    assert proposals[-1].draft_reply == recorded["response"]["draft_reply"]
+
+
+@pytest.mark.parametrize("status", ["preparing", "shipped"])
+def test_blocked_online_cancellation_uses_reviewed_rule_for_single_target(status):
+    original = fetch_order("A01", ROOT / "data/runtime/orders.sqlite3").model_copy(deep=True)
+    original.order.items[0].status = status
+    proposal = answer(["order-cancellation"], requires_order=True)
+    proposal.draft_reply = "온라인으로 취소 가능합니다."
+    engine, _ = make_engine(
+        [
+            action("lookup_order", requires_order=True),
+            action("search_policy", query="취소"),
+            proposal,
+        ],
+        [policy_result(["order-cancellation"])],
+        lookup=lambda order_id: original,
+    )
+    result = run(engine, order_id="A01")
+    assert result.status == "answered"
+    assert "온라인으로 취소할 수 없습니다" in result.draft_reply
+    assert result.order_result == original
+    assert result.recommendation.evidence_ids == result.applied_policies[0].evidence_ids
+
+
+@pytest.mark.parametrize("changed_field", ["excerpt", "source_url", "chunk_id", "document_id"])
+def test_unmatched_policy_snapshot_does_not_authorize_a_fixed_cancellation_answer(changed_field):
+    searches = policy_result(["order-cancellation", "order-status"])
+    source = next(
+        hit.source for hit in searches.hits if hit.source.rule_group_id == "order-cancellation"
+    )
+    changed = str(getattr(source, changed_field)) + "-changed"
+    changed_source = PolicySource.model_validate({**source.model_dump(), changed_field: changed})
+    next(hit for hit in searches.hits if hit.source is source).source = changed_source
+    engine, _, recorded, _ = recorded_f01(searches)
+    result = run(engine, order_id="A04")
+    assert result.status == "insufficient_evidence"
+    assert result.draft_reply is None
+    assert result.applied_policies == []
+    assert result.order_result.model_dump(mode="json") == recorded["response"]["order_result"]
+    assert len(result.sources) == 2 and len(result.tool_events) == 2
+
+
+@pytest.mark.parametrize(
+    "topic,groups",
+    [
+        ("shipping", ["shipping-eta"]),
+        ("cancellation", ["order-status"]),
+    ],
+)
+def test_shipping_and_status_only_answers_are_not_replaced_by_cancellation_rule(topic, groups):
+    proposal = answer(groups, requires_order=True, topic=topic)
+    engine, _ = make_engine(
+        [
+            action("lookup_order", requires_order=True, topic=topic),
+            action("search_policy", query="상태", topic=topic),
+            proposal,
+        ],
+        [policy_result([*groups, "order-cancellation"])],
+    )
+    result = run(engine, order_id="A04")
+    assert result.status == "answered"
+    assert result.draft_reply == proposal.draft_reply
+    assert engine.response_normalizations == []
+
+
+def test_processing_cancellation_answer_is_not_converted_into_a_prohibition():
+    proposal = answer(["order-cancellation"], requires_order=True)
+    engine, _ = make_engine(
+        [
+            action("lookup_order", requires_order=True),
+            action("search_policy", query="취소"),
+            proposal,
+        ],
+        [policy_result(["order-cancellation"])],
+    )
+    result = run(engine, order_id="A01")
+    assert result.status == "answered"
+    assert result.draft_reply == proposal.draft_reply
+    assert engine.response_normalizations == []
+
+
+@pytest.mark.parametrize("target,constrained", [(None, False), ("01", False), ("02", True)])
+def test_mixed_order_only_constrains_an_explicit_blocked_target(target, constrained):
+    proposal = answer(["order-cancellation"], requires_order=True)
+    engine, _ = make_engine(
+        [
+            action("lookup_order", requires_order=True),
+            action("search_policy", query="취소"),
+            proposal,
+        ],
+        [policy_result(["order-cancellation"])],
+    )
+    result = run(engine, order_id="A06", target_item_id=target)
+    assert result.status == "answered"
+    if constrained:
+        assert "품목 02" in result.draft_reply
+        assert "온라인으로 취소할 수 없습니다" in result.draft_reply
+    else:
+        assert result.draft_reply == proposal.draft_reply
+        assert engine.response_normalizations == []
+    assert result.order_result == fetch_order("A06", ROOT / "data/runtime/orders.sqlite3")
+
+
+def test_cancellation_guard_does_not_bypass_invalid_citations():
+    engine, _, _, proposals = recorded_f01()
+    proposals[-1].applied_policies[0].evidence_ids.append("invented")
+    result = run(engine, order_id="A04")
+    assert result.status == "system_error"
+    assert result.draft_reply is None
+    assert engine.last_response_error["type"] == "ValidationError"
+    assert engine.response_normalizations == []
+
+
+def test_cancellation_guard_does_not_promote_information_or_evidence_shortage():
+    engine, _, _, proposals = recorded_f01()
+    proposals[-1].status = "insufficient_evidence"
+    proposals[-1].draft_reply = None
+    result = run(engine, order_id="A04")
+    assert result.status == "insufficient_evidence"
+    assert result.draft_reply is None
+    assert engine.response_normalizations == []

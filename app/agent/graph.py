@@ -6,6 +6,7 @@ from uuid import uuid4
 from langgraph.graph import END, START, StateGraph
 from pydantic import ValidationError
 
+from app.agent.cancellation import constrain_online_cancellation
 from app.agent.evidence import missing_related_rule_groups
 from app.agent.models import AgentState, NextAction
 from app.consultation_contract import (
@@ -359,7 +360,7 @@ class ConsultationEngine:
                 self.response_normalizations.append(
                     "status.insufficient_evidence_to_needs_information"
                 )
-            return ConsultationResponse(
+            response = ConsultationResponse(
                 request_id=state["request_id"],
                 reference_time=state["reference_time"],
                 status=status,
@@ -371,6 +372,14 @@ class ConsultationEngine:
                 missing_fields=decision.missing_fields,
                 tool_events=state["tool_events"],
             )
+            constrained = constrain_online_cancellation(response, state["request"])
+            if constrained is not response:
+                self.response_normalizations.append(
+                    "answer.reviewed_online_cancellation_denial"
+                    if constrained.status == "answered"
+                    else "answer.unmatched_cancellation_rule_withheld"
+                )
+            return constrained
         except (ValueError, AttributeError) as error:
             self.last_response_error = {
                 "type": type(error).__name__,

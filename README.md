@@ -20,8 +20,8 @@ React + TypeScript + Vite / Python 3.12 + FastAPI / SQLite / LangChain + LangGra
 **3일차에 LangGraph 기본 상담 흐름·상담 API·결과 화면을 연결했습니다.**
 `POST /api/consultations`는 실제 그래프를 실행해 여섯 상담 상태 중 하나를 반환합니다. 모델 판단은 4회, 도구 실행은 전체 3회(조회 1회·검색 2회)로 제한합니다.
 가상 주문만 조회하며 실제 취소·환불·메시지 발송은 하지 않습니다.
-최신 v8 마감 평가에서 23/24 구조 통과와 별개로 고객 초안의 반대 안내(F01)가 발견되어
-[PR #3](https://github.com/YH-KIKI/cs_pilot/pull/3)은 Draft이며 병합을 보류했습니다. [마감 결과·남은 문제](docs/day3-closeout-2026-10-30.md)
+최신 v8 전체 평가는 23/24 구조 통과이며, 별도로 발견한 F01의 반대 초안은 검수된 단일 취소 제한 범위에서 보강했습니다.
+O03과 최신 전체 재평가가 남아 [PR #3](https://github.com/YH-KIKI/cs_pilot/pull/3)은 Draft입니다. [F01 보강·한계](docs/f01-guard-2026-10-30.md), [마감 결과](docs/day3-closeout-2026-10-30.md)
 기본 실행과 자동 테스트는 API를 호출하지 않습니다. 실제 신규 질문 임베딩은 키와 명시적 API 허용이 필요합니다. 첫 실제 검색 평가는 완료했으며 [결과와 한계](docs/evaluation.md)를 확인하세요.
 
 ## Windows 최초 설치
