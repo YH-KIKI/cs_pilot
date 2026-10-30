@@ -20,6 +20,7 @@ React + TypeScript + Vite / Python 3.12 + FastAPI / SQLite / LangChain + LangGra
 **3일차에 LangGraph 기본 상담 흐름·상담 API·결과 화면을 연결했습니다.**
 `POST /api/consultations`는 실제 그래프를 실행해 여섯 상담 상태 중 하나를 반환합니다. 모델 판단은 4회, 도구 실행은 전체 3회(조회 1회·검색 2회)로 제한합니다.
 가상 주문만 조회하며 실제 취소·환불·메시지 발송은 하지 않습니다.
+**프로젝트 3일차(기본 상담 연결)와 4일차(통합 검증)는 완료**했으며 실제 작업 날짜는 2026-10-30~31입니다. 5·6일차의 선행 구현도 main에 반영했고, 미실행 검증/원격 배포는 [일차별 현황](docs/devlog/README.md)과 [단계별 진행 상태](docs/initial-design.md#milestone-status)에 따로 표시했습니다.
 F01의 반대 초안과 O03의 불필요한 동의 확인을 보강한 최신 v9 전체 평가에서 **24/24 구조 통과**를 확인했습니다.
 답변 24개를 읽어 검토했으며 설명 생략 등 남은 개선과 단일 실행의 한계를 [검토 기록](docs/agent-review-v9-2026-10-31.md)에 구분했습니다. 상담 흐름·검증·배포 시작 기반은 [PR #3](https://github.com/YH-KIKI/cs_pilot/pull/3)으로 main에 병합했습니다. [O03 보강·범위](docs/o03-fix-2026-10-31.md), [F01 보강·한계](docs/f01-guard-2026-10-30.md)
 기본 실행과 자동 테스트는 API를 호출하지 않습니다. 실제 신규 질문 임베딩은 키와 명시적 API 허용이 필요합니다. 첫 실제 검색 평가는 완료했으며 [결과와 한계](docs/evaluation.md)를 확인하세요.
