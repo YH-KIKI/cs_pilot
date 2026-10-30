@@ -31,4 +31,10 @@ dt { color: #768378; } dd { margin: 0; overflow-wrap: anywhere; }
 .future { border-top: 1px solid #e4e9e0; margin-top: 28px; padding-top: 12px; }
 .future p { font-size: 12px; color: #768378; line-height: 1.8; }
 footer { font-size: 10px; margin-top: 26px; text-align: right; }
+.consultation-result { font-size: 13px; line-height: 1.8; overflow-wrap: anywhere; }
+.consultation-result h3 { margin-top: 24px; }
+.consultation-result pre { white-space: pre-wrap; font-size: 11px; }
+.consultation-result details { border-top: 1px solid #e4e9e0; padding: 12px 0; }
+.consultation-result summary { cursor: pointer; }
+.consultation-result blockquote { margin: 12px 0; padding: 14px; background: #f3f6ef; white-space: pre-wrap; }
 @media (max-width: 740px) { main { padding: 30px 18px; } .workspace { grid-template-columns: 1fr; } h1 { font-size: 36px; } h1 span { font-size: 21px; } .panel { padding: 22px; } }

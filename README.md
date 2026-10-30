@@ -17,9 +17,11 @@ React + TypeScript + Vite / Python 3.12 + FastAPI / SQLite / LangChain + LangGra
 - 규칙 단위 청킹·임베딩 캐시·Chroma 검색·출처와 관련 조건 반환
 - 실제 정책 벡터 11개와 검색 평가, 고정 벡터 내보내기·API 없는 복원
 
-**2일차 RAG 기반을 구현했습니다. LangGraph 상담 흐름·AI 답변·상담 화면 연결은 다음 단계입니다.**
-`POST /api/consultations`는 현재 계약만 제공하며 유효 입력에도 명시적으로 501을 반환합니다.
+**3일차에 LangGraph 기본 상담 흐름·상담 API·결과 화면을 연결했습니다.**
+`POST /api/consultations`는 실제 그래프를 실행해 여섯 상담 상태 중 하나를 반환합니다. 모델 판단은 4회, 도구 실행은 전체 3회(조회 1회·검색 2회)로 제한합니다.
 가상 주문만 조회하며 실제 취소·환불·메시지 발송은 하지 않습니다.
+F01의 반대 초안과 O03의 불필요한 동의 확인을 보강한 최신 v9 전체 평가에서 **24/24 구조 통과**를 확인했습니다.
+답변 24개를 읽어 검토했으며 설명 생략 등 남은 개선과 단일 실행의 한계를 [검토 기록](docs/agent-review-v9-2026-10-31.md)에 구분했습니다. 최종 PR 검토·병합은 아직 진행하지 않아 [PR #3](https://github.com/YH-KIKI/cs_pilot/pull/3)은 Draft입니다. [O03 보강·범위](docs/o03-fix-2026-10-31.md), [F01 보강·한계](docs/f01-guard-2026-10-30.md)
 기본 실행과 자동 테스트는 API를 호출하지 않습니다. 실제 신규 질문 임베딩은 키와 명시적 API 허용이 필요합니다. 첫 실제 검색 평가는 완료했으며 [결과와 한계](docs/evaluation.md)를 확인하세요.
 
 ## Windows 최초 설치
@@ -36,6 +38,8 @@ powershell -ExecutionPolicy Bypass -File scripts/setup.ps1
 가상환경 활성화 없이 아래 명령을 사용할 수 있습니다.
 
 ## 실행
+
+실제 상담은 로컬 `.env`에서 `AGENT_ALLOW_API=true`, `RAG_ALLOW_API=true`로 명시적으로 켜고 백엔드를 재시작합니다. 기본값은 둘 다 false입니다. API 비활성에서는 상담 응답이 `system_error`로 종료됩니다. 정책 인덱스가 없으면 먼저 `python -m scripts.rag restore`로 복원하세요. [그래프·설정·검증 범위](docs/agent-flow.md)
 
 백엔드(프로젝트 루트):
 
@@ -102,19 +106,26 @@ Vite 빌드 자체는 TypeScript 타입 검사 성공을 뜻하지 않습니다.
 
 ## 배포
 
-Docker는 React 타입 검사·빌드와 SQLite 초기화를 먼저 수행합니다.
-최종 컨테이너는 FastAPI 한 서비스로 `/`, `/assets`, `/api`를 제공합니다.
-Render에서는 Docker 서비스를 선택하고 `OPENAI_API_KEY`는 나중에 서버 환경변수로 지정합니다.
-현재 단계에서는 키 없이 동작합니다. 컨테이너 시작 시 DB를 검증하며 매번 시드를 INSERT하지 않습니다.
+Docker는 React 타입 검사·빌드, 고정 SQLite 생성, 저장된 정책 벡터 11개의 Chroma 복원을 수행합니다.
+최종 컨테이너는 `python -m scripts.start`로 데이터와 UI를 확인한 뒤 FastAPI 한 서비스로
+`/`, `/assets`, `/api`를 제공합니다. 시작 준비에는 API 키나 재임베딩이 필요하지 않습니다.
+DB나 정책 자료가 다르면 덮어쓰지 않고 시작에 실패합니다. 비어 있으면 고정 자료에서 복원합니다.
+`PORT`를 반영하며 기본값은 8000입니다. 실제 상담은 서버에서 키와 두 API 허용값을 설정해야 합니다.
 
 ```powershell
 docker build -t cs-pilot .
-docker run --rm -p 8000:8000 cs-pilot
+docker run --rm -p 127.0.0.1:8001:8000 cs-pilot
 ```
 
-Docker/원격 배포 검증 여부는 [환경 검증 기록](docs/environment.md)을 확인하세요.
+위 예시는 기존 개발 서버와 분리한 8001 포트입니다.
+로컬 Docker 빌드·재시작·네트워크 없는 빈 런타임 복원을 검증했습니다. 원격 배포와 컨테이너의 실제
+AI 호출은 아직 검증하지 않았습니다. [배포 절차·설정·검증 범위](docs/deployment.md),
+[원본 검증 결과](docs/deployment-verification-2026-10-30.json)를 확인하세요.
 
 ## 학습 자료
+
+- [LangGraph 기본 상담 흐름](docs/agent-flow.md)
+- [단일 서비스 배포 준비](docs/deployment.md)
 
 - [RAG 구성과 API 없는 검증](docs/rag.md)
 

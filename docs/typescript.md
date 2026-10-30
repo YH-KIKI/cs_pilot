@@ -2,7 +2,7 @@
 
 현재 실제로 연결한 타입은 주문·품목·조회 결과·화면 상태·컴포넌트 props입니다.
 정책 출처·상담 AI 응답·도구 이벤트의 타입도 Pydantic/Zod 계약으로 추가했습니다.
-정책/AI 화면은 해당 기능 구현 시 이 타입을 props로 연결합니다. 계약 정의와 실제 기능 구현은 구분합니다.
+3일차에 ConsultationResponse를 ConsultationResult props로 연결했습니다. Zod 검증을 통과한 실제 응답만 결과 상태에 저장하고, 출처·AI 초안·추가 확인·도구 내역을 표시합니다. RequestState의 success 분기에서만 data를 읽고, not_requested는 OrderSummary에 전달하기 전에 제외합니다.
 
 | 사례 | 프로젝트 적용 |
 |---|---|

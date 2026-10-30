@@ -27,14 +27,14 @@ export const orderLookupSchema = z.discriminatedUnion('kind', [
 ]);
 export const healthSchema = z.object({
   status: z.literal('ok'), database: z.literal('ready'),
-  ai_enabled: z.literal(false), message: z.string(),
+  ai_enabled: z.boolean(), message: z.string(),
 });
 
 export type OrderLookupResult = z.infer<typeof orderLookupSchema>;
 export type OrderStatus = z.infer<typeof orderStatusSchema>;
 export type HealthResponse = z.infer<typeof healthSchema>;
 
-// Day-1 API contract only. No consultation/AI requests are sent by the UI yet.
+// Runtime responses are validated before being rendered by the consultation screen.
 export const consultationStatusSchema = z.enum([
   'answered', 'needs_information', 'order_not_found', 'insufficient_evidence',
   'limit_reached', 'system_error',

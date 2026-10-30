@@ -107,16 +107,6 @@
               }
             }
           },
-          "501": {
-            "description": "Contract defined; agent not implemented",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ApiError"
-                }
-              }
-            }
-          },
           "422": {
             "description": "Validation Error",
             "content": {
@@ -133,26 +123,6 @@
   },
   "components": {
     "schemas": {
-      "ApiError": {
-        "properties": {
-          "code": {
-            "type": "string",
-            "const": "not_implemented",
-            "title": "Code"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
-          }
-        },
-        "additionalProperties": false,
-        "type": "object",
-        "required": [
-          "code",
-          "message"
-        ],
-        "title": "ApiError"
-      },
       "AppliedPolicy": {
         "properties": {
           "text": {
@@ -376,14 +346,13 @@
           },
           "ai_enabled": {
             "type": "boolean",
-            "const": false,
             "title": "Ai Enabled",
             "default": false
           },
           "message": {
             "type": "string",
             "title": "Message",
-            "default": "환경 구축 단계입니다. 정책 검색과 AI 상담은 아직 연결되지 않았습니다."
+            "default": "상담 API가 연결됐습니다. 실제 AI 실행에는 서버의 명시적 API 허용이 필요합니다."
           }
         },
         "additionalProperties": false,

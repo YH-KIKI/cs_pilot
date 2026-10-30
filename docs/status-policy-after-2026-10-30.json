@@ -1,0 +1,783 @@
+{
+  "started_at": "2026-10-30T14:10:13.882192+00:00",
+  "reference_time": "2026-10-22T12:00:00+09:00",
+  "prompt_version": "cs-agent-v8",
+  "model": "gpt-6-luna",
+  "corpus_version": "apple-kr-20261023-v1",
+  "seed_version": "2026-10-22-v1",
+  "suites_sha256": {
+    "data/eval/cases.json": "1b63e04610fd0689211c82692ca1280c49e24139c112419144ecee271ff20013",
+    "data/eval/status_policy_cases.json": "e1642fa0f6cf453fbf283e511873c96e0f72fde1e5d31cd42cd425e6ecaf48e7"
+  },
+  "agent_code_sha256": {
+    "app\\agent\\__init__.py": "e6f97b7c923a796ce049806c8d5133e2bdc8d916a22e58ed229e8b9a3e4c3908",
+    "app\\agent\\evaluation.py": "bb2ecb19fe39e5c642ff1234163ade8800ea4664513f79eb0a02964c5b19248b",
+    "app\\agent\\evidence.py": "a58f271cf085fbd8daf6abbff0c09f7de5b477fbd7b4cf1ca183ade65391344a",
+    "app\\agent\\graph.py": "29be0bf04b21a2efcf16dde0fcb1e71d160cff52c0193fc550db107b1a85b44a",
+    "app\\agent\\model.py": "385066dd4e726657dc735c891d27a9268bccdc024eec6083ef9c4f7493d91517",
+    "app\\agent\\models.py": "025e58babb7531863974697d4254073618a683ae3d1441cec680e46dc70ebac9",
+    "app\\agent\\service.py": "cfdb733359e11aca00ee7da1c837e70e94366e1aeefd42be6606d6cf50ebb753"
+  },
+  "runner": "scripts.evaluate_agent.evaluate_one; unchanged suite checker",
+  "status": "completed",
+  "cases": [
+    {
+      "case_id": "P02",
+      "execution": {
+        "model": "real_openai",
+        "tools": "integration",
+        "mock_error": null,
+        "lookup": "real_sqlite",
+        "search": "real_chroma"
+      },
+      "question": "온라인 주문은 언제 취소할 수 있나요? 부분 취소 제한도 알려주세요.",
+      "expected_statuses": [
+        "answered"
+      ],
+      "evaluation": {
+        "checks": {
+          "status": true,
+          "lookup_count": true,
+          "search_count": true,
+          "missing_fields": true,
+          "expected_rule_groups_retrieved": true,
+          "reference_time": true,
+          "source_provenance": true,
+          "tool_limits": true,
+          "answer_applies_expected_groups": true,
+          "order_facts": true,
+          "response_contract": true
+        },
+        "structural_pass": true,
+        "failed_checks": [],
+        "actual_tool_counts": {
+          "lookup_order": 0,
+          "search_policy": 1
+        },
+        "actual_applied_groups": [
+          "order-cancellation",
+          "order-status"
+        ],
+        "actual_elapsed_days": null,
+        "semantic_checklist": {
+          "must_include": [
+            "출고 준비 중/출고됨 제한",
+            "Visa·MasterCard·Diners 다품목 부분 취소 예외"
+          ],
+          "must_not_include": [
+            "변경 가능 상태만으로 취소 확정"
+          ],
+          "review_status": "manually_reviewed_once",
+          "assessment": "received_policy_corrected_in_this_run",
+          "notes": "주문 접수의 변경 불가와 처리 중의 변경 가능을 원문대로 설명했다. 상태 안내와 취소 정책이 별도임을 적용 정책에서도 구분했다."
+        }
+      },
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "1177a4d7-20fa-48ba-aded-1ab856313af8",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "answered",
+        "order_result": {
+          "kind": "not_requested"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-2a0e84c031bb5f83f5d804c5",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-cancellation",
+            "chunk_id": "policy-2a0e84c031bb5f83f5d804c5",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 취소",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 제품이 출고 준비 중 또는 출고됨 상태가 아닌 경우 개별 제품 또는 전체 주문을 온라인으로 취소할 수 있습니다.\n주문 또는 제품을 취소하려면 온라인에서 주문 상태 를 방문한 다음 주문 보기 버튼을 클릭하십시오. 주문 페이지에서 취소하려는 제품을 찾은 후 제품 취소 링크를 클릭하십시오.\n취소 요청이 제출되면 해당 제품의 상태 메시지가 \"취소됨\"으로 표시됩니다. 이 제품에 대해서는 대금이 청구되지 않습니다.\n온라인에서 제품을 취소할 수 없는 상태인데 반품해야 한다면 반품 및 환불 도움말 페이지를 참조하거나 080-330-8877 로 문의하십시오.\nVisa, MasterCard 및 Diners로 결제하였고, 주문에 여러 품목이 포함된 경우에는 단일 품목을 취소할 수 없습니다. 주문을 변경하려면 전체 주문을 취소하고 새로 주문해 주십시오. 추가 지원이 필요한 경우 Apple Online Store 고객 서비스 팀 080-330-8877 로 연락 주시기 바랍니다."
+          },
+          {
+            "evidence_id": "evidence-policy-8b285ee251f6dbf61f776b9e",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-status",
+            "chunk_id": "policy-8b285ee251f6dbf61f776b9e",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 상태 확인",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 상태를 쉽게 확인할 수 있습니다! 먼저 온라인에서 주문 상태 를 방문하여 Apple 계정  및 암호를 입력하십시오.\n로그인했으면 주문 보기 버튼을 클릭하십시오. 이렇게 하면 가장 최근에 주문한 내역을 한 눈에 모두 볼 수 있는 주문 페이지가 열립니다. 다른 주문 내역을 확인하려면 페이지 오른쪽 상단에 있는 \"더 많은 주문 보기\" 드롭다운 메뉴에서 해당 주문을 선택하십시오.\n주문 페이지에 있는 각 항목 위에 주문 상태 메시지가 표시됩니다. 주문 상태 메시지는 다음과 같습니다.\n주문 접수 - 고객님의 주문과 결제 정보가 접수되었습니다. 지금은 주문을 변경할 수 없지만 주문 처리 준비를 시작하면 변경할 수 있습니다.\n주문 처리 중 - 주문 처리에 필요한 모든 정보가 접수되었습니다. 제품이 준비되는 대로 소식을 보내 드리고 출고를 준비하겠습니다. 지금도 주문을 변경할 수 있습니다.\n출고 준비 중 - 주문하신 제품을 출고하기 전에 필요한 몇 가지 세부 사항을 처리 중입니다. 출고하는 대로 이메일로 배송 정보를 보내 드리겠습니다. 이제는 주문을 변경할 수 없습니다.\n출고됨 - \"배송 추적\" 버튼을 사용하여 패키지 위치를 온라인으로 확인할 수 있습니다. 이 정보는 출고 후 24시간 안에 볼 수 있습니다.\n배송 완료 - 패키지를 주문 시 지정한 배송 주소지에 배송해 드렸습니다. 주문하신 제품을 반품해야 하는 경우 온라인에서 반품 프로세스를 진행하시면 됩니다.\n매장으로 배송 - 제품이 발송되어 Apple Store로 운송 중입니다. 픽업 준비가 되면 픽업 알림 이메일을 보내 드립니다. 픽업 알림 이메일을 받으신 후에 Apple Store를 방문하시기 바랍니다.\n픽업 준비 완료 - 제품이 Apple Store에서 준비되어 있습니다. 결제 카드 또는 주문 번호와 사진이 부착된 유효한 신분증을 지참하세요.\n픽업됨 - 제품이 Apple Store에서 픽업되었습니다."
+          }
+        ],
+        "applied_policies": [
+          {
+            "text": "출고 준비 중 또는 출고됨 상태가 아닌 경우 온라인으로 개별 제품 또는 전체 주문을 취소할 수 있습니다. Visa, MasterCard 또는 Diners로 결제했고 주문에 여러 품목이 있으면 단일 품목만 취소할 수 없으며, 전체 주문을 취소하고 새로 주문해야 합니다.",
+            "evidence_ids": [
+              "evidence-policy-2a0e84c031bb5f83f5d804c5"
+            ]
+          },
+          {
+            "text": "상태 안내에 따르면 ‘주문 접수’ 상태에서는 아직 주문을 변경할 수 없고, ‘주문 처리 중’에는 변경할 수 있습니다. ‘출고 준비 중’에는 변경할 수 없습니다. 이 상태 안내는 취소 정책의 구체적인 기준과 구분해 설명합니다.",
+            "evidence_ids": [
+              "evidence-policy-8b285ee251f6dbf61f776b9e",
+              "evidence-policy-2a0e84c031bb5f83f5d804c5"
+            ]
+          }
+        ],
+        "recommendation": {
+          "text": "주문 상태 페이지에서 제품별로 취소 링크가 제공되는지 확인하세요. Visa·MasterCard·Diners로 결제한 여러 품목 주문에서 한 품목만 취소하려는 경우에는 전체 주문 취소 후 새로 주문하거나, 추가 지원을 위해 Apple Online Store 고객 서비스(080-330-8877)에 문의할 수 있습니다.",
+          "evidence_ids": [
+            "evidence-policy-2a0e84c031bb5f83f5d804c5"
+          ]
+        },
+        "draft_reply": "온라인 취소는 제품이 ‘출고 준비 중’ 또는 ‘출고됨’ 상태가 아닐 때 가능합니다. 다만 ‘주문 접수’ 상태에서는 주문 변경이 아직 불가능하며, ‘주문 처리 중’에는 변경할 수 있습니다. Visa, MasterCard 또는 Diners로 결제한 여러 품목 주문은 단일 품목만 취소할 수 없으므로, 전체 주문을 취소하고 새로 주문해야 합니다. 주문 상태 페이지에서 제품별 취소 가능 여부를 확인해 주세요. 추가 지원은 Apple Online Store 고객 서비스(080-330-8877)에 문의할 수 있습니다.",
+        "missing_fields": [],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 561,
+            "status": "success",
+            "result_summary": "정책 근거 후보 2개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 온라인 주문 취소 가능 시점: 주문 접수, 주문 처리 중, 출고 준비 중, 출고됨 상태별 취소 가능 여부. Visa, MasterCard, Diners 결제 및 여러 품목 주문의 부분 취소 제한과 예외를 확인해 주세요.",
+              "topic": "cancellation"
+            },
+            "evidence_ids": [
+              "evidence-policy-2a0e84c031bb5f83f5d804c5",
+              "evidence-policy-8b285ee251f6dbf61f776b9e"
+            ]
+          }
+        ]
+      },
+      "decisions": [
+        {
+          "action": "search_policy",
+          "requires_order": false,
+          "topic": "cancellation",
+          "query": "Apple 한국 온라인 스토어 온라인 주문 취소 가능 시점: 주문 접수, 주문 처리 중, 출고 준비 중, 출고됨 상태별 취소 가능 여부. Visa, MasterCard, Diners 결제 및 여러 품목 주문의 부분 취소 제한과 예외를 확인해 주세요.",
+          "status": null,
+          "date_facts": [],
+          "proposal": {
+            "action": "search_policy",
+            "requires_order": false,
+            "topic": "cancellation",
+            "query": "Apple 한국 온라인 스토어 온라인 주문 취소 가능 시점: 주문 접수, 주문 처리 중, 출고 준비 중, 출고됨 상태별 취소 가능 여부. Visa, MasterCard, Diners 결제 및 여러 품목 주문의 부분 취소 제한과 예외를 확인해 주세요.",
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "finish",
+          "requires_order": false,
+          "topic": null,
+          "query": null,
+          "status": "answered",
+          "date_facts": [],
+          "proposal": {
+            "action": "finish",
+            "requires_order": false,
+            "topic": null,
+            "query": null,
+            "status": "answered",
+            "applied_policies": [
+              {
+                "text": "출고 준비 중 또는 출고됨 상태가 아닌 경우 온라인으로 개별 제품 또는 전체 주문을 취소할 수 있습니다. Visa, MasterCard 또는 Diners로 결제했고 주문에 여러 품목이 있으면 단일 품목만 취소할 수 없으며, 전체 주문을 취소하고 새로 주문해야 합니다.",
+                "evidence_ids": [
+                  "evidence-policy-2a0e84c031bb5f83f5d804c5"
+                ]
+              },
+              {
+                "text": "상태 안내에 따르면 ‘주문 접수’ 상태에서는 아직 주문을 변경할 수 없고, ‘주문 처리 중’에는 변경할 수 있습니다. ‘출고 준비 중’에는 변경할 수 없습니다. 이 상태 안내는 취소 정책의 구체적인 기준과 구분해 설명합니다.",
+                "evidence_ids": [
+                  "evidence-policy-8b285ee251f6dbf61f776b9e",
+                  "evidence-policy-2a0e84c031bb5f83f5d804c5"
+                ]
+              }
+            ],
+            "recommendation": {
+              "text": "주문 상태 페이지에서 제품별로 취소 링크가 제공되는지 확인하세요. Visa·MasterCard·Diners로 결제한 여러 품목 주문에서 한 품목만 취소하려는 경우에는 전체 주문 취소 후 새로 주문하거나, 추가 지원을 위해 Apple Online Store 고객 서비스(080-330-8877)에 문의할 수 있습니다.",
+              "evidence_ids": [
+                "evidence-policy-2a0e84c031bb5f83f5d804c5"
+              ]
+            },
+            "draft_reply": "온라인 취소는 제품이 ‘출고 준비 중’ 또는 ‘출고됨’ 상태가 아닐 때 가능합니다. 다만 ‘주문 접수’ 상태에서는 주문 변경이 아직 불가능하며, ‘주문 처리 중’에는 변경할 수 있습니다. Visa, MasterCard 또는 Diners로 결제한 여러 품목 주문은 단일 품목만 취소할 수 없으므로, 전체 주문을 취소하고 새로 주문해야 합니다. 주문 상태 페이지에서 제품별 취소 가능 여부를 확인해 주세요. 추가 지원은 Apple Online Store 고객 서비스(080-330-8877)에 문의할 수 있습니다.",
+            "missing_fields": []
+          }
+        }
+      ],
+      "model_usage": [
+        {
+          "input_tokens": 2294,
+          "output_tokens": 119,
+          "total_tokens": 2413,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0,
+            "cache_creation": 2291
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 3427,
+          "output_tokens": 496,
+          "total_tokens": 3923,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2166,
+            "cache_creation": 1258
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "response_error": null,
+      "response_normalizations": []
+    },
+    {
+      "case_id": "O03",
+      "execution": {
+        "model": "real_openai",
+        "tools": "integration",
+        "mock_error": null,
+        "lookup": "real_sqlite",
+        "search": "real_chroma"
+      },
+      "question": "01번 품목만 취소하고 싶어요.",
+      "expected_statuses": [
+        "answered"
+      ],
+      "evaluation": {
+        "checks": {
+          "status": true,
+          "lookup_count": true,
+          "search_count": true,
+          "missing_fields": true,
+          "expected_rule_groups_retrieved": true,
+          "reference_time": true,
+          "source_provenance": true,
+          "tool_limits": true,
+          "answer_applies_expected_groups": true,
+          "order_facts": true,
+          "response_contract": true
+        },
+        "structural_pass": true,
+        "failed_checks": [],
+        "actual_tool_counts": {
+          "lookup_order": 1,
+          "search_policy": 1
+        },
+        "actual_applied_groups": [
+          "order-cancellation",
+          "order-status"
+        ],
+        "actual_elapsed_days": null,
+        "semantic_checklist": {
+          "must_include": [
+            "Visa",
+            "두 품목",
+            "단일 품목 취소 예외"
+          ],
+          "must_not_include": [
+            "01번 취소 완료"
+          ],
+          "review_status": "manually_reviewed_once",
+          "assessment": "answered_without_empty_confirmation_in_this_run",
+          "notes": "실제 processing/Visa/다품목과 단일 취소 제한을 유지하고 answered/초안으로 종료했다. 이번 모델은 처음부터 정상 제안을 냈으므로 feedback 재판단은 실제 호출에서 발생하지 않았다. 그 경로는 이전 실패 제안 재생 테스트로 확인했다."
+        }
+      },
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "c07aa1c0-8e9c-4fe9-aeb7-4b43a6dcfd07",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "answered",
+        "order_result": {
+          "kind": "found",
+          "order": {
+            "order_id": "A03",
+            "is_synthetic": true,
+            "store": "Apple KR Online Store (demo)",
+            "purchase_country": "KR",
+            "ordered_at": "2026-10-21T09:00:00+09:00",
+            "payment_method": "card",
+            "card_brand": "Visa",
+            "items": [
+              {
+                "item_id": "01",
+                "product_name": "iPhone (demo)",
+                "product_type": "hardware",
+                "quantity": 1,
+                "status": "processing",
+                "shipped_at": null,
+                "estimated_delivery_date": null,
+                "delivered_at": null,
+                "tracking_number": null,
+                "last_tracking_event": null,
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "unknown",
+                "components_complete": null,
+                "security_lock_disabled": null,
+                "return_requested_at": null
+              },
+              {
+                "item_id": "02",
+                "product_name": "Case (demo)",
+                "product_type": "accessory",
+                "quantity": 1,
+                "status": "processing",
+                "shipped_at": null,
+                "estimated_delivery_date": null,
+                "delivered_at": null,
+                "tracking_number": null,
+                "last_tracking_event": null,
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "unknown",
+                "components_complete": null,
+                "security_lock_disabled": null,
+                "return_requested_at": null
+              }
+            ]
+          },
+          "snapshot_at": "2026-10-22T12:00:00+09:00"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-2a0e84c031bb5f83f5d804c5",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-cancellation",
+            "chunk_id": "policy-2a0e84c031bb5f83f5d804c5",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 취소",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 제품이 출고 준비 중 또는 출고됨 상태가 아닌 경우 개별 제품 또는 전체 주문을 온라인으로 취소할 수 있습니다.\n주문 또는 제품을 취소하려면 온라인에서 주문 상태 를 방문한 다음 주문 보기 버튼을 클릭하십시오. 주문 페이지에서 취소하려는 제품을 찾은 후 제품 취소 링크를 클릭하십시오.\n취소 요청이 제출되면 해당 제품의 상태 메시지가 \"취소됨\"으로 표시됩니다. 이 제품에 대해서는 대금이 청구되지 않습니다.\n온라인에서 제품을 취소할 수 없는 상태인데 반품해야 한다면 반품 및 환불 도움말 페이지를 참조하거나 080-330-8877 로 문의하십시오.\nVisa, MasterCard 및 Diners로 결제하였고, 주문에 여러 품목이 포함된 경우에는 단일 품목을 취소할 수 없습니다. 주문을 변경하려면 전체 주문을 취소하고 새로 주문해 주십시오. 추가 지원이 필요한 경우 Apple Online Store 고객 서비스 팀 080-330-8877 로 연락 주시기 바랍니다."
+          },
+          {
+            "evidence_id": "evidence-policy-8b285ee251f6dbf61f776b9e",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-status",
+            "chunk_id": "policy-8b285ee251f6dbf61f776b9e",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 상태 확인",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 상태를 쉽게 확인할 수 있습니다! 먼저 온라인에서 주문 상태 를 방문하여 Apple 계정  및 암호를 입력하십시오.\n로그인했으면 주문 보기 버튼을 클릭하십시오. 이렇게 하면 가장 최근에 주문한 내역을 한 눈에 모두 볼 수 있는 주문 페이지가 열립니다. 다른 주문 내역을 확인하려면 페이지 오른쪽 상단에 있는 \"더 많은 주문 보기\" 드롭다운 메뉴에서 해당 주문을 선택하십시오.\n주문 페이지에 있는 각 항목 위에 주문 상태 메시지가 표시됩니다. 주문 상태 메시지는 다음과 같습니다.\n주문 접수 - 고객님의 주문과 결제 정보가 접수되었습니다. 지금은 주문을 변경할 수 없지만 주문 처리 준비를 시작하면 변경할 수 있습니다.\n주문 처리 중 - 주문 처리에 필요한 모든 정보가 접수되었습니다. 제품이 준비되는 대로 소식을 보내 드리고 출고를 준비하겠습니다. 지금도 주문을 변경할 수 있습니다.\n출고 준비 중 - 주문하신 제품을 출고하기 전에 필요한 몇 가지 세부 사항을 처리 중입니다. 출고하는 대로 이메일로 배송 정보를 보내 드리겠습니다. 이제는 주문을 변경할 수 없습니다.\n출고됨 - \"배송 추적\" 버튼을 사용하여 패키지 위치를 온라인으로 확인할 수 있습니다. 이 정보는 출고 후 24시간 안에 볼 수 있습니다.\n배송 완료 - 패키지를 주문 시 지정한 배송 주소지에 배송해 드렸습니다. 주문하신 제품을 반품해야 하는 경우 온라인에서 반품 프로세스를 진행하시면 됩니다.\n매장으로 배송 - 제품이 발송되어 Apple Store로 운송 중입니다. 픽업 준비가 되면 픽업 알림 이메일을 보내 드립니다. 픽업 알림 이메일을 받으신 후에 Apple Store를 방문하시기 바랍니다.\n픽업 준비 완료 - 제품이 Apple Store에서 준비되어 있습니다. 결제 카드 또는 주문 번호와 사진이 부착된 유효한 신분증을 지참하세요.\n픽업됨 - 제품이 Apple Store에서 픽업되었습니다."
+          }
+        ],
+        "applied_policies": [
+          {
+            "text": "주문 처리 중 상태에서는 주문 변경이 가능하지만, 취소 정책상 개별 취소는 출고 준비 중 또는 출고됨 상태가 아닐 때 가능해야 합니다. 다만 Visa 결제의 다품목 주문은 단일 품목만 취소할 수 없으며, 주문 전체를 취소하고 새로 주문해야 한다고 안내되어 있습니다.",
+            "evidence_ids": [
+              "evidence-policy-2a0e84c031bb5f83f5d804c5",
+              "evidence-policy-8b285ee251f6dbf61f776b9e"
+            ]
+          }
+        ],
+        "recommendation": {
+          "text": "01번 품목은 조회 시점에 ‘주문 처리 중’으로 기록되어 있어 출고 준비 중이나 출고됨 상태는 아닙니다. 하지만 이 주문은 Visa 결제의 다품목 주문이므로 정책상 01번만 단독 취소할 수 없습니다. 전체 주문 취소 후 새로 주문하는 방법을 검토하시거나 Apple Online Store 고객 서비스(080-330-8877)에 문의하도록 안내하세요. 취소 처리가 완료된 것은 아닙니다.",
+          "evidence_ids": [
+            "evidence-policy-2a0e84c031bb5f83f5d804c5",
+            "evidence-policy-8b285ee251f6dbf61f776b9e"
+          ]
+        },
+        "draft_reply": "01번 품목은 2026년 10월 22일 12시 조회 시 ‘주문 처리 중’으로 기록되어 있습니다. 이 상태에서는 주문 변경이 가능하지만, 해당 주문은 Visa 결제의 다품목 주문이므로 Apple 정책상 01번 품목만 따로 취소할 수 없습니다. 전체 주문을 취소하고 새로 주문하는 방법을 검토하시거나, 추가 지원을 위해 Apple Online Store 고객 서비스(080-330-8877)에 문의해 주세요. 현재 취소가 완료된 것은 아닙니다.",
+        "missing_fields": [],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 6,
+            "status": "success",
+            "result_summary": "가상 주문 조회 완료",
+            "tool_name": "lookup_order",
+            "input": {
+              "order_id": "A03"
+            }
+          },
+          {
+            "sequence": 2,
+            "duration_ms": 733,
+            "status": "success",
+            "result_summary": "정책 근거 후보 2개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 주문 취소 정책: 주문 처리 중 상태에서 취소 가능한지, Visa 카드로 결제한 다품목 주문에서 일부 품목만 부분 취소할 수 있는지와 관련 예외",
+              "topic": "cancellation"
+            },
+            "evidence_ids": [
+              "evidence-policy-2a0e84c031bb5f83f5d804c5",
+              "evidence-policy-8b285ee251f6dbf61f776b9e"
+            ]
+          }
+        ]
+      },
+      "decisions": [
+        {
+          "action": "lookup_order",
+          "requires_order": true,
+          "topic": "cancellation",
+          "query": null,
+          "status": null,
+          "date_facts": [],
+          "proposal": {
+            "action": "lookup_order",
+            "requires_order": true,
+            "topic": "cancellation",
+            "query": null,
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "search_policy",
+          "requires_order": true,
+          "topic": "cancellation",
+          "query": "Apple 한국 온라인 스토어 주문 취소 정책: 주문 처리 중 상태에서 취소 가능한지, Visa 카드로 결제한 다품목 주문에서 일부 품목만 부분 취소할 수 있는지와 관련 예외",
+          "status": null,
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": null
+            },
+            {
+              "item_id": "02",
+              "elapsed_days_since_delivery": null
+            }
+          ],
+          "proposal": {
+            "action": "search_policy",
+            "requires_order": true,
+            "topic": "cancellation",
+            "query": "Apple 한국 온라인 스토어 주문 취소 정책: 주문 처리 중 상태에서 취소 가능한지, Visa 카드로 결제한 다품목 주문에서 일부 품목만 부분 취소할 수 있는지와 관련 예외",
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "finish",
+          "requires_order": true,
+          "topic": "cancellation",
+          "query": null,
+          "status": "answered",
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": null
+            },
+            {
+              "item_id": "02",
+              "elapsed_days_since_delivery": null
+            }
+          ],
+          "proposal": {
+            "action": "finish",
+            "requires_order": true,
+            "topic": "cancellation",
+            "query": null,
+            "status": "answered",
+            "applied_policies": [
+              {
+                "text": "주문 처리 중 상태에서는 주문 변경이 가능하지만, 취소 정책상 개별 취소는 출고 준비 중 또는 출고됨 상태가 아닐 때 가능해야 합니다. 다만 Visa 결제의 다품목 주문은 단일 품목만 취소할 수 없으며, 주문 전체를 취소하고 새로 주문해야 한다고 안내되어 있습니다.",
+                "evidence_ids": [
+                  "evidence-policy-2a0e84c031bb5f83f5d804c5",
+                  "evidence-policy-8b285ee251f6dbf61f776b9e"
+                ]
+              }
+            ],
+            "recommendation": {
+              "text": "01번 품목은 조회 시점에 ‘주문 처리 중’으로 기록되어 있어 출고 준비 중이나 출고됨 상태는 아닙니다. 하지만 이 주문은 Visa 결제의 다품목 주문이므로 정책상 01번만 단독 취소할 수 없습니다. 전체 주문 취소 후 새로 주문하는 방법을 검토하시거나 Apple Online Store 고객 서비스(080-330-8877)에 문의하도록 안내하세요. 취소 처리가 완료된 것은 아닙니다.",
+              "evidence_ids": [
+                "evidence-policy-2a0e84c031bb5f83f5d804c5",
+                "evidence-policy-8b285ee251f6dbf61f776b9e"
+              ]
+            },
+            "draft_reply": "01번 품목은 2026년 10월 22일 12시 조회 시 ‘주문 처리 중’으로 기록되어 있습니다. 이 상태에서는 주문 변경이 가능하지만, 해당 주문은 Visa 결제의 다품목 주문이므로 Apple 정책상 01번 품목만 따로 취소할 수 없습니다. 전체 주문을 취소하고 새로 주문하는 방법을 검토하시거나, 추가 지원을 위해 Apple Online Store 고객 서비스(080-330-8877)에 문의해 주세요. 현재 취소가 완료된 것은 아닙니다.",
+            "missing_fields": []
+          }
+        }
+      ],
+      "model_usage": [
+        {
+          "input_tokens": 2289,
+          "output_tokens": 51,
+          "total_tokens": 2340,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2166,
+            "cache_creation": 120
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2804,
+          "output_tokens": 103,
+          "total_tokens": 2907,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2166,
+            "cache_creation": 635
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 3922,
+          "output_tokens": 446,
+          "total_tokens": 4368,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2166,
+            "cache_creation": 1753
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "response_error": null,
+      "response_normalizations": []
+    },
+    {
+      "case_id": "SP01",
+      "execution": {
+        "model": "real_openai",
+        "tools": "integration",
+        "mock_error": null,
+        "lookup": "real_sqlite",
+        "search": "real_chroma"
+      },
+      "question": "일반 주문 상태 안내에서 ‘주문 접수’와 ‘주문 처리 중’은 둘 다 주문 변경이 가능한가요?",
+      "expected_statuses": [
+        "answered"
+      ],
+      "evaluation": {
+        "checks": {
+          "status": true,
+          "lookup_count": true,
+          "search_count": true,
+          "missing_fields": true,
+          "expected_rule_groups_retrieved": true,
+          "reference_time": true,
+          "source_provenance": true,
+          "tool_limits": true,
+          "answer_applies_expected_groups": true,
+          "order_facts": true,
+          "response_contract": true
+        },
+        "structural_pass": true,
+        "failed_checks": [],
+        "actual_tool_counts": {
+          "lookup_order": 0,
+          "search_policy": 1
+        },
+        "actual_applied_groups": [
+          "order-status"
+        ],
+        "actual_elapsed_days": null,
+        "semantic_checklist": {
+          "must_include": [
+            "주문 접수에서는 아직 변경 불가",
+            "주문 처리 중에서는 변경 가능"
+          ],
+          "must_not_include": [
+            "두 상태 모두 변경 가능",
+            "변경 가능만으로 취소 가능 확정"
+          ],
+          "review_status": "manually_reviewed_once",
+          "assessment": "status_policy_found_and_distinguished",
+          "notes": "cancellation 필터로 실제 order-status 근거를 찾아 주문 접수는 아직 변경 불가, 처리 중은 변경 가능이라고 답했다. 이번에는 topic=null 재검색이 필요하지 않았다. 취소와 상태 변경 안내도 구분했다."
+        }
+      },
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "8c077002-1db3-4644-ab48-c628ac78421d",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "answered",
+        "order_result": {
+          "kind": "not_requested"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-8b285ee251f6dbf61f776b9e",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-status",
+            "chunk_id": "policy-8b285ee251f6dbf61f776b9e",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 상태 확인",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 상태를 쉽게 확인할 수 있습니다! 먼저 온라인에서 주문 상태 를 방문하여 Apple 계정  및 암호를 입력하십시오.\n로그인했으면 주문 보기 버튼을 클릭하십시오. 이렇게 하면 가장 최근에 주문한 내역을 한 눈에 모두 볼 수 있는 주문 페이지가 열립니다. 다른 주문 내역을 확인하려면 페이지 오른쪽 상단에 있는 \"더 많은 주문 보기\" 드롭다운 메뉴에서 해당 주문을 선택하십시오.\n주문 페이지에 있는 각 항목 위에 주문 상태 메시지가 표시됩니다. 주문 상태 메시지는 다음과 같습니다.\n주문 접수 - 고객님의 주문과 결제 정보가 접수되었습니다. 지금은 주문을 변경할 수 없지만 주문 처리 준비를 시작하면 변경할 수 있습니다.\n주문 처리 중 - 주문 처리에 필요한 모든 정보가 접수되었습니다. 제품이 준비되는 대로 소식을 보내 드리고 출고를 준비하겠습니다. 지금도 주문을 변경할 수 있습니다.\n출고 준비 중 - 주문하신 제품을 출고하기 전에 필요한 몇 가지 세부 사항을 처리 중입니다. 출고하는 대로 이메일로 배송 정보를 보내 드리겠습니다. 이제는 주문을 변경할 수 없습니다.\n출고됨 - \"배송 추적\" 버튼을 사용하여 패키지 위치를 온라인으로 확인할 수 있습니다. 이 정보는 출고 후 24시간 안에 볼 수 있습니다.\n배송 완료 - 패키지를 주문 시 지정한 배송 주소지에 배송해 드렸습니다. 주문하신 제품을 반품해야 하는 경우 온라인에서 반품 프로세스를 진행하시면 됩니다.\n매장으로 배송 - 제품이 발송되어 Apple Store로 운송 중입니다. 픽업 준비가 되면 픽업 알림 이메일을 보내 드립니다. 픽업 알림 이메일을 받으신 후에 Apple Store를 방문하시기 바랍니다.\n픽업 준비 완료 - 제품이 Apple Store에서 준비되어 있습니다. 결제 카드 또는 주문 번호와 사진이 부착된 유효한 신분증을 지참하세요.\n픽업됨 - 제품이 Apple Store에서 픽업되었습니다."
+          },
+          {
+            "evidence_id": "evidence-policy-2a0e84c031bb5f83f5d804c5",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-cancellation",
+            "chunk_id": "policy-2a0e84c031bb5f83f5d804c5",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 취소",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 제품이 출고 준비 중 또는 출고됨 상태가 아닌 경우 개별 제품 또는 전체 주문을 온라인으로 취소할 수 있습니다.\n주문 또는 제품을 취소하려면 온라인에서 주문 상태 를 방문한 다음 주문 보기 버튼을 클릭하십시오. 주문 페이지에서 취소하려는 제품을 찾은 후 제품 취소 링크를 클릭하십시오.\n취소 요청이 제출되면 해당 제품의 상태 메시지가 \"취소됨\"으로 표시됩니다. 이 제품에 대해서는 대금이 청구되지 않습니다.\n온라인에서 제품을 취소할 수 없는 상태인데 반품해야 한다면 반품 및 환불 도움말 페이지를 참조하거나 080-330-8877 로 문의하십시오.\nVisa, MasterCard 및 Diners로 결제하였고, 주문에 여러 품목이 포함된 경우에는 단일 품목을 취소할 수 없습니다. 주문을 변경하려면 전체 주문을 취소하고 새로 주문해 주십시오. 추가 지원이 필요한 경우 Apple Online Store 고객 서비스 팀 080-330-8877 로 연락 주시기 바랍니다."
+          }
+        ],
+        "applied_policies": [
+          {
+            "text": "주문 상태 안내에 따르면 ‘주문 접수’ 상태에서는 아직 주문을 변경할 수 없고, 주문 처리 준비가 시작된 뒤 변경할 수 있습니다. ‘주문 처리 중’ 상태에서는 주문을 변경할 수 있습니다.",
+            "evidence_ids": [
+              "evidence-policy-8b285ee251f6dbf61f776b9e"
+            ]
+          }
+        ],
+        "recommendation": {
+          "text": "두 상태의 변경 가능 여부는 다릅니다. ‘주문 접수’에서는 변경할 수 없지만, ‘주문 처리 중’에서는 변경할 수 있습니다. 이는 상태 안내이며, 취소는 별도의 취소 정책과 조건이 적용됩니다.",
+          "evidence_ids": [
+            "evidence-policy-8b285ee251f6dbf61f776b9e",
+            "evidence-policy-2a0e84c031bb5f83f5d804c5"
+          ]
+        },
+        "draft_reply": "‘주문 접수’ 상태에서는 아직 주문을 변경할 수 없고, 주문 처리 준비가 시작된 뒤 변경할 수 있습니다. 반면 ‘주문 처리 중’ 상태에서는 주문을 변경할 수 있습니다. 취소는 주문 변경과 별도로 취소 정책 및 조건이 적용됩니다.",
+        "missing_fields": [],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 399,
+            "status": "success",
+            "result_summary": "정책 근거 후보 2개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "일반 주문 상태 안내에서 ‘주문 접수’와 ‘주문 처리 중’ 각각 주문 변경이 가능한지, 상태별 변경 가능 여부와 관련 조건",
+              "topic": "cancellation"
+            },
+            "evidence_ids": [
+              "evidence-policy-8b285ee251f6dbf61f776b9e",
+              "evidence-policy-2a0e84c031bb5f83f5d804c5"
+            ]
+          }
+        ]
+      },
+      "decisions": [
+        {
+          "action": "search_policy",
+          "requires_order": false,
+          "topic": "cancellation",
+          "query": "일반 주문 상태 안내에서 ‘주문 접수’와 ‘주문 처리 중’ 각각 주문 변경이 가능한지, 상태별 변경 가능 여부와 관련 조건",
+          "status": null,
+          "date_facts": [],
+          "proposal": {
+            "action": "search_policy",
+            "requires_order": false,
+            "topic": "cancellation",
+            "query": "일반 주문 상태 안내에서 ‘주문 접수’와 ‘주문 처리 중’ 각각 주문 변경이 가능한지, 상태별 변경 가능 여부와 관련 조건",
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "finish",
+          "requires_order": false,
+          "topic": null,
+          "query": null,
+          "status": "answered",
+          "date_facts": [],
+          "proposal": {
+            "action": "finish",
+            "requires_order": false,
+            "topic": null,
+            "query": null,
+            "status": "answered",
+            "applied_policies": [
+              {
+                "text": "주문 상태 안내에 따르면 ‘주문 접수’ 상태에서는 아직 주문을 변경할 수 없고, 주문 처리 준비가 시작된 뒤 변경할 수 있습니다. ‘주문 처리 중’ 상태에서는 주문을 변경할 수 있습니다.",
+                "evidence_ids": [
+                  "evidence-policy-8b285ee251f6dbf61f776b9e"
+                ]
+              }
+            ],
+            "recommendation": {
+              "text": "두 상태의 변경 가능 여부는 다릅니다. ‘주문 접수’에서는 변경할 수 없지만, ‘주문 처리 중’에서는 변경할 수 있습니다. 이는 상태 안내이며, 취소는 별도의 취소 정책과 조건이 적용됩니다.",
+              "evidence_ids": [
+                "evidence-policy-8b285ee251f6dbf61f776b9e",
+                "evidence-policy-2a0e84c031bb5f83f5d804c5"
+              ]
+            },
+            "draft_reply": "‘주문 접수’ 상태에서는 아직 주문을 변경할 수 없고, 주문 처리 준비가 시작된 뒤 변경할 수 있습니다. 반면 ‘주문 처리 중’ 상태에서는 주문을 변경할 수 있습니다. 취소는 주문 변경과 별도로 취소 정책 및 조건이 적용됩니다.",
+            "missing_fields": []
+          }
+        }
+      ],
+      "model_usage": [
+        {
+          "input_tokens": 2304,
+          "output_tokens": 84,
+          "total_tokens": 2388,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2166,
+            "cache_creation": 135
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 3408,
+          "output_tokens": 290,
+          "total_tokens": 3698,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2166,
+            "cache_creation": 1239
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "response_error": null,
+      "response_normalizations": []
+    }
+  ],
+  "note": "P02/O03 and separate SP01 only; not the full 24-case suite.",
+  "completed_at": "2026-10-30T14:10:39.547338+00:00",
+  "summary": {
+    "cases": 3,
+    "structural_pass": 3,
+    "failed_case_ids": [],
+    "real_model_calls": 7,
+    "model_tokens": {
+      "input_tokens": 20448,
+      "output_tokens": 1589,
+      "total_tokens": 22037
+    },
+    "semantic_review": "manually_reviewed_3_cases_once",
+    "actual_cost_and_embedding_tokens": "not_collected"
+  }
+}

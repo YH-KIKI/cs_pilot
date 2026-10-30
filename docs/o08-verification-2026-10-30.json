@@ -1,0 +1,422 @@
+{
+  "started_at": "2026-10-30T10:52:14.665469+00:00",
+  "reference_time": "2026-10-22T12:00:00+09:00",
+  "suite_version": "day1-v1",
+  "suite_sha256": "1b63e04610fd0689211c82692ca1280c49e24139c112419144ecee271ff20013",
+  "corpus_version": "apple-kr-20261023-v1",
+  "seed_version": "2026-10-22-v1",
+  "model": "gpt-6-luna",
+  "prompt_version": "cs-agent-v3",
+  "agent_code_sha256": {
+    "app\\agent\\__init__.py": "e6f97b7c923a796ce049806c8d5133e2bdc8d916a22e58ed229e8b9a3e4c3908",
+    "app\\agent\\evaluation.py": "bb2ecb19fe39e5c642ff1234163ade8800ea4664513f79eb0a02964c5b19248b",
+    "app\\agent\\graph.py": "391019663a759a3b00db475c1866b225dcb54f9fb2eced1767a50b8f5de6ff17",
+    "app\\agent\\model.py": "adcda14073be7e4369cb477a5ae7d5aaca88d57122fac2db2029983031419d63",
+    "app\\agent\\models.py": "025e58babb7531863974697d4254073618a683ae3d1441cec680e46dc70ebac9",
+    "app\\agent\\service.py": "cfdb733359e11aca00ee7da1c837e70e94366e1aeefd42be6606d6cf50ebb753"
+  },
+  "status": "completed",
+  "cases": [
+    {
+      "case_id": "O08",
+      "execution": {
+        "model": "real_openai",
+        "tools": "integration",
+        "mock_error": null,
+        "lookup": "real_sqlite",
+        "search": "real_chroma"
+      },
+      "question": "영수증이 있고 한국에서 반품합니다. 오늘 신청 마감시각을 확정해 주세요.",
+      "expected_statuses": [
+        "needs_information"
+      ],
+      "evaluation": {
+        "checks": {
+          "status": true,
+          "lookup_count": true,
+          "search_count": true,
+          "missing_fields": true,
+          "expected_rule_groups_retrieved": true,
+          "reference_time": true,
+          "source_provenance": true,
+          "tool_limits": true,
+          "order_facts": true,
+          "date_facts": true,
+          "response_contract": true
+        },
+        "structural_pass": true,
+        "failed_checks": [],
+        "actual_tool_counts": {
+          "lookup_order": 1,
+          "search_policy": 2
+        },
+        "actual_applied_groups": [
+          "returns-process",
+          "returns-standard"
+        ],
+        "actual_elapsed_days": 14,
+        "semantic_checklist": {
+          "must_include": [
+            "날짜 차이 14일",
+            "원문에 없는 마감시각 수동 확인"
+          ],
+          "must_not_include": [
+            "자정까지 확정",
+            "수집일을 시행일로 사용"
+          ],
+          "review_status": "manually_reviewed_once",
+          "notes": "대상 주문/품목을 조회하고 수령 후 14일을 계산했다. 정책에 없는 마감시각을 확정하지 않고 other 확인 질문을 유지했다. 모델의 insufficient_evidence 제안이 needs_information으로 보정됐음을 기록에서 확인했다."
+        }
+      },
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "a4429b08-8343-4e8b-a0ab-9021b8284598",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "needs_information",
+        "order_result": {
+          "kind": "found",
+          "order": {
+            "order_id": "A08",
+            "is_synthetic": true,
+            "store": "Apple KR Online Store (demo)",
+            "purchase_country": "KR",
+            "ordered_at": "2026-10-01T09:00:00+09:00",
+            "payment_method": "card",
+            "card_brand": "Visa",
+            "items": [
+              {
+                "item_id": "01",
+                "product_name": "iPad (demo)",
+                "product_type": "hardware",
+                "quantity": 1,
+                "status": "delivered",
+                "shipped_at": null,
+                "estimated_delivery_date": null,
+                "delivered_at": "2026-10-08T12:00:00+09:00",
+                "tracking_number": null,
+                "last_tracking_event": null,
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "original",
+                "components_complete": true,
+                "security_lock_disabled": true,
+                "return_requested_at": null
+              }
+            ]
+          },
+          "snapshot_at": "2026-10-22T12:00:00+09:00"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-961c94cf805ff6ca387bc3c8",
+            "document_id": "apple-kr-returns",
+            "rule_group_id": "returns-damage",
+            "chunk_id": "policy-961c94cf805ff6ca387bc3c8",
+            "title": "반품 및 환불",
+            "heading": "제품 결함 또는 손상",
+            "source_url": "https://www.apple.com/kr/shop/help/returns_refund",
+            "collected_at": "2026-10-22T15:32:45.973672Z",
+            "effective_date": null,
+            "excerpt": "구입한 제품에 문제가 있거나 배송 중 손상된 경우, Apple 온라인 스토어 고객 서비스 080-330-8877(월요일~금요일, 오전 9시~오후 9시, 토요일~일요일, 오전 10시~오후 9시)로 문의하여 주십시오."
+          },
+          {
+            "evidence_id": "evidence-policy-ca44177e22c9ecb699729080",
+            "document_id": "apple-kr-returns",
+            "rule_group_id": "returns-process",
+            "chunk_id": "policy-ca44177e22c9ecb699729080",
+            "title": "반품 및 환불",
+            "heading": "제품 반품",
+            "source_url": "https://www.apple.com/kr/shop/help/returns_refund",
+            "collected_at": "2026-10-22T15:32:45.973672Z",
+            "effective_date": null,
+            "excerpt": "구입하신 제품이 만족스럽지 못하다면, 해당 제품을 반품하여 환불 받을 수 있습니다.\n구입한 Apple 제품을 반품하시려면, Apple 온라인 스토어 고객 서비스 080-330-8877(월요일~금요일, 오전 9시~오후 9시, 토요일~일요일, 오전 10시~오후 9시)로 문의하여 주십시오. ZEISS Optical Inserts를 반품하려면 해당 제품을 구입한 ZEISS Optical Inserts Professionals에 문의하십시오.\n반품은 Apple Online Store 이용 약관 에 따라 처리됩니다. 대상 제품의 경우 해당 제품을 받은 날짜로부터 최대 14일 이내에 반품을 시작해야 합니다.\n반품을 신청하면, 반품 세부사항이 담긴 확인 메일이 발송됩니다. 컴퓨터를 반품할 경우에는 원래 배송되었던 포장 그대로 반품할 것을 적극 권장합니다.\n해당 제품은 반품을 신청하고 14일 이내에 Apple 반품 센터에 도착해야 합니다.\n제품이 도착하면 반품 처리절차에 들어가며, 환불이 진행됩니다."
+          },
+          {
+            "evidence_id": "evidence-policy-fe254304ae0f2727f2ac8582",
+            "document_id": "apple-kr-returns",
+            "rule_group_id": "returns-standard",
+            "chunk_id": "policy-fe254304ae0f2727f2ac8582",
+            "title": "반품 및 환불",
+            "heading": "표준 반품 정책",
+            "source_url": "https://www.apple.com/kr/shop/help/returns_refund",
+            "collected_at": "2026-10-22T15:32:45.973672Z",
+            "effective_date": null,
+            "excerpt": "Apple은 기본적으로 고객이 Apple Store에서 구입하는 제품에 대해 만족감을 느낄 것이라고 굳게 믿고 있습니다. 사용자가 필요로 하는 제품을 디자인하고 만들기 위해 최선의 노력을 기울이고 있기 때문입니다. 하지만 때로는 제품이 기대와는 다를 수 있다는 점도 이해하고 있습니다. 드물겠지만 만일 제품이 기대와 다른 경우 Apple로부터 제품을 수령한 날짜로부터 14일 이내에 영수증을 동봉하셔서 반품 또는 교환을 접수하실 수 있습니다. Apple은 구입 당시 사용한 지불 방법으로 환불이나 교환을 진행해 드립니다. 제품은 최초 구입 상태 그대로, 포함되어 있던 모든 부품, 액세서리, 제품 상자를 동봉하여 반납하셔야 합니다. 이와 더불어 다음 사항에 유의해 주십시오.\n제품은 원래 구입한 국가 또는 지역에서만 반품할 수 있습니다.\n전자 소프트웨어 다운로드, 소프트웨어 Up-To-Date 프로그램 구독 상품 및 모든 Apple Developer 제품은 반품 대상에서 제외됩니다.\n패키지 외부에 소프트웨어 사용권이 표시된 상태로 밀봉되어 있고 패키지를 개봉하기 전에 소프트웨어 사용권을 읽을 수 있는 경우, 개봉된 소프트웨어 제품은 반품이 되지 않습니다. 예외적으로 사용권 약관에 동의하지 않으면 Apple 브랜드 소프트웨어를 반품할 수 있지만 고객은 반품된 소프트웨어 사본을 보유하거나 사용할 수 없습니다.\nApple은 분실 또는 도난 시 제품을 보호할 수 있는 보안 기능을 제공합니다.  이러한 기능이 활성화되어 있고 해당 휴대폰을 소유한 사람이 이 기능을 비활성화할 수 없는 경우 Apple은 반품 또는 교환을 거부할 수 있습니다.\nApple Store에서 구입한 제품을 반품하는 방법에 대한 전체적인 세부 정보는 반품 및 환불 (새 창에서 열림) 페이지를 방문해 주십시오."
+          }
+        ],
+        "applied_policies": [
+          {
+            "text": "표준 반품 정책은 제품을 받은 날부터 최대 14일 이내 반품을 접수할 수 있고, 영수증을 동봉해야 한다고 안내합니다. 또한 최초 구입 상태와 모든 구성품·액세서리·상자를 함께 반납하고, 구입한 국가 또는 지역에서 반품해야 합니다.",
+            "evidence_ids": [
+              "evidence-policy-fe254304ae0f2727f2ac8582"
+            ]
+          },
+          {
+            "text": "반품 절차 안내에는 반품 시작 기한이 제품을 받은 날부터 최대 14일 이내라고 되어 있지만, 해당 정책 문구에는 14일째의 구체적인 마감 시각이 명시되어 있지 않습니다.",
+            "evidence_ids": [
+              "evidence-policy-ca44177e22c9ecb699729080"
+            ]
+          }
+        ],
+        "recommendation": {
+          "text": "조회된 주문에서는 대상 품목이 2026년 10월 8일 12:00에 배송 완료되었고, 기준 시각인 2026년 10월 22일 12:00까지 14일이 경과했습니다. 정책과 주문 정보만으로 오늘 신청 가능한 정확한 마감 시각을 확정할 수 없습니다. 경계일 마감 시각은 Apple 온라인 스토어 고객 서비스에 직접 확인해 주세요. 제공된 정책 안내 번호는 080-330-8877입니다.",
+          "evidence_ids": [
+            "evidence-policy-ca44177e22c9ecb699729080",
+            "evidence-policy-961c94cf805ff6ca387bc3c8"
+          ]
+        },
+        "draft_reply": null,
+        "missing_fields": [
+          {
+            "field": "other",
+            "item_id": "01",
+            "question": "2026년 10월 22일 반품 신청의 정확한 마감 시각을 Apple 온라인 스토어 고객 서비스에 확인해 주세요."
+          }
+        ],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 24,
+            "status": "success",
+            "result_summary": "가상 주문 조회 완료",
+            "tool_name": "lookup_order",
+            "input": {
+              "order_id": "A08"
+            }
+          },
+          {
+            "sequence": 2,
+            "duration_ms": 3290,
+            "status": "success",
+            "result_summary": "정책 근거 후보 3개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 반품 정책: 주문 상품 수령일로부터 14일 이내 반품 요청 기준, 14일째 당일 신청 마감 시각, 영수증 조건 및 한국 내 반품 조건",
+              "topic": "returns"
+            },
+            "evidence_ids": [
+              "evidence-policy-961c94cf805ff6ca387bc3c8",
+              "evidence-policy-ca44177e22c9ecb699729080",
+              "evidence-policy-fe254304ae0f2727f2ac8582"
+            ]
+          },
+          {
+            "sequence": 3,
+            "duration_ms": 628,
+            "status": "success",
+            "result_summary": "정책 근거 후보 3개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 반품 정책의 수령일부터 14일 이내 기준에서 14일째 신청 가능한 정확한 마감 시각 또는 당일 마감 시각이 명시되어 있는지 확인",
+              "topic": "returns"
+            },
+            "evidence_ids": [
+              "evidence-policy-961c94cf805ff6ca387bc3c8",
+              "evidence-policy-ca44177e22c9ecb699729080",
+              "evidence-policy-fe254304ae0f2727f2ac8582"
+            ]
+          }
+        ]
+      },
+      "decisions": [
+        {
+          "action": "lookup_order",
+          "requires_order": true,
+          "topic": "returns",
+          "query": null,
+          "status": null,
+          "date_facts": [],
+          "proposal": {
+            "action": "lookup_order",
+            "requires_order": true,
+            "topic": "returns",
+            "query": null,
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "search_policy",
+          "requires_order": true,
+          "topic": "returns",
+          "query": "Apple 한국 온라인 스토어 반품 정책: 주문 상품 수령일로부터 14일 이내 반품 요청 기준, 14일째 당일 신청 마감 시각, 영수증 조건 및 한국 내 반품 조건",
+          "status": null,
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": 14
+            }
+          ],
+          "proposal": {
+            "action": "search_policy",
+            "requires_order": true,
+            "topic": "returns",
+            "query": "Apple 한국 온라인 스토어 반품 정책: 주문 상품 수령일로부터 14일 이내 반품 요청 기준, 14일째 당일 신청 마감 시각, 영수증 조건 및 한국 내 반품 조건",
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "search_policy",
+          "requires_order": true,
+          "topic": "returns",
+          "query": "Apple 한국 온라인 스토어 반품 정책의 수령일부터 14일 이내 기준에서 14일째 신청 가능한 정확한 마감 시각 또는 당일 마감 시각이 명시되어 있는지 확인",
+          "status": null,
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": 14
+            }
+          ],
+          "proposal": {
+            "action": "search_policy",
+            "requires_order": true,
+            "topic": "returns",
+            "query": "Apple 한국 온라인 스토어 반품 정책의 수령일부터 14일 이내 기준에서 14일째 신청 가능한 정확한 마감 시각 또는 당일 마감 시각이 명시되어 있는지 확인",
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "finish",
+          "requires_order": true,
+          "topic": "returns",
+          "query": null,
+          "status": "insufficient_evidence",
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": 14
+            }
+          ],
+          "proposal": {
+            "action": "finish",
+            "requires_order": true,
+            "topic": "returns",
+            "query": null,
+            "status": "insufficient_evidence",
+            "applied_policies": [
+              {
+                "text": "표준 반품 정책은 제품을 받은 날부터 최대 14일 이내 반품을 접수할 수 있고, 영수증을 동봉해야 한다고 안내합니다. 또한 최초 구입 상태와 모든 구성품·액세서리·상자를 함께 반납하고, 구입한 국가 또는 지역에서 반품해야 합니다.",
+                "evidence_ids": [
+                  "evidence-policy-fe254304ae0f2727f2ac8582"
+                ]
+              },
+              {
+                "text": "반품 절차 안내에는 반품 시작 기한이 제품을 받은 날부터 최대 14일 이내라고 되어 있지만, 해당 정책 문구에는 14일째의 구체적인 마감 시각이 명시되어 있지 않습니다.",
+                "evidence_ids": [
+                  "evidence-policy-ca44177e22c9ecb699729080"
+                ]
+              }
+            ],
+            "recommendation": {
+              "text": "조회된 주문에서는 대상 품목이 2026년 10월 8일 12:00에 배송 완료되었고, 기준 시각인 2026년 10월 22일 12:00까지 14일이 경과했습니다. 정책과 주문 정보만으로 오늘 신청 가능한 정확한 마감 시각을 확정할 수 없습니다. 경계일 마감 시각은 Apple 온라인 스토어 고객 서비스에 직접 확인해 주세요. 제공된 정책 안내 번호는 080-330-8877입니다.",
+              "evidence_ids": [
+                "evidence-policy-ca44177e22c9ecb699729080",
+                "evidence-policy-961c94cf805ff6ca387bc3c8"
+              ]
+            },
+            "draft_reply": null,
+            "missing_fields": [
+              {
+                "field": "other",
+                "item_id": "01",
+                "question": "2026년 10월 22일 반품 신청의 정확한 마감 시각을 Apple 온라인 스토어 고객 서비스에 확인해 주세요."
+              }
+            ]
+          }
+        }
+      ],
+      "model_usage": [
+        {
+          "input_tokens": 1533,
+          "output_tokens": 50,
+          "total_tokens": 1583,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1530,
+            "cache_creation": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 1829,
+          "output_tokens": 98,
+          "total_tokens": 1927,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1412,
+            "cache_creation": 414
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 3169,
+          "output_tokens": 95,
+          "total_tokens": 3264,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1412,
+            "cache_creation": 1754
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 3330,
+          "output_tokens": 422,
+          "total_tokens": 3752,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1412,
+            "cache_creation": 1915
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "response_error": null,
+      "response_normalizations": [
+        "status.insufficient_evidence_to_needs_information"
+      ]
+    }
+  ],
+  "note": "Structural checks are not semantic answer accuracy; L01 uses a scripted model.",
+  "completed_at": "2026-10-30T10:52:36.460645+00:00",
+  "summary": {
+    "cases": 1,
+    "structural_pass": 1,
+    "failed_case_ids": [],
+    "model_modes": {
+      "real_openai": 1
+    },
+    "real_model_calls": 4,
+    "model_tokens": {
+      "input_tokens": 9861,
+      "output_tokens": 665,
+      "total_tokens": 10526
+    },
+    "semantic_review": "manual review of O08 only; not a full-suite reevaluation",
+    "actual_cost_and_embedding_tokens": "not_collected"
+  },
+  "scope_note": "Only O08 was rerun against the real model; earlier 24-case reports remain historical."
+}

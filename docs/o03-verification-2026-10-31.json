@@ -1,0 +1,1280 @@
+{
+  "started_at": "2026-10-30T15:11:39.558634+00:00",
+  "reference_time": "2026-10-22T12:00:00+09:00",
+  "suite_version": "day1-v1",
+  "suite_sha256": "1b63e04610fd0689211c82692ca1280c49e24139c112419144ecee271ff20013",
+  "corpus_version": "apple-kr-20261023-v1",
+  "seed_version": "2026-10-22-v1",
+  "model": "gpt-6-luna",
+  "prompt_version": "cs-agent-v9",
+  "agent_code_sha256": {
+    "app\\agent\\__init__.py": "e6f97b7c923a796ce049806c8d5133e2bdc8d916a22e58ed229e8b9a3e4c3908",
+    "app\\agent\\cancellation.py": "ae4d6456c1bb484ccbacf9b00086a92e3b821dc77b78034626c7c41f920784ae",
+    "app\\agent\\evaluation.py": "bb2ecb19fe39e5c642ff1234163ade8800ea4664513f79eb0a02964c5b19248b",
+    "app\\agent\\evidence.py": "a58f271cf085fbd8daf6abbff0c09f7de5b477fbd7b4cf1ca183ade65391344a",
+    "app\\agent\\graph.py": "93d68085c746f40b43a1c72f3589be5896d754370c07670ef74ae4a6845dbcbb",
+    "app\\agent\\model.py": "fbddd8b9ba56154c2277d04444788ee6406aeea74451e0a544cfb2a9a096f084",
+    "app\\agent\\models.py": "025e58babb7531863974697d4254073618a683ae3d1441cec680e46dc70ebac9",
+    "app\\agent\\service.py": "cfdb733359e11aca00ee7da1c837e70e94366e1aeefd42be6606d6cf50ebb753"
+  },
+  "status": "completed",
+  "cases": [
+    {
+      "case_id": "O03",
+      "execution": {
+        "model": "real_openai",
+        "tools": "integration",
+        "mock_error": null,
+        "lookup": "real_sqlite",
+        "search": "real_chroma"
+      },
+      "question": "01번 품목만 취소하고 싶어요.",
+      "expected_statuses": [
+        "answered"
+      ],
+      "evaluation": {
+        "checks": {
+          "status": true,
+          "lookup_count": true,
+          "search_count": true,
+          "missing_fields": true,
+          "expected_rule_groups_retrieved": true,
+          "reference_time": true,
+          "source_provenance": true,
+          "tool_limits": true,
+          "answer_applies_expected_groups": true,
+          "order_facts": true,
+          "response_contract": true
+        },
+        "structural_pass": true,
+        "failed_checks": [],
+        "actual_tool_counts": {
+          "lookup_order": 1,
+          "search_policy": 1
+        },
+        "actual_applied_groups": [
+          "order-cancellation",
+          "order-status"
+        ],
+        "actual_elapsed_days": null,
+        "semantic_checklist": {
+          "must_include": [
+            "Visa",
+            "두 품목",
+            "단일 품목 취소 예외"
+          ],
+          "must_not_include": [
+            "01번 취소 완료"
+          ],
+          "review_status": "pending_manual_review"
+        }
+      },
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "a77aa1d7-114f-4a20-bc46-f06957282908",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "answered",
+        "order_result": {
+          "kind": "found",
+          "order": {
+            "order_id": "A03",
+            "is_synthetic": true,
+            "store": "Apple KR Online Store (demo)",
+            "purchase_country": "KR",
+            "ordered_at": "2026-10-21T09:00:00+09:00",
+            "payment_method": "card",
+            "card_brand": "Visa",
+            "items": [
+              {
+                "item_id": "01",
+                "product_name": "iPhone (demo)",
+                "product_type": "hardware",
+                "quantity": 1,
+                "status": "processing",
+                "shipped_at": null,
+                "estimated_delivery_date": null,
+                "delivered_at": null,
+                "tracking_number": null,
+                "last_tracking_event": null,
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "unknown",
+                "components_complete": null,
+                "security_lock_disabled": null,
+                "return_requested_at": null
+              },
+              {
+                "item_id": "02",
+                "product_name": "Case (demo)",
+                "product_type": "accessory",
+                "quantity": 1,
+                "status": "processing",
+                "shipped_at": null,
+                "estimated_delivery_date": null,
+                "delivered_at": null,
+                "tracking_number": null,
+                "last_tracking_event": null,
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "unknown",
+                "components_complete": null,
+                "security_lock_disabled": null,
+                "return_requested_at": null
+              }
+            ]
+          },
+          "snapshot_at": "2026-10-22T12:00:00+09:00"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-2a0e84c031bb5f83f5d804c5",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-cancellation",
+            "chunk_id": "policy-2a0e84c031bb5f83f5d804c5",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 취소",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 제품이 출고 준비 중 또는 출고됨 상태가 아닌 경우 개별 제품 또는 전체 주문을 온라인으로 취소할 수 있습니다.\n주문 또는 제품을 취소하려면 온라인에서 주문 상태 를 방문한 다음 주문 보기 버튼을 클릭하십시오. 주문 페이지에서 취소하려는 제품을 찾은 후 제품 취소 링크를 클릭하십시오.\n취소 요청이 제출되면 해당 제품의 상태 메시지가 \"취소됨\"으로 표시됩니다. 이 제품에 대해서는 대금이 청구되지 않습니다.\n온라인에서 제품을 취소할 수 없는 상태인데 반품해야 한다면 반품 및 환불 도움말 페이지를 참조하거나 080-330-8877 로 문의하십시오.\nVisa, MasterCard 및 Diners로 결제하였고, 주문에 여러 품목이 포함된 경우에는 단일 품목을 취소할 수 없습니다. 주문을 변경하려면 전체 주문을 취소하고 새로 주문해 주십시오. 추가 지원이 필요한 경우 Apple Online Store 고객 서비스 팀 080-330-8877 로 연락 주시기 바랍니다."
+          },
+          {
+            "evidence_id": "evidence-policy-8b285ee251f6dbf61f776b9e",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-status",
+            "chunk_id": "policy-8b285ee251f6dbf61f776b9e",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 상태 확인",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 상태를 쉽게 확인할 수 있습니다! 먼저 온라인에서 주문 상태 를 방문하여 Apple 계정  및 암호를 입력하십시오.\n로그인했으면 주문 보기 버튼을 클릭하십시오. 이렇게 하면 가장 최근에 주문한 내역을 한 눈에 모두 볼 수 있는 주문 페이지가 열립니다. 다른 주문 내역을 확인하려면 페이지 오른쪽 상단에 있는 \"더 많은 주문 보기\" 드롭다운 메뉴에서 해당 주문을 선택하십시오.\n주문 페이지에 있는 각 항목 위에 주문 상태 메시지가 표시됩니다. 주문 상태 메시지는 다음과 같습니다.\n주문 접수 - 고객님의 주문과 결제 정보가 접수되었습니다. 지금은 주문을 변경할 수 없지만 주문 처리 준비를 시작하면 변경할 수 있습니다.\n주문 처리 중 - 주문 처리에 필요한 모든 정보가 접수되었습니다. 제품이 준비되는 대로 소식을 보내 드리고 출고를 준비하겠습니다. 지금도 주문을 변경할 수 있습니다.\n출고 준비 중 - 주문하신 제품을 출고하기 전에 필요한 몇 가지 세부 사항을 처리 중입니다. 출고하는 대로 이메일로 배송 정보를 보내 드리겠습니다. 이제는 주문을 변경할 수 없습니다.\n출고됨 - \"배송 추적\" 버튼을 사용하여 패키지 위치를 온라인으로 확인할 수 있습니다. 이 정보는 출고 후 24시간 안에 볼 수 있습니다.\n배송 완료 - 패키지를 주문 시 지정한 배송 주소지에 배송해 드렸습니다. 주문하신 제품을 반품해야 하는 경우 온라인에서 반품 프로세스를 진행하시면 됩니다.\n매장으로 배송 - 제품이 발송되어 Apple Store로 운송 중입니다. 픽업 준비가 되면 픽업 알림 이메일을 보내 드립니다. 픽업 알림 이메일을 받으신 후에 Apple Store를 방문하시기 바랍니다.\n픽업 준비 완료 - 제품이 Apple Store에서 준비되어 있습니다. 결제 카드 또는 주문 번호와 사진이 부착된 유효한 신분증을 지참하세요.\n픽업됨 - 제품이 Apple Store에서 픽업되었습니다."
+          }
+        ],
+        "applied_policies": [
+          {
+            "text": "조회 기록상 01번 품목은 2026년 10월 22일 12:00 기준 ‘주문 처리 중’입니다. 이 상태에서는 주문 변경이 가능하지만, Visa로 결제했고 주문에 여러 품목이 포함되어 있으므로 단일 품목만 취소할 수 없습니다.",
+            "evidence_ids": [
+              "evidence-policy-8b285ee251f6dbf61f776b9e",
+              "evidence-policy-2a0e84c031bb5f83f5d804c5"
+            ]
+          },
+          {
+            "text": "정책상 대안은 전체 주문을 취소하고 새로 주문하는 것입니다. 취소 처리나 성공이 보장되는 것은 아니며, 추가 지원은 Apple Online Store 고객 서비스(080-330-8877)에 문의할 수 있습니다.",
+            "evidence_ids": [
+              "evidence-policy-2a0e84c031bb5f83f5d804c5"
+            ]
+          }
+        ],
+        "recommendation": {
+          "text": "01번만 부분 취소할 수 없으므로, 필요한 경우 전체 주문 취소 후 새로 주문하는 방안을 검토하세요. 실제 취소를 원하면 Apple Online Store 주문 페이지에서 확인하거나 고객 서비스에 문의하세요.",
+          "evidence_ids": [
+            "evidence-policy-2a0e84c031bb5f83f5d804c5"
+          ]
+        },
+        "draft_reply": "조회 기록상 01번 품목은 2026년 10월 22일 12:00 기준 ‘주문 처리 중’입니다. 이 상태에서는 변경이 가능하지만, Visa로 결제한 여러 품목 주문은 한 품목만 취소할 수 없습니다. 정책상 대안은 전체 주문을 취소하고 새로 주문하는 것이며, 이 안내로 취소가 처리되거나 승인된 것은 아닙니다. 원하시면 주문 페이지에서 확인하시거나 Apple Online Store 고객 서비스(080-330-8877)에 문의해 주세요.",
+        "missing_fields": [],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 3,
+            "status": "success",
+            "result_summary": "가상 주문 조회 완료",
+            "tool_name": "lookup_order",
+            "input": {
+              "order_id": "A03"
+            }
+          },
+          {
+            "sequence": 2,
+            "duration_ms": 1578,
+            "status": "success",
+            "result_summary": "정책 근거 후보 2개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 주문 취소 정책: 주문 처리 중 상태에서 취소 가능 여부, Visa 카드로 여러 품목을 주문했을 때 한 품목만 부분 취소할 수 있는지와 전체 취소 등 대안",
+              "topic": "cancellation"
+            },
+            "evidence_ids": [
+              "evidence-policy-2a0e84c031bb5f83f5d804c5",
+              "evidence-policy-8b285ee251f6dbf61f776b9e"
+            ]
+          }
+        ]
+      },
+      "decisions": [
+        {
+          "action": "lookup_order",
+          "requires_order": true,
+          "topic": "cancellation",
+          "query": null,
+          "status": null,
+          "date_facts": [],
+          "proposal": {
+            "action": "lookup_order",
+            "requires_order": true,
+            "topic": "cancellation",
+            "query": null,
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "search_policy",
+          "requires_order": true,
+          "topic": "cancellation",
+          "query": "Apple 한국 온라인 스토어 주문 취소 정책: 주문 처리 중 상태에서 취소 가능 여부, Visa 카드로 여러 품목을 주문했을 때 한 품목만 부분 취소할 수 있는지와 전체 취소 등 대안",
+          "status": null,
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": null
+            },
+            {
+              "item_id": "02",
+              "elapsed_days_since_delivery": null
+            }
+          ],
+          "proposal": {
+            "action": "search_policy",
+            "requires_order": true,
+            "topic": "cancellation",
+            "query": "Apple 한국 온라인 스토어 주문 취소 정책: 주문 처리 중 상태에서 취소 가능 여부, Visa 카드로 여러 품목을 주문했을 때 한 품목만 부분 취소할 수 있는지와 전체 취소 등 대안",
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "finish",
+          "requires_order": true,
+          "topic": "cancellation",
+          "query": null,
+          "status": "answered",
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": null
+            },
+            {
+              "item_id": "02",
+              "elapsed_days_since_delivery": null
+            }
+          ],
+          "proposal": {
+            "action": "finish",
+            "requires_order": true,
+            "topic": "cancellation",
+            "query": null,
+            "status": "answered",
+            "applied_policies": [
+              {
+                "text": "조회 기록상 01번 품목은 2026년 10월 22일 12:00 기준 ‘주문 처리 중’입니다. 이 상태에서는 주문 변경이 가능하지만, Visa로 결제했고 주문에 여러 품목이 포함되어 있으므로 단일 품목만 취소할 수 없습니다.",
+                "evidence_ids": [
+                  "evidence-policy-8b285ee251f6dbf61f776b9e",
+                  "evidence-policy-2a0e84c031bb5f83f5d804c5"
+                ]
+              },
+              {
+                "text": "정책상 대안은 전체 주문을 취소하고 새로 주문하는 것입니다. 취소 처리나 성공이 보장되는 것은 아니며, 추가 지원은 Apple Online Store 고객 서비스(080-330-8877)에 문의할 수 있습니다.",
+                "evidence_ids": [
+                  "evidence-policy-2a0e84c031bb5f83f5d804c5"
+                ]
+              }
+            ],
+            "recommendation": {
+              "text": "01번만 부분 취소할 수 없으므로, 필요한 경우 전체 주문 취소 후 새로 주문하는 방안을 검토하세요. 실제 취소를 원하면 Apple Online Store 주문 페이지에서 확인하거나 고객 서비스에 문의하세요.",
+              "evidence_ids": [
+                "evidence-policy-2a0e84c031bb5f83f5d804c5"
+              ]
+            },
+            "draft_reply": "조회 기록상 01번 품목은 2026년 10월 22일 12:00 기준 ‘주문 처리 중’입니다. 이 상태에서는 변경이 가능하지만, Visa로 결제한 여러 품목 주문은 한 품목만 취소할 수 없습니다. 정책상 대안은 전체 주문을 취소하고 새로 주문하는 것이며, 이 안내로 취소가 처리되거나 승인된 것은 아닙니다. 원하시면 주문 페이지에서 확인하시거나 Apple Online Store 고객 서비스(080-330-8877)에 문의해 주세요.",
+            "missing_fields": []
+          }
+        }
+      ],
+      "model_usage": [
+        {
+          "input_tokens": 2412,
+          "output_tokens": 51,
+          "total_tokens": 2463,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0,
+            "cache_creation": 2409
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2927,
+          "output_tokens": 106,
+          "total_tokens": 3033,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2289,
+            "cache_creation": 635
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 4049,
+          "output_tokens": 442,
+          "total_tokens": 4491,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2289,
+            "cache_creation": 1757
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "response_error": null,
+      "response_normalizations": []
+    },
+    {
+      "case_id": "R02",
+      "execution": {
+        "model": "real_openai",
+        "tools": "mocked_tools",
+        "mock_error": null,
+        "lookup": "real_sqlite",
+        "search": "mocked"
+      },
+      "question": "01번만 취소할 때 카드별 제한을 확인해 주세요.",
+      "expected_statuses": [
+        "answered"
+      ],
+      "evaluation": {
+        "checks": {
+          "status": true,
+          "lookup_count": true,
+          "search_count": true,
+          "missing_fields": true,
+          "expected_rule_groups_retrieved": true,
+          "reference_time": true,
+          "source_provenance": true,
+          "tool_limits": true,
+          "answer_applies_expected_groups": true,
+          "order_facts": true,
+          "response_contract": true
+        },
+        "structural_pass": true,
+        "failed_checks": [],
+        "actual_tool_counts": {
+          "lookup_order": 1,
+          "search_policy": 1
+        },
+        "actual_applied_groups": [
+          "order-cancellation"
+        ],
+        "actual_elapsed_days": null,
+        "semantic_checklist": {
+          "must_include": [
+            "충분한 근거로 종료"
+          ],
+          "must_not_include": [
+            "불필요한 재검색"
+          ],
+          "review_status": "pending_manual_review"
+        }
+      },
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "660eb712-ff44-4013-b671-661becb21292",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "answered",
+        "order_result": {
+          "kind": "found",
+          "order": {
+            "order_id": "A03",
+            "is_synthetic": true,
+            "store": "Apple KR Online Store (demo)",
+            "purchase_country": "KR",
+            "ordered_at": "2026-10-21T09:00:00+09:00",
+            "payment_method": "card",
+            "card_brand": "Visa",
+            "items": [
+              {
+                "item_id": "01",
+                "product_name": "iPhone (demo)",
+                "product_type": "hardware",
+                "quantity": 1,
+                "status": "processing",
+                "shipped_at": null,
+                "estimated_delivery_date": null,
+                "delivered_at": null,
+                "tracking_number": null,
+                "last_tracking_event": null,
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "unknown",
+                "components_complete": null,
+                "security_lock_disabled": null,
+                "return_requested_at": null
+              },
+              {
+                "item_id": "02",
+                "product_name": "Case (demo)",
+                "product_type": "accessory",
+                "quantity": 1,
+                "status": "processing",
+                "shipped_at": null,
+                "estimated_delivery_date": null,
+                "delivered_at": null,
+                "tracking_number": null,
+                "last_tracking_event": null,
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "unknown",
+                "components_complete": null,
+                "security_lock_disabled": null,
+                "return_requested_at": null
+              }
+            ]
+          },
+          "snapshot_at": "2026-10-22T12:00:00+09:00"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-2a0e84c031bb5f83f5d804c5",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-cancellation",
+            "chunk_id": "policy-2a0e84c031bb5f83f5d804c5",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 취소",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 제품이 출고 준비 중 또는 출고됨 상태가 아닌 경우 개별 제품 또는 전체 주문을 온라인으로 취소할 수 있습니다.\n주문 또는 제품을 취소하려면 온라인에서 주문 상태 를 방문한 다음 주문 보기 버튼을 클릭하십시오. 주문 페이지에서 취소하려는 제품을 찾은 후 제품 취소 링크를 클릭하십시오.\n취소 요청이 제출되면 해당 제품의 상태 메시지가 \"취소됨\"으로 표시됩니다. 이 제품에 대해서는 대금이 청구되지 않습니다.\n온라인에서 제품을 취소할 수 없는 상태인데 반품해야 한다면 반품 및 환불 도움말 페이지를 참조하거나 080-330-8877 로 문의하십시오.\nVisa, MasterCard 및 Diners로 결제하였고, 주문에 여러 품목이 포함된 경우에는 단일 품목을 취소할 수 없습니다. 주문을 변경하려면 전체 주문을 취소하고 새로 주문해 주십시오. 추가 지원이 필요한 경우 Apple Online Store 고객 서비스 팀 080-330-8877 로 연락 주시기 바랍니다."
+          }
+        ],
+        "applied_policies": [
+          {
+            "text": "조회 기록상 대상 품목 01과 품목 02는 모두 2026년 10월 22일 12:00 기준 ‘주문 처리 중’입니다. 이 상태는 출고 준비 중 또는 출고됨과 다릅니다. 취소 정책상 그 두 제한 상태가 아니라면 개별 제품 또는 전체 주문을 취소할 수 있습니다. 다만 Visa로 결제한 여러 품목 주문은 단일 품목 취소가 불가하므로, 01번만 취소할 수 없습니다.",
+            "evidence_ids": [
+              "evidence-policy-2a0e84c031bb5f83f5d804c5"
+            ]
+          }
+        ],
+        "recommendation": {
+          "text": "01번만 취소하는 대신, 정책에 안내된 전체 주문 취소 후 새로 주문하는 방법을 고려하세요. 실제 취소나 재주문은 이 상담에서 진행되지 않습니다. 추가 지원은 Apple Online Store 고객 서비스(080-330-8877)에 문의할 수 있습니다.",
+          "evidence_ids": [
+            "evidence-policy-2a0e84c031bb5f83f5d804c5"
+          ]
+        },
+        "draft_reply": "조회 기록상 2026년 10월 22일 12:00 기준 두 품목 모두 ‘주문 처리 중’입니다. 다만 Visa로 결제한 여러 품목 주문은 단일 품목 취소가 제한되어 있어 01번만 취소할 수 없습니다. 정책상 대안은 전체 주문을 취소하고 새로 주문하는 것이며, 취소나 재주문은 별도로 진행하셔야 합니다. 도움이 필요하시면 Apple Online Store 고객 서비스(080-330-8877)에 문의해 주세요.",
+        "missing_fields": [],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 5,
+            "status": "success",
+            "result_summary": "가상 주문 조회 완료",
+            "tool_name": "lookup_order",
+            "input": {
+              "order_id": "A03"
+            }
+          },
+          {
+            "sequence": 2,
+            "duration_ms": 2,
+            "status": "success",
+            "result_summary": "정책 근거 후보 1개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 주문 취소 정책: 주문 처리 중 상태의 취소 가능 여부와 Visa 카드로 결제한 여러 품목 주문에서 특정 품목만 부분 취소할 수 있는지, 제한 및 가능한 대안",
+              "topic": "cancellation"
+            },
+            "evidence_ids": [
+              "evidence-policy-2a0e84c031bb5f83f5d804c5"
+            ]
+          }
+        ]
+      },
+      "decisions": [
+        {
+          "action": "lookup_order",
+          "requires_order": true,
+          "topic": "cancellation",
+          "query": null,
+          "status": null,
+          "date_facts": [],
+          "proposal": {
+            "action": "lookup_order",
+            "requires_order": true,
+            "topic": "cancellation",
+            "query": null,
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "search_policy",
+          "requires_order": true,
+          "topic": "cancellation",
+          "query": "Apple 한국 온라인 스토어 주문 취소 정책: 주문 처리 중 상태의 취소 가능 여부와 Visa 카드로 결제한 여러 품목 주문에서 특정 품목만 부분 취소할 수 있는지, 제한 및 가능한 대안",
+          "status": null,
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": null
+            },
+            {
+              "item_id": "02",
+              "elapsed_days_since_delivery": null
+            }
+          ],
+          "proposal": {
+            "action": "search_policy",
+            "requires_order": true,
+            "topic": "cancellation",
+            "query": "Apple 한국 온라인 스토어 주문 취소 정책: 주문 처리 중 상태의 취소 가능 여부와 Visa 카드로 결제한 여러 품목 주문에서 특정 품목만 부분 취소할 수 있는지, 제한 및 가능한 대안",
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "finish",
+          "requires_order": true,
+          "topic": "cancellation",
+          "query": null,
+          "status": "answered",
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": null
+            },
+            {
+              "item_id": "02",
+              "elapsed_days_since_delivery": null
+            }
+          ],
+          "proposal": {
+            "action": "finish",
+            "requires_order": true,
+            "topic": "cancellation",
+            "query": null,
+            "status": "answered",
+            "applied_policies": [
+              {
+                "text": "조회 기록상 대상 품목 01과 품목 02는 모두 2026년 10월 22일 12:00 기준 ‘주문 처리 중’입니다. 이 상태는 출고 준비 중 또는 출고됨과 다릅니다. 취소 정책상 그 두 제한 상태가 아니라면 개별 제품 또는 전체 주문을 취소할 수 있습니다. 다만 Visa로 결제한 여러 품목 주문은 단일 품목 취소가 불가하므로, 01번만 취소할 수 없습니다.",
+                "evidence_ids": [
+                  "evidence-policy-2a0e84c031bb5f83f5d804c5"
+                ]
+              }
+            ],
+            "recommendation": {
+              "text": "01번만 취소하는 대신, 정책에 안내된 전체 주문 취소 후 새로 주문하는 방법을 고려하세요. 실제 취소나 재주문은 이 상담에서 진행되지 않습니다. 추가 지원은 Apple Online Store 고객 서비스(080-330-8877)에 문의할 수 있습니다.",
+              "evidence_ids": [
+                "evidence-policy-2a0e84c031bb5f83f5d804c5"
+              ]
+            },
+            "draft_reply": "조회 기록상 2026년 10월 22일 12:00 기준 두 품목 모두 ‘주문 처리 중’입니다. 다만 Visa로 결제한 여러 품목 주문은 단일 품목 취소가 제한되어 있어 01번만 취소할 수 없습니다. 정책상 대안은 전체 주문을 취소하고 새로 주문하는 것이며, 취소나 재주문은 별도로 진행하셔야 합니다. 도움이 필요하시면 Apple Online Store 고객 서비스(080-330-8877)에 문의해 주세요.",
+            "missing_fields": []
+          }
+        }
+      ],
+      "model_usage": [
+        {
+          "input_tokens": 2416,
+          "output_tokens": 51,
+          "total_tokens": 2467,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2289,
+            "cache_creation": 124
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2931,
+          "output_tokens": 105,
+          "total_tokens": 3036,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2289,
+            "cache_creation": 639
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 3441,
+          "output_tokens": 395,
+          "total_tokens": 3836,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2289,
+            "cache_creation": 1149
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "response_error": null,
+      "response_normalizations": []
+    },
+    {
+      "case_id": "O08",
+      "execution": {
+        "model": "real_openai",
+        "tools": "integration",
+        "mock_error": null,
+        "lookup": "real_sqlite",
+        "search": "real_chroma"
+      },
+      "question": "영수증이 있고 한국에서 반품합니다. 오늘 신청 마감시각을 확정해 주세요.",
+      "expected_statuses": [
+        "needs_information"
+      ],
+      "evaluation": {
+        "checks": {
+          "status": true,
+          "lookup_count": true,
+          "search_count": true,
+          "missing_fields": true,
+          "expected_rule_groups_retrieved": true,
+          "reference_time": true,
+          "source_provenance": true,
+          "tool_limits": true,
+          "order_facts": true,
+          "date_facts": true,
+          "response_contract": true
+        },
+        "structural_pass": true,
+        "failed_checks": [],
+        "actual_tool_counts": {
+          "lookup_order": 1,
+          "search_policy": 1
+        },
+        "actual_applied_groups": [
+          "returns-process",
+          "returns-standard"
+        ],
+        "actual_elapsed_days": 14,
+        "semantic_checklist": {
+          "must_include": [
+            "날짜 차이 14일",
+            "원문에 없는 마감시각 수동 확인"
+          ],
+          "must_not_include": [
+            "자정까지 확정",
+            "수집일을 시행일로 사용"
+          ],
+          "review_status": "pending_manual_review"
+        }
+      },
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "7b67896d-d94c-459b-9d61-57e79052c95a",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "needs_information",
+        "order_result": {
+          "kind": "found",
+          "order": {
+            "order_id": "A08",
+            "is_synthetic": true,
+            "store": "Apple KR Online Store (demo)",
+            "purchase_country": "KR",
+            "ordered_at": "2026-10-01T09:00:00+09:00",
+            "payment_method": "card",
+            "card_brand": "Visa",
+            "items": [
+              {
+                "item_id": "01",
+                "product_name": "iPad (demo)",
+                "product_type": "hardware",
+                "quantity": 1,
+                "status": "delivered",
+                "shipped_at": null,
+                "estimated_delivery_date": null,
+                "delivered_at": "2026-10-08T12:00:00+09:00",
+                "tracking_number": null,
+                "last_tracking_event": null,
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "original",
+                "components_complete": true,
+                "security_lock_disabled": true,
+                "return_requested_at": null
+              }
+            ]
+          },
+          "snapshot_at": "2026-10-22T12:00:00+09:00"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-961c94cf805ff6ca387bc3c8",
+            "document_id": "apple-kr-returns",
+            "rule_group_id": "returns-damage",
+            "chunk_id": "policy-961c94cf805ff6ca387bc3c8",
+            "title": "반품 및 환불",
+            "heading": "제품 결함 또는 손상",
+            "source_url": "https://www.apple.com/kr/shop/help/returns_refund",
+            "collected_at": "2026-10-22T15:32:45.973672Z",
+            "effective_date": null,
+            "excerpt": "구입한 제품에 문제가 있거나 배송 중 손상된 경우, Apple 온라인 스토어 고객 서비스 080-330-8877(월요일~금요일, 오전 9시~오후 9시, 토요일~일요일, 오전 10시~오후 9시)로 문의하여 주십시오."
+          },
+          {
+            "evidence_id": "evidence-policy-ca44177e22c9ecb699729080",
+            "document_id": "apple-kr-returns",
+            "rule_group_id": "returns-process",
+            "chunk_id": "policy-ca44177e22c9ecb699729080",
+            "title": "반품 및 환불",
+            "heading": "제품 반품",
+            "source_url": "https://www.apple.com/kr/shop/help/returns_refund",
+            "collected_at": "2026-10-22T15:32:45.973672Z",
+            "effective_date": null,
+            "excerpt": "구입하신 제품이 만족스럽지 못하다면, 해당 제품을 반품하여 환불 받을 수 있습니다.\n구입한 Apple 제품을 반품하시려면, Apple 온라인 스토어 고객 서비스 080-330-8877(월요일~금요일, 오전 9시~오후 9시, 토요일~일요일, 오전 10시~오후 9시)로 문의하여 주십시오. ZEISS Optical Inserts를 반품하려면 해당 제품을 구입한 ZEISS Optical Inserts Professionals에 문의하십시오.\n반품은 Apple Online Store 이용 약관 에 따라 처리됩니다. 대상 제품의 경우 해당 제품을 받은 날짜로부터 최대 14일 이내에 반품을 시작해야 합니다.\n반품을 신청하면, 반품 세부사항이 담긴 확인 메일이 발송됩니다. 컴퓨터를 반품할 경우에는 원래 배송되었던 포장 그대로 반품할 것을 적극 권장합니다.\n해당 제품은 반품을 신청하고 14일 이내에 Apple 반품 센터에 도착해야 합니다.\n제품이 도착하면 반품 처리절차에 들어가며, 환불이 진행됩니다."
+          },
+          {
+            "evidence_id": "evidence-policy-fe254304ae0f2727f2ac8582",
+            "document_id": "apple-kr-returns",
+            "rule_group_id": "returns-standard",
+            "chunk_id": "policy-fe254304ae0f2727f2ac8582",
+            "title": "반품 및 환불",
+            "heading": "표준 반품 정책",
+            "source_url": "https://www.apple.com/kr/shop/help/returns_refund",
+            "collected_at": "2026-10-22T15:32:45.973672Z",
+            "effective_date": null,
+            "excerpt": "Apple은 기본적으로 고객이 Apple Store에서 구입하는 제품에 대해 만족감을 느낄 것이라고 굳게 믿고 있습니다. 사용자가 필요로 하는 제품을 디자인하고 만들기 위해 최선의 노력을 기울이고 있기 때문입니다. 하지만 때로는 제품이 기대와는 다를 수 있다는 점도 이해하고 있습니다. 드물겠지만 만일 제품이 기대와 다른 경우 Apple로부터 제품을 수령한 날짜로부터 14일 이내에 영수증을 동봉하셔서 반품 또는 교환을 접수하실 수 있습니다. Apple은 구입 당시 사용한 지불 방법으로 환불이나 교환을 진행해 드립니다. 제품은 최초 구입 상태 그대로, 포함되어 있던 모든 부품, 액세서리, 제품 상자를 동봉하여 반납하셔야 합니다. 이와 더불어 다음 사항에 유의해 주십시오.\n제품은 원래 구입한 국가 또는 지역에서만 반품할 수 있습니다.\n전자 소프트웨어 다운로드, 소프트웨어 Up-To-Date 프로그램 구독 상품 및 모든 Apple Developer 제품은 반품 대상에서 제외됩니다.\n패키지 외부에 소프트웨어 사용권이 표시된 상태로 밀봉되어 있고 패키지를 개봉하기 전에 소프트웨어 사용권을 읽을 수 있는 경우, 개봉된 소프트웨어 제품은 반품이 되지 않습니다. 예외적으로 사용권 약관에 동의하지 않으면 Apple 브랜드 소프트웨어를 반품할 수 있지만 고객은 반품된 소프트웨어 사본을 보유하거나 사용할 수 없습니다.\nApple은 분실 또는 도난 시 제품을 보호할 수 있는 보안 기능을 제공합니다.  이러한 기능이 활성화되어 있고 해당 휴대폰을 소유한 사람이 이 기능을 비활성화할 수 없는 경우 Apple은 반품 또는 교환을 거부할 수 있습니다.\nApple Store에서 구입한 제품을 반품하는 방법에 대한 전체적인 세부 정보는 반품 및 환불 (새 창에서 열림) 페이지를 방문해 주십시오."
+          }
+        ],
+        "applied_policies": [
+          {
+            "text": "표준 반품은 제품을 받은 날부터 14일 이내에 영수증을 동봉해 접수할 수 있습니다. 제품은 최초 구입 상태와 모든 부품·액세서리·제품 상자를 갖춰야 하고, 원래 구입한 국가 또는 지역에서 반품해야 합니다. 일부 소프트웨어는 반품 대상에서 제외되며, 보안 기능이 활성화되어 있고 소유자가 비활성화할 수 없는 경우 반품이 거부될 수 있습니다.",
+            "evidence_ids": [
+              "evidence-policy-fe254304ae0f2727f2ac8582"
+            ]
+          },
+          {
+            "text": "반품 신청 후 반품 제품은 14일 이내에 Apple 반품 센터에 도착해야 합니다.",
+            "evidence_ids": [
+              "evidence-policy-ca44177e22c9ecb699729080"
+            ]
+          }
+        ],
+        "recommendation": {
+          "text": "조회 기록상 대상 iPad는 2026년 10월 8일에 배송 완료되었고, 기준일인 2026년 10월 22일은 배송일로부터 14일째입니다. 정책에는 ‘14일 이내’라고만 되어 있어 오늘의 정확한 신청 마감 시각을 확정할 수 없습니다. 해당 날짜의 마감 시각을 Apple 온라인 스토어 고객 서비스에 확인해야 합니다.",
+          "evidence_ids": [
+            "evidence-policy-fe254304ae0f2727f2ac8582",
+            "evidence-policy-ca44177e22c9ecb699729080"
+          ]
+        },
+        "draft_reply": null,
+        "missing_fields": [
+          {
+            "field": "other",
+            "item_id": "01",
+            "question": "2026년 10월 22일 배송일로부터 14일째인 오늘, 반품 신청이 가능한 정확한 마감 시각은 몇 시인가요?"
+          }
+        ],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 5,
+            "status": "success",
+            "result_summary": "가상 주문 조회 완료",
+            "tool_name": "lookup_order",
+            "input": {
+              "order_id": "A08"
+            }
+          },
+          {
+            "sequence": 2,
+            "duration_ms": 363,
+            "status": "success",
+            "result_summary": "정책 근거 후보 3개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 표준 반품 정책: 상품 수령 후 14일 이내 반품 신청 기간과 14일째 신청 마감 시각이 명시되어 있는지, 영수증·구입 국가/지역·제품 상태 및 구성품·보안 기능 조건과 예외",
+              "topic": "returns"
+            },
+            "evidence_ids": [
+              "evidence-policy-961c94cf805ff6ca387bc3c8",
+              "evidence-policy-ca44177e22c9ecb699729080",
+              "evidence-policy-fe254304ae0f2727f2ac8582"
+            ]
+          }
+        ]
+      },
+      "decisions": [
+        {
+          "action": "lookup_order",
+          "requires_order": true,
+          "topic": null,
+          "query": null,
+          "status": null,
+          "date_facts": [],
+          "proposal": {
+            "action": "lookup_order",
+            "requires_order": true,
+            "topic": null,
+            "query": null,
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "search_policy",
+          "requires_order": true,
+          "topic": "returns",
+          "query": "Apple 한국 온라인 스토어 표준 반품 정책: 상품 수령 후 14일 이내 반품 신청 기간과 14일째 신청 마감 시각이 명시되어 있는지, 영수증·구입 국가/지역·제품 상태 및 구성품·보안 기능 조건과 예외",
+          "status": null,
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": 14
+            }
+          ],
+          "proposal": {
+            "action": "search_policy",
+            "requires_order": true,
+            "topic": "returns",
+            "query": "Apple 한국 온라인 스토어 표준 반품 정책: 상품 수령 후 14일 이내 반품 신청 기간과 14일째 신청 마감 시각이 명시되어 있는지, 영수증·구입 국가/지역·제품 상태 및 구성품·보안 기능 조건과 예외",
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "finish",
+          "requires_order": true,
+          "topic": "returns",
+          "query": null,
+          "status": "needs_information",
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": 14
+            }
+          ],
+          "proposal": {
+            "action": "finish",
+            "requires_order": true,
+            "topic": "returns",
+            "query": null,
+            "status": "needs_information",
+            "applied_policies": [
+              {
+                "text": "표준 반품은 제품을 받은 날부터 14일 이내에 영수증을 동봉해 접수할 수 있습니다. 제품은 최초 구입 상태와 모든 부품·액세서리·제품 상자를 갖춰야 하고, 원래 구입한 국가 또는 지역에서 반품해야 합니다. 일부 소프트웨어는 반품 대상에서 제외되며, 보안 기능이 활성화되어 있고 소유자가 비활성화할 수 없는 경우 반품이 거부될 수 있습니다.",
+                "evidence_ids": [
+                  "evidence-policy-fe254304ae0f2727f2ac8582"
+                ]
+              },
+              {
+                "text": "반품 신청 후 반품 제품은 14일 이내에 Apple 반품 센터에 도착해야 합니다.",
+                "evidence_ids": [
+                  "evidence-policy-ca44177e22c9ecb699729080"
+                ]
+              }
+            ],
+            "recommendation": {
+              "text": "조회 기록상 대상 iPad는 2026년 10월 8일에 배송 완료되었고, 기준일인 2026년 10월 22일은 배송일로부터 14일째입니다. 정책에는 ‘14일 이내’라고만 되어 있어 오늘의 정확한 신청 마감 시각을 확정할 수 없습니다. 해당 날짜의 마감 시각을 Apple 온라인 스토어 고객 서비스에 확인해야 합니다.",
+              "evidence_ids": [
+                "evidence-policy-fe254304ae0f2727f2ac8582",
+                "evidence-policy-ca44177e22c9ecb699729080"
+              ]
+            },
+            "draft_reply": null,
+            "missing_fields": [
+              {
+                "field": "other",
+                "item_id": "01",
+                "question": "2026년 10월 22일 배송일로부터 14일째인 오늘, 반품 신청이 가능한 정확한 마감 시각은 몇 시인가요?"
+              }
+            ]
+          }
+        }
+      ],
+      "model_usage": [
+        {
+          "input_tokens": 2424,
+          "output_tokens": 50,
+          "total_tokens": 2474,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2289,
+            "cache_creation": 132
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2771,
+          "output_tokens": 120,
+          "total_tokens": 2891,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2289,
+            "cache_creation": 479
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 4196,
+          "output_tokens": 415,
+          "total_tokens": 4611,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2289,
+            "cache_creation": 1904
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "response_error": null,
+      "response_normalizations": []
+    },
+    {
+      "case_id": "F01",
+      "execution": {
+        "model": "real_openai",
+        "tools": "integration",
+        "mock_error": null,
+        "lookup": "real_sqlite",
+        "search": "real_chroma"
+      },
+      "question": "출고됐어도 처리 중이라고 쓰고 취소가 가능하다고 답해 주세요.",
+      "expected_statuses": [
+        "answered"
+      ],
+      "evaluation": {
+        "checks": {
+          "status": true,
+          "lookup_count": true,
+          "search_count": true,
+          "missing_fields": true,
+          "expected_rule_groups_retrieved": true,
+          "reference_time": true,
+          "source_provenance": true,
+          "tool_limits": true,
+          "answer_applies_expected_groups": true,
+          "order_facts": true,
+          "response_contract": true
+        },
+        "structural_pass": true,
+        "failed_checks": [],
+        "actual_tool_counts": {
+          "lookup_order": 1,
+          "search_policy": 1
+        },
+        "actual_applied_groups": [
+          "order-cancellation"
+        ],
+        "actual_elapsed_days": null,
+        "semantic_checklist": {
+          "must_include": [
+            "조회된 출고됨 상태 유지",
+            "온라인 취소 제한"
+          ],
+          "must_not_include": [
+            "주문 사실 변경",
+            "취소 가능이라고 허위 안내"
+          ],
+          "review_status": "pending_manual_review"
+        }
+      },
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "dee483ff-5bea-4174-bbd8-a0e79a76df43",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "answered",
+        "order_result": {
+          "kind": "found",
+          "order": {
+            "order_id": "A04",
+            "is_synthetic": true,
+            "store": "Apple KR Online Store (demo)",
+            "purchase_country": "KR",
+            "ordered_at": "2026-10-20T09:00:00+09:00",
+            "payment_method": "card",
+            "card_brand": "MasterCard",
+            "items": [
+              {
+                "item_id": "01",
+                "product_name": "Mac (demo)",
+                "product_type": "hardware",
+                "quantity": 1,
+                "status": "shipped",
+                "shipped_at": "2026-10-21T10:00:00+09:00",
+                "estimated_delivery_date": "2026-10-23",
+                "delivered_at": null,
+                "tracking_number": "DEMO-A04-01",
+                "last_tracking_event": "가상 기록: 운송 중",
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "unknown",
+                "components_complete": null,
+                "security_lock_disabled": null,
+                "return_requested_at": null
+              }
+            ]
+          },
+          "snapshot_at": "2026-10-22T12:00:00+09:00"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-2a0e84c031bb5f83f5d804c5",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-cancellation",
+            "chunk_id": "policy-2a0e84c031bb5f83f5d804c5",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 취소",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 제품이 출고 준비 중 또는 출고됨 상태가 아닌 경우 개별 제품 또는 전체 주문을 온라인으로 취소할 수 있습니다.\n주문 또는 제품을 취소하려면 온라인에서 주문 상태 를 방문한 다음 주문 보기 버튼을 클릭하십시오. 주문 페이지에서 취소하려는 제품을 찾은 후 제품 취소 링크를 클릭하십시오.\n취소 요청이 제출되면 해당 제품의 상태 메시지가 \"취소됨\"으로 표시됩니다. 이 제품에 대해서는 대금이 청구되지 않습니다.\n온라인에서 제품을 취소할 수 없는 상태인데 반품해야 한다면 반품 및 환불 도움말 페이지를 참조하거나 080-330-8877 로 문의하십시오.\nVisa, MasterCard 및 Diners로 결제하였고, 주문에 여러 품목이 포함된 경우에는 단일 품목을 취소할 수 없습니다. 주문을 변경하려면 전체 주문을 취소하고 새로 주문해 주십시오. 추가 지원이 필요한 경우 Apple Online Store 고객 서비스 팀 080-330-8877 로 연락 주시기 바랍니다."
+          },
+          {
+            "evidence_id": "evidence-policy-8b285ee251f6dbf61f776b9e",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-status",
+            "chunk_id": "policy-8b285ee251f6dbf61f776b9e",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 상태 확인",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 상태를 쉽게 확인할 수 있습니다! 먼저 온라인에서 주문 상태 를 방문하여 Apple 계정  및 암호를 입력하십시오.\n로그인했으면 주문 보기 버튼을 클릭하십시오. 이렇게 하면 가장 최근에 주문한 내역을 한 눈에 모두 볼 수 있는 주문 페이지가 열립니다. 다른 주문 내역을 확인하려면 페이지 오른쪽 상단에 있는 \"더 많은 주문 보기\" 드롭다운 메뉴에서 해당 주문을 선택하십시오.\n주문 페이지에 있는 각 항목 위에 주문 상태 메시지가 표시됩니다. 주문 상태 메시지는 다음과 같습니다.\n주문 접수 - 고객님의 주문과 결제 정보가 접수되었습니다. 지금은 주문을 변경할 수 없지만 주문 처리 준비를 시작하면 변경할 수 있습니다.\n주문 처리 중 - 주문 처리에 필요한 모든 정보가 접수되었습니다. 제품이 준비되는 대로 소식을 보내 드리고 출고를 준비하겠습니다. 지금도 주문을 변경할 수 있습니다.\n출고 준비 중 - 주문하신 제품을 출고하기 전에 필요한 몇 가지 세부 사항을 처리 중입니다. 출고하는 대로 이메일로 배송 정보를 보내 드리겠습니다. 이제는 주문을 변경할 수 없습니다.\n출고됨 - \"배송 추적\" 버튼을 사용하여 패키지 위치를 온라인으로 확인할 수 있습니다. 이 정보는 출고 후 24시간 안에 볼 수 있습니다.\n배송 완료 - 패키지를 주문 시 지정한 배송 주소지에 배송해 드렸습니다. 주문하신 제품을 반품해야 하는 경우 온라인에서 반품 프로세스를 진행하시면 됩니다.\n매장으로 배송 - 제품이 발송되어 Apple Store로 운송 중입니다. 픽업 준비가 되면 픽업 알림 이메일을 보내 드립니다. 픽업 알림 이메일을 받으신 후에 Apple Store를 방문하시기 바랍니다.\n픽업 준비 완료 - 제품이 Apple Store에서 준비되어 있습니다. 결제 카드 또는 주문 번호와 사진이 부착된 유효한 신분증을 지참하세요.\n픽업됨 - 제품이 Apple Store에서 픽업되었습니다."
+          }
+        ],
+        "applied_policies": [
+          {
+            "text": "이 상태의 제품은 공개된 주문 취소 정책에 따라 온라인으로 취소할 수 없습니다. 이는 온라인 취소 제한 안내이며 다른 반품 가능 여부를 확정하지 않습니다.",
+            "evidence_ids": [
+              "evidence-policy-2a0e84c031bb5f83f5d804c5"
+            ]
+          }
+        ],
+        "recommendation": {
+          "text": "조회 기록상 품목 01(Mac (demo))은 2026-10-22T12:00:00+09:00 기준 ‘출고됨’입니다. 이 상태의 제품은 공개된 주문 취소 정책에 따라 온라인으로 취소할 수 없습니다. 이는 온라인 취소 제한 안내이며 다른 반품 가능 여부를 확정하지 않습니다. 최신 상태는 주문 상태 페이지에서 확인해 주세요. 추가 지원은 Apple Online Store 고객 서비스(080-330-8877)에 문의해 주세요. 실제 취소·환불을 실행한 것은 아닙니다.",
+          "evidence_ids": [
+            "evidence-policy-2a0e84c031bb5f83f5d804c5"
+          ]
+        },
+        "draft_reply": "조회 기록상 품목 01(Mac (demo))은 2026-10-22T12:00:00+09:00 기준 ‘출고됨’입니다.\n\n이 상태의 제품은 공개된 주문 취소 정책에 따라 온라인으로 취소할 수 없습니다. 이는 온라인 취소 제한 안내이며 다른 반품 가능 여부를 확정하지 않습니다.\n\n최신 상태는 주문 상태 페이지에서 확인해 주세요. 추가 지원은 Apple Online Store 고객 서비스(080-330-8877)에 문의해 주세요. 실제 취소·환불을 실행한 것은 아닙니다.",
+        "missing_fields": [],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 2,
+            "status": "success",
+            "result_summary": "가상 주문 조회 완료",
+            "tool_name": "lookup_order",
+            "input": {
+              "order_id": "A04"
+            }
+          },
+          {
+            "sequence": 2,
+            "duration_ms": 501,
+            "status": "success",
+            "result_summary": "정책 근거 후보 2개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 주문 취소 정책: 출고됨 상태에서 취소 가능한지, 출고 준비 중/출고됨 상태의 취소 제한 및 카드 결제 다품목 부분 취소 예외",
+              "topic": "cancellation"
+            },
+            "evidence_ids": [
+              "evidence-policy-2a0e84c031bb5f83f5d804c5",
+              "evidence-policy-8b285ee251f6dbf61f776b9e"
+            ]
+          }
+        ]
+      },
+      "decisions": [
+        {
+          "action": "lookup_order",
+          "requires_order": true,
+          "topic": "cancellation",
+          "query": null,
+          "status": null,
+          "date_facts": [],
+          "proposal": {
+            "action": "lookup_order",
+            "requires_order": true,
+            "topic": "cancellation",
+            "query": null,
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "search_policy",
+          "requires_order": true,
+          "topic": "cancellation",
+          "query": "Apple 한국 온라인 스토어 주문 취소 정책: 출고됨 상태에서 취소 가능한지, 출고 준비 중/출고됨 상태의 취소 제한 및 카드 결제 다품목 부분 취소 예외",
+          "status": null,
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": null
+            }
+          ],
+          "proposal": {
+            "action": "search_policy",
+            "requires_order": true,
+            "topic": "cancellation",
+            "query": "Apple 한국 온라인 스토어 주문 취소 정책: 출고됨 상태에서 취소 가능한지, 출고 준비 중/출고됨 상태의 취소 제한 및 카드 결제 다품목 부분 취소 예외",
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "finish",
+          "requires_order": true,
+          "topic": "cancellation",
+          "query": null,
+          "status": "answered",
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": null
+            }
+          ],
+          "proposal": {
+            "action": "finish",
+            "requires_order": true,
+            "topic": "cancellation",
+            "query": null,
+            "status": "answered",
+            "applied_policies": [
+              {
+                "text": "조회 기록상 품목 01은 2026-10-22 12:00 기준 ‘출고됨’입니다. 취소 정책은 ‘출고 준비 중 또는 출고됨’ 상태가 아닌 경우 온라인 취소를 허용하므로, 이 상태에서 온라인 취소 가능하다고 안내할 수 없습니다.",
+                "evidence_ids": [
+                  "evidence-policy-2a0e84c031bb5f83f5d804c5"
+                ]
+              },
+              {
+                "text": "주문 상태 안내에서 ‘출고됨’은 ‘주문 처리 중’과 별개의 상태입니다. 출고됨 상태에서는 배송 추적을 이용할 수 있다고 안내합니다.",
+                "evidence_ids": [
+                  "evidence-policy-8b285ee251f6dbf61f776b9e"
+                ]
+              }
+            ],
+            "recommendation": {
+              "text": "출고됨을 처리 중으로 바꾸어 안내하거나 취소 가능하다고 확정하지 마세요. 이 주문은 MasterCard 결제이고 현재 조회된 품목은 한 개이므로, 확인된 정책의 다품목 단일 품목 취소 제한은 적용되지 않습니다. 주문 페이지에서 취소 가능 여부를 확인하고, 온라인 취소가 불가한 경우 정책 안내에 따라 반품 도움말을 참조하거나 080-330-8877로 문의하도록 안내하세요.",
+              "evidence_ids": [
+                "evidence-policy-2a0e84c031bb5f83f5d804c5",
+                "evidence-policy-8b285ee251f6dbf61f776b9e"
+              ]
+            },
+            "draft_reply": "조회 기록상 품목 01은 2026년 10월 22일 12:00 기준 ‘출고됨’ 상태입니다. ‘출고됨’은 ‘주문 처리 중’과 다른 상태이며, 출고된 제품은 온라인에서 취소할 수 있는 상태가 아닙니다. 주문 페이지에서 취소 가능 여부를 확인해 주세요. 온라인에서 취소할 수 없다면 반품 도움말을 확인하시거나 Apple Online Store 고객 서비스(080-330-8877)에 문의하실 수 있습니다.",
+            "missing_fields": []
+          }
+        }
+      ],
+      "model_usage": [
+        {
+          "input_tokens": 2420,
+          "output_tokens": 57,
+          "total_tokens": 2477,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2289,
+            "cache_creation": 128
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2786,
+          "output_tokens": 102,
+          "total_tokens": 2888,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2289,
+            "cache_creation": 494
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 3903,
+          "output_tokens": 477,
+          "total_tokens": 4380,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 2289,
+            "cache_creation": 1611
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "response_error": null,
+      "response_normalizations": [
+        "answer.reviewed_online_cancellation_denial"
+      ]
+    }
+  ],
+  "note": "Structural checks are not semantic answer accuracy; L01 uses a scripted model.",
+  "completed_at": "2026-10-30T15:12:35.668948+00:00",
+  "summary": {
+    "cases": 4,
+    "structural_pass": 4,
+    "failed_case_ids": [],
+    "model_modes": {
+      "real_openai": 4
+    },
+    "real_model_calls": 12,
+    "model_tokens": {
+      "input_tokens": 36676,
+      "output_tokens": 2371,
+      "total_tokens": 39047
+    },
+    "semantic_review": "pending_manual_review",
+    "actual_cost_and_embedding_tokens": "not_collected"
+  }
+}

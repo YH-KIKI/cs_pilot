@@ -73,3 +73,7 @@ Docker 단일 서비스는 로컬에서 검증했다. 현재 개발 화면은 �
 - Python sqlite3: https://docs.python.org/3.12/library/sqlite3.html
 - OpenAI 모델: https://developers.openai.com/api/docs/models/gpt-6-luna
 - ChatOpenAI: https://docs.langchain.com/oss/python/integrations/chat/openai
+
+## 후속 · 2026-10-30 배포 기반 검증
+
+위 설치/미검증 항목은 1일차 당시 기록이다. 이후 LangGraph/화면 연결과 실제 API 평가는 별도 개발 일지에 남겼다. 이번에는 고정 정책 자료를 포함한 Linux Docker 빌드, 시작 전 DB/벡터 복원, 실제 HTTP/재시작·빈 런타임 복원·오류 시 시작 중단을 검증했다. pytest 91개·Ruff 및 컨테이너 React typecheck/build 통과. [현재 배포 구성/실제 범위](deployment.md), [검증 원본](deployment-verification-2026-10-30.json). 이번 컨테이너 검증은 유료 AI 호출 0회이며 실제 원격 배포/브라우저 클릭/배포 환경 AI 연결은 미실행이다.

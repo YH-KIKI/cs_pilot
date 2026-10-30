@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     openai_embedding_model: str = "text-embedding-3-small"
     orders_db_path: Path = ROOT / "data/runtime/orders.sqlite3"
     rag_allow_api: bool = False
+    agent_allow_api: bool = False
 
     @property
     def db_path(self) -> Path:

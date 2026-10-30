@@ -1,0 +1,695 @@
+{
+  "executed_at": "2026-10-30T09:12:58.988637+00:00",
+  "reference_time": "2026-10-22T12:00:00+09:00",
+  "suite_version": "day1-v1",
+  "corpus_version": "apple-kr-20261023-v1",
+  "seed_version": "2026-10-22-v1",
+  "model": "gpt-6-luna",
+  "prompt_version": "cs-agent-v1",
+  "scope": "small real-provider smoke; not full 24-case agent evaluation",
+  "cases": [
+    {
+      "case_id": "P01",
+      "status_and_tool_counts_match": true,
+      "expected_statuses": [
+        "answered"
+      ],
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "e4b66511-08e9-4ca3-8277-7fd9a665359c",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "answered",
+        "order_result": {
+          "kind": "not_requested"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-a9b5657ef7f53d40514b1475",
+            "document_id": "apple-kr-shipping",
+            "rule_group_id": "shipping-options",
+            "chunk_id": "policy-a9b5657ef7f53d40514b1475",
+            "title": "배송 및 픽업",
+            "heading": "배송 옵션",
+            "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+            "collected_at": "2026-10-22T15:32:45.019279Z",
+            "effective_date": null,
+            "excerpt": "표준 배송은 모든 온라인 주문에 대해 무료입니다. 주문에 포함된 제품 및 배송 주소에 따라 이용 가능한 배송 옵션 및 시간은 결제 단계에 표시됩니다.\n주문을 하고 나면 주문 상태 페이지에서 제품별 예상 출고 및 배송 시점을 확인할 수 있습니다. 제품은 재고가 확보되는 대로 출고됩니다."
+          },
+          {
+            "evidence_id": "evidence-policy-efba507c7eb4f7d24c21ff43",
+            "document_id": "apple-kr-shipping",
+            "rule_group_id": "shipping-eta",
+            "chunk_id": "policy-efba507c7eb4f7d24c21ff43",
+            "title": "배송 및 픽업",
+            "heading": "주문 제품에 대한 예상 배송일자는 언제입니까?",
+            "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+            "collected_at": "2026-10-22T15:32:45.019279Z",
+            "effective_date": null,
+            "excerpt": "예상 배송일자와 운송업체는 최신 주문 상태가 나와 있는 온라인 셀프 서비스 페이지를 참고하면 됩니다. Apple 및 운송업체에서도 정확한 배송 시간은 확인해 드릴 수 없습니다. 운송업체에서 배송 전에 전화를 드리지는 않습니다.\n수도권 내 거주지 주소로 주문한 경우\n자정부터 새벽 5시 사이에 표준 배송으로 주문한 제품은 같은 날 오후 6시부터 자정 사이에 배송됩니다.\n오후 3시부터 자정 사이에 표준 배송으로 주문한 제품은 다음 날 오후 6시부터 자정 사이에 배송됩니다.\n일반적인 경우, 표준 배송으로 주문한 모든 제품은 오전 8시부터 오후 8시 사이에 배송될 수도 있습니다.\n대한민국 내 기타 지역으로 주문한 경우\n거주지 주소로 주문한 경우, 표준 배송 및 업무일 기준 익일 배송을 통해 보통 월-토 오전 8시부터 오후 8시 사이에 배송됩니다.\n사무실 주소로 주문한 경우, 보통 월-금 오전 8시부터 오후 8시 사이에 배송됩니다."
+          },
+          {
+            "evidence_id": "evidence-policy-1a82f99726d92f0de18e090c",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-tracking",
+            "chunk_id": "policy-1a82f99726d92f0de18e090c",
+            "title": "주문 확인 및 변경",
+            "heading": "배송 추적",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문하신 제품이 출고되면 배송업체, 예상 배송일 및 배송 추적 번호(가능할 경우)가 포함된 배송 알림 이메일을 보내드립니다.\n온라인에 있는 주문 상태 . 에서도 배송 정보를 확인할 수 있습니다. 배송 추적을 클릭하면 배송 상태 윈도우에 해당 제품의 예상 배송일, 추적 번호 및 배송지가 표시됩니다. 여러 제품을 주문한 경우 각 제품에 대해 추적 번호가 각각 따로 표시될 수 있습니다.\n안전한 배송을 위해서 대부분의 제품은 제품 수령 시 서명이 필요합니다. 부재 시 제품을 수령할 수 있는 방법은 배송 및 배달 움말 페이지를 참조하십시오."
+          },
+          {
+            "evidence_id": "evidence-policy-977d4108366c34bf39a92f29",
+            "document_id": "apple-kr-shipping",
+            "rule_group_id": "shipping-customized",
+            "chunk_id": "policy-977d4108366c34bf39a92f29",
+            "title": "배송 및 픽업",
+            "heading": "각인 및 맞춤 구성 제품의 배송 시간",
+            "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+            "collected_at": "2026-10-22T15:32:45.019279Z",
+            "effective_date": null,
+            "excerpt": "각인 제품과 맞춤 구성 Mac은 제품을 준비하는 데 시간이 조금 더 걸립니다. 구성 중 어떤 옵션을 선택하는지에 따라 배송 날짜가 자동으로 업데이트되며, 최종 배송 날짜는 주문 확인 이메일 및 주문 상태 페이지에서 확인할 수 있습니다."
+          }
+        ],
+        "applied_policies": [
+          {
+            "text": "Apple 한국 온라인 스토어의 표준 배송은 모든 온라인 주문에 무료입니다.",
+            "evidence_ids": [
+              "evidence-policy-a9b5657ef7f53d40514b1475"
+            ]
+          }
+        ],
+        "recommendation": {
+          "text": "따라서 표준 배송 비용은 무료입니다. 주문별로 이용 가능한 배송 옵션과 시간은 결제 단계에서 확인할 수 있습니다.",
+          "evidence_ids": [
+            "evidence-policy-a9b5657ef7f53d40514b1475"
+          ]
+        },
+        "draft_reply": "네. Apple 한국 온라인 스토어의 표준 배송은 모든 온라인 주문에 무료입니다. 주문에 따라 이용 가능한 배송 옵션과 시간은 결제 단계에서 확인할 수 있습니다.",
+        "missing_fields": [],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 4592,
+            "status": "success",
+            "result_summary": "정책 근거 후보 4개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 표준 배송은 무료인가요? 표준 배송 비용에 관한 공식 정책",
+              "topic": "shipping"
+            },
+            "evidence_ids": [
+              "evidence-policy-a9b5657ef7f53d40514b1475",
+              "evidence-policy-efba507c7eb4f7d24c21ff43",
+              "evidence-policy-1a82f99726d92f0de18e090c",
+              "evidence-policy-977d4108366c34bf39a92f29"
+            ]
+          }
+        ]
+      },
+      "model_usage": [
+        {
+          "input_tokens": 1227,
+          "output_tokens": 77,
+          "total_tokens": 1304,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0,
+            "cache_creation": 1224
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2492,
+          "output_tokens": 185,
+          "total_tokens": 2677,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 1366
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "semantic_review": {
+        "method": "manual inspection of generated text and actual tool result",
+        "notes": "표준 배송 무료와 주문별 배송 옵션 안내를 확인. 실제 주문 조회 없음.",
+        "scope": "only this output; not a full policy applicability certification"
+      }
+    },
+    {
+      "case_id": "O03",
+      "status_and_tool_counts_match": true,
+      "expected_statuses": [
+        "answered"
+      ],
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "ca08cffb-76ed-479f-9fb7-db36ef1c7e0c",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "answered",
+        "order_result": {
+          "kind": "found",
+          "order": {
+            "order_id": "A03",
+            "is_synthetic": true,
+            "store": "Apple KR Online Store (demo)",
+            "purchase_country": "KR",
+            "ordered_at": "2026-10-21T09:00:00+09:00",
+            "payment_method": "card",
+            "card_brand": "Visa",
+            "items": [
+              {
+                "item_id": "01",
+                "product_name": "iPhone (demo)",
+                "product_type": "hardware",
+                "quantity": 1,
+                "status": "processing",
+                "shipped_at": null,
+                "estimated_delivery_date": null,
+                "delivered_at": null,
+                "tracking_number": null,
+                "last_tracking_event": null,
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "unknown",
+                "components_complete": null,
+                "security_lock_disabled": null,
+                "return_requested_at": null
+              },
+              {
+                "item_id": "02",
+                "product_name": "Case (demo)",
+                "product_type": "accessory",
+                "quantity": 1,
+                "status": "processing",
+                "shipped_at": null,
+                "estimated_delivery_date": null,
+                "delivered_at": null,
+                "tracking_number": null,
+                "last_tracking_event": null,
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "unknown",
+                "components_complete": null,
+                "security_lock_disabled": null,
+                "return_requested_at": null
+              }
+            ]
+          },
+          "snapshot_at": "2026-10-22T12:00:00+09:00"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-2a0e84c031bb5f83f5d804c5",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-cancellation",
+            "chunk_id": "policy-2a0e84c031bb5f83f5d804c5",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 취소",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 제품이 출고 준비 중 또는 출고됨 상태가 아닌 경우 개별 제품 또는 전체 주문을 온라인으로 취소할 수 있습니다.\n주문 또는 제품을 취소하려면 온라인에서 주문 상태 를 방문한 다음 주문 보기 버튼을 클릭하십시오. 주문 페이지에서 취소하려는 제품을 찾은 후 제품 취소 링크를 클릭하십시오.\n취소 요청이 제출되면 해당 제품의 상태 메시지가 \"취소됨\"으로 표시됩니다. 이 제품에 대해서는 대금이 청구되지 않습니다.\n온라인에서 제품을 취소할 수 없는 상태인데 반품해야 한다면 반품 및 환불 도움말 페이지를 참조하거나 080-330-8877 로 문의하십시오.\nVisa, MasterCard 및 Diners로 결제하였고, 주문에 여러 품목이 포함된 경우에는 단일 품목을 취소할 수 없습니다. 주문을 변경하려면 전체 주문을 취소하고 새로 주문해 주십시오. 추가 지원이 필요한 경우 Apple Online Store 고객 서비스 팀 080-330-8877 로 연락 주시기 바랍니다."
+          },
+          {
+            "evidence_id": "evidence-policy-8b285ee251f6dbf61f776b9e",
+            "document_id": "apple-kr-orders",
+            "rule_group_id": "order-status",
+            "chunk_id": "policy-8b285ee251f6dbf61f776b9e",
+            "title": "주문 확인 및 변경",
+            "heading": "주문 상태 확인",
+            "source_url": "https://www.apple.com/kr/shop/help/viewing_changing_orders",
+            "collected_at": "2026-10-22T15:32:44.321131Z",
+            "effective_date": null,
+            "excerpt": "주문 상태를 쉽게 확인할 수 있습니다! 먼저 온라인에서 주문 상태 를 방문하여 Apple 계정  및 암호를 입력하십시오.\n로그인했으면 주문 보기 버튼을 클릭하십시오. 이렇게 하면 가장 최근에 주문한 내역을 한 눈에 모두 볼 수 있는 주문 페이지가 열립니다. 다른 주문 내역을 확인하려면 페이지 오른쪽 상단에 있는 \"더 많은 주문 보기\" 드롭다운 메뉴에서 해당 주문을 선택하십시오.\n주문 페이지에 있는 각 항목 위에 주문 상태 메시지가 표시됩니다. 주문 상태 메시지는 다음과 같습니다.\n주문 접수 - 고객님의 주문과 결제 정보가 접수되었습니다. 지금은 주문을 변경할 수 없지만 주문 처리 준비를 시작하면 변경할 수 있습니다.\n주문 처리 중 - 주문 처리에 필요한 모든 정보가 접수되었습니다. 제품이 준비되는 대로 소식을 보내 드리고 출고를 준비하겠습니다. 지금도 주문을 변경할 수 있습니다.\n출고 준비 중 - 주문하신 제품을 출고하기 전에 필요한 몇 가지 세부 사항을 처리 중입니다. 출고하는 대로 이메일로 배송 정보를 보내 드리겠습니다. 이제는 주문을 변경할 수 없습니다.\n출고됨 - \"배송 추적\" 버튼을 사용하여 패키지 위치를 온라인으로 확인할 수 있습니다. 이 정보는 출고 후 24시간 안에 볼 수 있습니다.\n배송 완료 - 패키지를 주문 시 지정한 배송 주소지에 배송해 드렸습니다. 주문하신 제품을 반품해야 하는 경우 온라인에서 반품 프로세스를 진행하시면 됩니다.\n매장으로 배송 - 제품이 발송되어 Apple Store로 운송 중입니다. 픽업 준비가 되면 픽업 알림 이메일을 보내 드립니다. 픽업 알림 이메일을 받으신 후에 Apple Store를 방문하시기 바랍니다.\n픽업 준비 완료 - 제품이 Apple Store에서 준비되어 있습니다. 결제 카드 또는 주문 번호와 사진이 부착된 유효한 신분증을 지참하세요.\n픽업됨 - 제품이 Apple Store에서 픽업되었습니다."
+          }
+        ],
+        "applied_policies": [
+          {
+            "text": "주문 조회 결과, 품목 01과 02는 모두 ‘processing’ 상태입니다. 정책상 ‘주문 처리 중’에는 주문을 변경할 수 있고, 출고 준비 중 또는 출고됨 상태가 아니라면 개별 제품 취소가 가능합니다. 다만 여러 품목 주문을 Visa로 결제한 경우 단일 품목만 취소할 수 없으며, 전체 주문 취소 후 새로 주문해야 합니다.",
+            "evidence_ids": [
+              "evidence-policy-8b285ee251f6dbf61f776b9e",
+              "evidence-policy-2a0e84c031bb5f83f5d804c5"
+            ]
+          }
+        ],
+        "recommendation": {
+          "text": "Visa로 결제한 여러 품목 주문이므로 품목 01만 취소할 수 없습니다. 주문 전체 취소를 원하시는지 확인하거나 Apple Online Store 고객 서비스(080-330-8877)에 문의해 주세요.",
+          "evidence_ids": [
+            "evidence-policy-2a0e84c031bb5f83f5d804c5"
+          ]
+        },
+        "draft_reply": "조회된 주문에서는 품목 01과 02가 모두 주문 처리 중입니다. 하지만 Visa로 결제한 여러 품목 주문은 단일 품목 취소가 불가능합니다. 주문 전체 취소 후 새로 주문하시거나, 추가 지원이 필요하면 Apple Online Store 고객 서비스(080-330-8877)에 문의해 주세요. 실제 취소는 진행되지 않았습니다.",
+        "missing_fields": [],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 8,
+            "status": "success",
+            "result_summary": "가상 주문 조회 완료",
+            "tool_name": "lookup_order",
+            "input": {
+              "order_id": "A03"
+            }
+          },
+          {
+            "sequence": 2,
+            "duration_ms": 426,
+            "status": "success",
+            "result_summary": "정책 근거 후보 2개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 주문 취소 정책: 주문의 일부 품목만 취소할 수 있는지, 출고 준비 중 또는 출고됨 상태에서의 취소 제한, Visa 카드로 결제한 여러 품목 주문의 부분 취소 예외",
+              "topic": "cancellation"
+            },
+            "evidence_ids": [
+              "evidence-policy-2a0e84c031bb5f83f5d804c5",
+              "evidence-policy-8b285ee251f6dbf61f776b9e"
+            ]
+          }
+        ]
+      },
+      "model_usage": [
+        {
+          "input_tokens": 1226,
+          "output_tokens": 52,
+          "total_tokens": 1278,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 100
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 1637,
+          "output_tokens": 105,
+          "total_tokens": 1742,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 511
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2763,
+          "output_tokens": 349,
+          "total_tokens": 3112,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 1637
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "semantic_review": {
+        "method": "manual inspection of generated text and actual tool result",
+        "notes": "조회된 두 품목 processing 상태와 Visa 다품목 단일 취소 제한을 유지. 취소 실행 완료 주장 없음.",
+        "scope": "only this output; not a full policy applicability certification"
+      }
+    },
+    {
+      "case_id": "E01",
+      "status_and_tool_counts_match": true,
+      "expected_statuses": [
+        "insufficient_evidence"
+      ],
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "31da8edd-4f39-4de0-a77a-cb10ab9a1580",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "insufficient_evidence",
+        "order_result": {
+          "kind": "not_requested"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-efba507c7eb4f7d24c21ff43",
+            "document_id": "apple-kr-shipping",
+            "rule_group_id": "shipping-eta",
+            "chunk_id": "policy-efba507c7eb4f7d24c21ff43",
+            "title": "배송 및 픽업",
+            "heading": "주문 제품에 대한 예상 배송일자는 언제입니까?",
+            "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+            "collected_at": "2026-10-22T15:32:45.019279Z",
+            "effective_date": null,
+            "excerpt": "예상 배송일자와 운송업체는 최신 주문 상태가 나와 있는 온라인 셀프 서비스 페이지를 참고하면 됩니다. Apple 및 운송업체에서도 정확한 배송 시간은 확인해 드릴 수 없습니다. 운송업체에서 배송 전에 전화를 드리지는 않습니다.\n수도권 내 거주지 주소로 주문한 경우\n자정부터 새벽 5시 사이에 표준 배송으로 주문한 제품은 같은 날 오후 6시부터 자정 사이에 배송됩니다.\n오후 3시부터 자정 사이에 표준 배송으로 주문한 제품은 다음 날 오후 6시부터 자정 사이에 배송됩니다.\n일반적인 경우, 표준 배송으로 주문한 모든 제품은 오전 8시부터 오후 8시 사이에 배송될 수도 있습니다.\n대한민국 내 기타 지역으로 주문한 경우\n거주지 주소로 주문한 경우, 표준 배송 및 업무일 기준 익일 배송을 통해 보통 월-토 오전 8시부터 오후 8시 사이에 배송됩니다.\n사무실 주소로 주문한 경우, 보통 월-금 오전 8시부터 오후 8시 사이에 배송됩니다."
+          },
+          {
+            "evidence_id": "evidence-policy-a9b5657ef7f53d40514b1475",
+            "document_id": "apple-kr-shipping",
+            "rule_group_id": "shipping-options",
+            "chunk_id": "policy-a9b5657ef7f53d40514b1475",
+            "title": "배송 및 픽업",
+            "heading": "배송 옵션",
+            "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+            "collected_at": "2026-10-22T15:32:45.019279Z",
+            "effective_date": null,
+            "excerpt": "표준 배송은 모든 온라인 주문에 대해 무료입니다. 주문에 포함된 제품 및 배송 주소에 따라 이용 가능한 배송 옵션 및 시간은 결제 단계에 표시됩니다.\n주문을 하고 나면 주문 상태 페이지에서 제품별 예상 출고 및 배송 시점을 확인할 수 있습니다. 제품은 재고가 확보되는 대로 출고됩니다."
+          },
+          {
+            "evidence_id": "evidence-policy-977d4108366c34bf39a92f29",
+            "document_id": "apple-kr-shipping",
+            "rule_group_id": "shipping-customized",
+            "chunk_id": "policy-977d4108366c34bf39a92f29",
+            "title": "배송 및 픽업",
+            "heading": "각인 및 맞춤 구성 제품의 배송 시간",
+            "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+            "collected_at": "2026-10-22T15:32:45.019279Z",
+            "effective_date": null,
+            "excerpt": "각인 제품과 맞춤 구성 Mac은 제품을 준비하는 데 시간이 조금 더 걸립니다. 구성 중 어떤 옵션을 선택하는지에 따라 배송 날짜가 자동으로 업데이트되며, 최종 배송 날짜는 주문 확인 이메일 및 주문 상태 페이지에서 확인할 수 있습니다."
+          },
+          {
+            "evidence_id": "evidence-policy-313a1638bfb0ec867db25750",
+            "document_id": "apple-kr-shipping",
+            "rule_group_id": "shipping-damage",
+            "chunk_id": "policy-313a1638bfb0ec867db25750",
+            "title": "배송 및 픽업",
+            "heading": "주문한 제품 중 빠진 제품이 있거나 제품이 손상된 경우",
+            "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+            "collected_at": "2026-10-22T15:32:45.019279Z",
+            "effective_date": null,
+            "excerpt": "배송에 문제가 있을 경우, 고객의 불편을 최소화할 수 있도록 즉시 해당 배송업체에 연락하여 빠른 시일내에 문제를 해결해 드리겠습니다. 애플에서는 조사 진행상황, 문제가 발생한 장소 및 배송 재개 시기에 관한 정보를 고객에게 최대한 신속하게 알려드리도록 하겠습니다.\n제품 수령 후 해당 제품의 손상을 발견했다면, 애플 온라인 스토어 고객 서비스 로 문의하여 주십시오."
+          }
+        ],
+        "applied_policies": [
+          {
+            "text": "확인한 배송 정책에는 배송 예상일과 배송 상황 확인 방법이 안내되어 있지만, 배송이 하루 지연될 때 지급하는 정액 보상 금액은 명시되어 있지 않습니다.",
+            "evidence_ids": [
+              "evidence-policy-efba507c7eb4f7d24c21ff43",
+              "evidence-policy-a9b5657ef7f53d40514b1475"
+            ]
+          }
+        ],
+        "recommendation": {
+          "text": "정책 근거만으로는 하루당 보상액이 있는지 또는 얼마인지 확정할 수 없습니다. 주문별 배송 문제는 Apple 온라인 스토어 고객 서비스에 문의해 확인하는 것이 좋습니다.",
+          "evidence_ids": [
+            "evidence-policy-313a1638bfb0ec867db25750"
+          ]
+        },
+        "draft_reply": null,
+        "missing_fields": [],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 418,
+            "status": "success",
+            "result_summary": "정책 근거 후보 4개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 배송 지연 시 하루 지연마다 지급하는 정액 보상 또는 지연 보상 금액이 정해져 있는지",
+              "topic": "shipping"
+            },
+            "evidence_ids": [
+              "evidence-policy-efba507c7eb4f7d24c21ff43",
+              "evidence-policy-a9b5657ef7f53d40514b1475",
+              "evidence-policy-977d4108366c34bf39a92f29",
+              "evidence-policy-313a1638bfb0ec867db25750"
+            ]
+          },
+          {
+            "sequence": 2,
+            "duration_ms": 268,
+            "status": "success",
+            "result_summary": "정책 근거 후보 4개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 배송이 예상일보다 지연된 경우 고객 보상, 지연 보상, 정액 보상 금액 또는 하루당 지급액",
+              "topic": "shipping"
+            },
+            "evidence_ids": [
+              "evidence-policy-efba507c7eb4f7d24c21ff43",
+              "evidence-policy-a9b5657ef7f53d40514b1475",
+              "evidence-policy-313a1638bfb0ec867db25750",
+              "evidence-policy-977d4108366c34bf39a92f29"
+            ]
+          }
+        ]
+      },
+      "model_usage": [
+        {
+          "input_tokens": 1229,
+          "output_tokens": 82,
+          "total_tokens": 1311,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 103
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2459,
+          "output_tokens": 84,
+          "total_tokens": 2543,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 1333
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2633,
+          "output_tokens": 256,
+          "total_tokens": 2889,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 1507
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "semantic_review": {
+        "method": "manual inspection of generated text and actual tool result",
+        "notes": "정액 지연 보상액을 생성하지 않고 수집 정책의 근거 부족으로 종료. 후보 목록 존재와 답변 충분성을 구분.",
+        "scope": "only this output; not a full policy applicability certification"
+      }
+    },
+    {
+      "case_id": "O08",
+      "status_and_tool_counts_match": true,
+      "expected_statuses": [
+        "needs_information"
+      ],
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "ddad022e-f192-4b9f-b886-9f20fff08d69",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "needs_information",
+        "order_result": {
+          "kind": "found",
+          "order": {
+            "order_id": "A08",
+            "is_synthetic": true,
+            "store": "Apple KR Online Store (demo)",
+            "purchase_country": "KR",
+            "ordered_at": "2026-10-01T09:00:00+09:00",
+            "payment_method": "card",
+            "card_brand": "Visa",
+            "items": [
+              {
+                "item_id": "01",
+                "product_name": "iPad (demo)",
+                "product_type": "hardware",
+                "quantity": 1,
+                "status": "delivered",
+                "shipped_at": null,
+                "estimated_delivery_date": null,
+                "delivered_at": "2026-10-08T12:00:00+09:00",
+                "tracking_number": null,
+                "last_tracking_event": null,
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "original",
+                "components_complete": true,
+                "security_lock_disabled": true,
+                "return_requested_at": null
+              }
+            ]
+          },
+          "snapshot_at": "2026-10-22T12:00:00+09:00"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-961c94cf805ff6ca387bc3c8",
+            "document_id": "apple-kr-returns",
+            "rule_group_id": "returns-damage",
+            "chunk_id": "policy-961c94cf805ff6ca387bc3c8",
+            "title": "반품 및 환불",
+            "heading": "제품 결함 또는 손상",
+            "source_url": "https://www.apple.com/kr/shop/help/returns_refund",
+            "collected_at": "2026-10-22T15:32:45.973672Z",
+            "effective_date": null,
+            "excerpt": "구입한 제품에 문제가 있거나 배송 중 손상된 경우, Apple 온라인 스토어 고객 서비스 080-330-8877(월요일~금요일, 오전 9시~오후 9시, 토요일~일요일, 오전 10시~오후 9시)로 문의하여 주십시오."
+          },
+          {
+            "evidence_id": "evidence-policy-ca44177e22c9ecb699729080",
+            "document_id": "apple-kr-returns",
+            "rule_group_id": "returns-process",
+            "chunk_id": "policy-ca44177e22c9ecb699729080",
+            "title": "반품 및 환불",
+            "heading": "제품 반품",
+            "source_url": "https://www.apple.com/kr/shop/help/returns_refund",
+            "collected_at": "2026-10-22T15:32:45.973672Z",
+            "effective_date": null,
+            "excerpt": "구입하신 제품이 만족스럽지 못하다면, 해당 제품을 반품하여 환불 받을 수 있습니다.\n구입한 Apple 제품을 반품하시려면, Apple 온라인 스토어 고객 서비스 080-330-8877(월요일~금요일, 오전 9시~오후 9시, 토요일~일요일, 오전 10시~오후 9시)로 문의하여 주십시오. ZEISS Optical Inserts를 반품하려면 해당 제품을 구입한 ZEISS Optical Inserts Professionals에 문의하십시오.\n반품은 Apple Online Store 이용 약관 에 따라 처리됩니다. 대상 제품의 경우 해당 제품을 받은 날짜로부터 최대 14일 이내에 반품을 시작해야 합니다.\n반품을 신청하면, 반품 세부사항이 담긴 확인 메일이 발송됩니다. 컴퓨터를 반품할 경우에는 원래 배송되었던 포장 그대로 반품할 것을 적극 권장합니다.\n해당 제품은 반품을 신청하고 14일 이내에 Apple 반품 센터에 도착해야 합니다.\n제품이 도착하면 반품 처리절차에 들어가며, 환불이 진행됩니다."
+          },
+          {
+            "evidence_id": "evidence-policy-fe254304ae0f2727f2ac8582",
+            "document_id": "apple-kr-returns",
+            "rule_group_id": "returns-standard",
+            "chunk_id": "policy-fe254304ae0f2727f2ac8582",
+            "title": "반품 및 환불",
+            "heading": "표준 반품 정책",
+            "source_url": "https://www.apple.com/kr/shop/help/returns_refund",
+            "collected_at": "2026-10-22T15:32:45.973672Z",
+            "effective_date": null,
+            "excerpt": "Apple은 기본적으로 고객이 Apple Store에서 구입하는 제품에 대해 만족감을 느낄 것이라고 굳게 믿고 있습니다. 사용자가 필요로 하는 제품을 디자인하고 만들기 위해 최선의 노력을 기울이고 있기 때문입니다. 하지만 때로는 제품이 기대와는 다를 수 있다는 점도 이해하고 있습니다. 드물겠지만 만일 제품이 기대와 다른 경우 Apple로부터 제품을 수령한 날짜로부터 14일 이내에 영수증을 동봉하셔서 반품 또는 교환을 접수하실 수 있습니다. Apple은 구입 당시 사용한 지불 방법으로 환불이나 교환을 진행해 드립니다. 제품은 최초 구입 상태 그대로, 포함되어 있던 모든 부품, 액세서리, 제품 상자를 동봉하여 반납하셔야 합니다. 이와 더불어 다음 사항에 유의해 주십시오.\n제품은 원래 구입한 국가 또는 지역에서만 반품할 수 있습니다.\n전자 소프트웨어 다운로드, 소프트웨어 Up-To-Date 프로그램 구독 상품 및 모든 Apple Developer 제품은 반품 대상에서 제외됩니다.\n패키지 외부에 소프트웨어 사용권이 표시된 상태로 밀봉되어 있고 패키지를 개봉하기 전에 소프트웨어 사용권을 읽을 수 있는 경우, 개봉된 소프트웨어 제품은 반품이 되지 않습니다. 예외적으로 사용권 약관에 동의하지 않으면 Apple 브랜드 소프트웨어를 반품할 수 있지만 고객은 반품된 소프트웨어 사본을 보유하거나 사용할 수 없습니다.\nApple은 분실 또는 도난 시 제품을 보호할 수 있는 보안 기능을 제공합니다.  이러한 기능이 활성화되어 있고 해당 휴대폰을 소유한 사람이 이 기능을 비활성화할 수 없는 경우 Apple은 반품 또는 교환을 거부할 수 있습니다.\nApple Store에서 구입한 제품을 반품하는 방법에 대한 전체적인 세부 정보는 반품 및 환불 (새 창에서 열림) 페이지를 방문해 주십시오."
+          }
+        ],
+        "applied_policies": [
+          {
+            "text": "표준 반품 정책은 제품을 수령한 날부터 14일 이내에 영수증을 동봉해 반품을 접수할 수 있다고 안내합니다. 한국에서 구매한 이 제품은 최초 구입 상태와 구성품이 갖춰져 있고 보안 잠금도 해제된 것으로 조회되었습니다. 다만 정책에는 14일째의 구체적인 마감 시각이 명시되어 있지 않습니다.",
+            "evidence_ids": [
+              "evidence-policy-fe254304ae0f2727f2ac8582"
+            ]
+          },
+          {
+            "text": "반품은 제품을 받은 날부터 최대 14일 이내에 시작해야 합니다.",
+            "evidence_ids": [
+              "evidence-policy-ca44177e22c9ecb699729080"
+            ]
+          }
+        ],
+        "recommendation": {
+          "text": "조회상 수령 후 14일이 경과한 것으로 계산되어 오늘이 반품 신청 가능 기간인지 또는 마감 시각이 언제인지 확정할 수 없습니다. Apple 온라인 스토어 고객 서비스에 즉시 문의해 확인하시기 바랍니다.",
+          "evidence_ids": [
+            "evidence-policy-ca44177e22c9ecb699729080"
+          ]
+        },
+        "draft_reply": null,
+        "missing_fields": [
+          {
+            "field": "other",
+            "item_id": "01",
+            "question": "정책 근거에 14일째 신청 마감 시각이 명시되어 있지 않습니다. 정확한 마감 시각은 Apple 온라인 스토어 고객 서비스에 확인해 주세요."
+          }
+        ],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 1120,
+            "status": "success",
+            "result_summary": "정책 근거 후보 3개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 반품: 반품 신청 가능 기간과 14일 경계의 마감 시각, 수령일 기준 및 영수증 조건",
+              "topic": "returns"
+            },
+            "evidence_ids": [
+              "evidence-policy-961c94cf805ff6ca387bc3c8",
+              "evidence-policy-ca44177e22c9ecb699729080",
+              "evidence-policy-fe254304ae0f2727f2ac8582"
+            ]
+          },
+          {
+            "sequence": 2,
+            "duration_ms": 8,
+            "status": "success",
+            "result_summary": "가상 주문 조회 완료",
+            "tool_name": "lookup_order",
+            "input": {
+              "order_id": "A08"
+            }
+          }
+        ]
+      },
+      "model_usage": [
+        {
+          "input_tokens": 1238,
+          "output_tokens": 84,
+          "total_tokens": 1322,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 112
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2563,
+          "output_tokens": 471,
+          "total_tokens": 3034,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 1437
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2860,
+          "output_tokens": 462,
+          "total_tokens": 3322,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 1734
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "semantic_review": {
+        "method": "manual inspection of generated text and actual tool result",
+        "notes": "서버 계산 날짜 차이 14일을 사용하고 정책에 없는 마감시각 확정 대신 other 추가 확인을 요청.",
+        "scope": "only this output; not a full policy applicability certification"
+      }
+    }
+  ],
+  "model_token_totals": {
+    "input_tokens": 22327,
+    "output_tokens": 2207,
+    "total_tokens": 24534
+  },
+  "billing_cost": "not measured; embedding token usage not included in model totals"
+}
