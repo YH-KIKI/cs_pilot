@@ -1,11 +1,14 @@
 from contextlib import asynccontextmanager
+from typing import Annotated
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
+from app.agent.graph import ConsultationEngine
+from app.agent.service import get_consultation_engine
 from app.config import ROOT, get_settings
-from app.consultation_contract import ApiError, ConsultationRequest, ConsultationResponse
+from app.consultation_contract import ConsultationRequest, ConsultationResponse
 from app.schemas import HealthResponse, OrderId, OrderLookupResult
 from app.tools.orders import lookup_order_result
 from scripts.init_orders_db import verify_database
@@ -25,7 +28,11 @@ app = FastAPI(title="CS Pilot", version="0.1.0", lifespan=lifespan)
 
 @app.get("/api/health", response_model=HealthResponse)
 def health() -> HealthResponse:
-    return HealthResponse()
+    settings = get_settings()
+    return HealthResponse(
+        ai_enabled=settings.agent_allow_api
+        and bool(settings.openai_api_key.get_secret_value().strip())
+    )
 
 
 @app.get("/api/orders/{order_id}", response_model=OrderLookupResult)
@@ -36,21 +43,12 @@ def get_order(order_id: OrderId) -> OrderLookupResult:
 @app.post(
     "/api/consultations",
     response_model=ConsultationResponse,
-    responses={501: {"model": ApiError, "description": "Contract defined; agent not implemented"}},
 )
-def create_consultation(request: ConsultationRequest):
-    from fastapi.responses import JSONResponse
-
-    return JSONResponse(
-        status_code=501,
-        content=ApiError(
-            code="not_implemented",
-            message=(
-                "상담 API 계약만 정의된 단계입니다. "
-                "RAG·에이전트 실행은 아직 연결되지 않았습니다."
-            ),
-        ).model_dump(),
-    )
+def create_consultation(
+    request: ConsultationRequest,
+    engine: Annotated[ConsultationEngine, Depends(get_consultation_engine)],
+) -> ConsultationResponse:
+    return engine.run(request)
 
 
 # One screen only: do not swallow unknown API paths with an SPA catch-all.

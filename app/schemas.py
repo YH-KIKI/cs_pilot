@@ -61,5 +61,5 @@ class HealthResponse(BaseModel):
     model_config = ConfigDict(extra="forbid")
     status: Literal["ok"] = "ok"
     database: Literal["ready"] = "ready"
-    ai_enabled: Literal[False] = False
-    message: str = "환경 구축 단계입니다. 정책 검색과 AI 상담은 아직 연결되지 않았습니다."
+    ai_enabled: bool = False
+    message: str = "상담 API가 연결됐습니다. 실제 AI 실행에는 서버의 명시적 API 허용이 필요합니다."

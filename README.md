@@ -17,8 +17,8 @@ React + TypeScript + Vite / Python 3.12 + FastAPI / SQLite / LangChain + LangGra
 - 규칙 단위 청킹·임베딩 캐시·Chroma 검색·출처와 관련 조건 반환
 - 실제 정책 벡터 11개와 검색 평가, 고정 벡터 내보내기·API 없는 복원
 
-**2일차 RAG 기반을 구현했습니다. LangGraph 상담 흐름·AI 답변·상담 화면 연결은 다음 단계입니다.**
-`POST /api/consultations`는 현재 계약만 제공하며 유효 입력에도 명시적으로 501을 반환합니다.
+**3일차에 LangGraph 기본 상담 흐름·상담 API·결과 화면을 연결했습니다.**
+`POST /api/consultations`는 실제 그래프를 실행해 여섯 상담 상태 중 하나를 반환합니다. 모델 판단은 4회, 도구 실행은 전체 3회(조회 1회·검색 2회)로 제한합니다.
 가상 주문만 조회하며 실제 취소·환불·메시지 발송은 하지 않습니다.
 기본 실행과 자동 테스트는 API를 호출하지 않습니다. 실제 신규 질문 임베딩은 키와 명시적 API 허용이 필요합니다. 첫 실제 검색 평가는 완료했으며 [결과와 한계](docs/evaluation.md)를 확인하세요.
 
@@ -36,6 +36,8 @@ powershell -ExecutionPolicy Bypass -File scripts/setup.ps1
 가상환경 활성화 없이 아래 명령을 사용할 수 있습니다.
 
 ## 실행
+
+실제 상담은 로컬 `.env`에서 `AGENT_ALLOW_API=true`, `RAG_ALLOW_API=true`로 명시적으로 켜고 백엔드를 재시작합니다. 기본값은 둘 다 false입니다. API 비활성에서는 상담 응답이 `system_error`로 종료됩니다. 정책 인덱스가 없으면 먼저 `python -m scripts.rag restore`로 복원하세요. [그래프·설정·검증 범위](docs/agent-flow.md)
 
 백엔드(프로젝트 루트):
 
@@ -115,6 +117,8 @@ docker run --rm -p 8000:8000 cs-pilot
 Docker/원격 배포 검증 여부는 [환경 검증 기록](docs/environment.md)을 확인하세요.
 
 ## 학습 자료
+
+- [LangGraph 기본 상담 흐름](docs/agent-flow.md)
 
 - [RAG 구성과 API 없는 검증](docs/rag.md)
 

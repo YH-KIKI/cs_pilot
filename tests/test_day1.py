@@ -66,14 +66,20 @@ def test_information_and_tool_limits_are_enforced():
         ConsultationResponse.model_validate(invalid)
 
 
-def test_contract_endpoint_does_not_pretend_agent_is_implemented():
+def test_consultation_api_disabled_without_explicit_opt_in(monkeypatch):
+    from app.config import Settings
+
+    monkeypatch.setattr(
+        "app.agent.model.get_settings", lambda: Settings(_env_file=None, agent_allow_api=False)
+    )
     with TestClient(app) as client:
         response = client.post("/api/consultations", json={"question": "표준 배송비?"})
-        assert response.status_code == 501
-        assert response.json()["code"] == "not_implemented"
+        assert response.status_code == 200
+        assert response.json()["status"] == "system_error"
+        assert response.json()["tool_events"] == []
         assert client.post("/api/consultations", json={"question": " "}).status_code == 422
     schema = app.openapi()
     assert "200" in schema["paths"]["/api/consultations"]["post"]["responses"]
-    assert "501" in schema["paths"]["/api/consultations"]["post"]["responses"]
+    assert "501" not in schema["paths"]["/api/consultations"]["post"]["responses"]
     frozen = json.loads((ROOT / "docs/api-contract.openapi.json").read_text("utf-8"))
     assert frozen == schema

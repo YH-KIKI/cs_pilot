@@ -1,0 +1,510 @@
+{
+  "started_at": "2026-10-30T10:15:23.867729+00:00",
+  "reference_time": "2026-10-22T12:00:00+09:00",
+  "suite_version": "day1-v1",
+  "suite_sha256": "1b63e04610fd0689211c82692ca1280c49e24139c112419144ecee271ff20013",
+  "corpus_version": "apple-kr-20261023-v1",
+  "seed_version": "2026-10-22-v1",
+  "model": "gpt-6-luna",
+  "prompt_version": "cs-agent-v1",
+  "agent_code_sha256": {
+    "app\\agent\\__init__.py": "e6f97b7c923a796ce049806c8d5133e2bdc8d916a22e58ed229e8b9a3e4c3908",
+    "app\\agent\\evaluation.py": "bb2ecb19fe39e5c642ff1234163ade8800ea4664513f79eb0a02964c5b19248b",
+    "app\\agent\\graph.py": "febdf4b5160b0cb5ab8b3be985b0524cd8532eda2981b550609256af2cdbf013",
+    "app\\agent\\model.py": "15e04be52135b1b5246d0ed04ddd0ca39df4fb839f5e3c7ce2a6af9d9c8f7020",
+    "app\\agent\\models.py": "b5d733045d8a7650e655f4fde5cea099a221474997fcb6a9a66fd9aeb96d491d",
+    "app\\agent\\service.py": "cfdb733359e11aca00ee7da1c837e70e94366e1aeefd42be6606d6cf50ebb753"
+  },
+  "status": "completed",
+  "cases": [
+    {
+      "case_id": "E01",
+      "execution": {
+        "model": "real_openai",
+        "tools": "integration",
+        "mock_error": null,
+        "lookup": "real_sqlite",
+        "search": "real_chroma"
+      },
+      "question": "배송이 하루 늦으면 매일 얼마씩 정액 보상하나요?",
+      "expected_statuses": [
+        "insufficient_evidence"
+      ],
+      "evaluation": {
+        "checks": {
+          "status": false,
+          "lookup_count": true,
+          "search_count": true,
+          "missing_fields": true,
+          "expected_rule_groups_retrieved": true,
+          "reference_time": true,
+          "source_provenance": true,
+          "tool_limits": true,
+          "order_facts": true,
+          "response_contract": true
+        },
+        "structural_pass": false,
+        "failed_checks": [
+          "status"
+        ],
+        "actual_tool_counts": {
+          "lookup_order": 0,
+          "search_policy": 2
+        },
+        "actual_applied_groups": [],
+        "actual_elapsed_days": null,
+        "semantic_checklist": {
+          "must_include": [
+            "수집한 정책에서 정액 보상 근거 확인 못 함"
+          ],
+          "must_not_include": [
+            "임의 보상 금액",
+            "전체 Apple 정책에 절대 없다고 단정"
+          ],
+          "review_status": "pending_manual_review"
+        }
+      },
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "aed1ad15-05fe-4e0a-bf27-90b85154227c",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "system_error",
+        "order_result": {
+          "kind": "not_requested"
+        },
+        "sources": [
+          {
+            "evidence_id": "evidence-policy-efba507c7eb4f7d24c21ff43",
+            "document_id": "apple-kr-shipping",
+            "rule_group_id": "shipping-eta",
+            "chunk_id": "policy-efba507c7eb4f7d24c21ff43",
+            "title": "배송 및 픽업",
+            "heading": "주문 제품에 대한 예상 배송일자는 언제입니까?",
+            "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+            "collected_at": "2026-10-22T15:32:45.019279Z",
+            "effective_date": null,
+            "excerpt": "예상 배송일자와 운송업체는 최신 주문 상태가 나와 있는 온라인 셀프 서비스 페이지를 참고하면 됩니다. Apple 및 운송업체에서도 정확한 배송 시간은 확인해 드릴 수 없습니다. 운송업체에서 배송 전에 전화를 드리지는 않습니다.\n수도권 내 거주지 주소로 주문한 경우\n자정부터 새벽 5시 사이에 표준 배송으로 주문한 제품은 같은 날 오후 6시부터 자정 사이에 배송됩니다.\n오후 3시부터 자정 사이에 표준 배송으로 주문한 제품은 다음 날 오후 6시부터 자정 사이에 배송됩니다.\n일반적인 경우, 표준 배송으로 주문한 모든 제품은 오전 8시부터 오후 8시 사이에 배송될 수도 있습니다.\n대한민국 내 기타 지역으로 주문한 경우\n거주지 주소로 주문한 경우, 표준 배송 및 업무일 기준 익일 배송을 통해 보통 월-토 오전 8시부터 오후 8시 사이에 배송됩니다.\n사무실 주소로 주문한 경우, 보통 월-금 오전 8시부터 오후 8시 사이에 배송됩니다."
+          },
+          {
+            "evidence_id": "evidence-policy-a9b5657ef7f53d40514b1475",
+            "document_id": "apple-kr-shipping",
+            "rule_group_id": "shipping-options",
+            "chunk_id": "policy-a9b5657ef7f53d40514b1475",
+            "title": "배송 및 픽업",
+            "heading": "배송 옵션",
+            "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+            "collected_at": "2026-10-22T15:32:45.019279Z",
+            "effective_date": null,
+            "excerpt": "표준 배송은 모든 온라인 주문에 대해 무료입니다. 주문에 포함된 제품 및 배송 주소에 따라 이용 가능한 배송 옵션 및 시간은 결제 단계에 표시됩니다.\n주문을 하고 나면 주문 상태 페이지에서 제품별 예상 출고 및 배송 시점을 확인할 수 있습니다. 제품은 재고가 확보되는 대로 출고됩니다."
+          },
+          {
+            "evidence_id": "evidence-policy-977d4108366c34bf39a92f29",
+            "document_id": "apple-kr-shipping",
+            "rule_group_id": "shipping-customized",
+            "chunk_id": "policy-977d4108366c34bf39a92f29",
+            "title": "배송 및 픽업",
+            "heading": "각인 및 맞춤 구성 제품의 배송 시간",
+            "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+            "collected_at": "2026-10-22T15:32:45.019279Z",
+            "effective_date": null,
+            "excerpt": "각인 제품과 맞춤 구성 Mac은 제품을 준비하는 데 시간이 조금 더 걸립니다. 구성 중 어떤 옵션을 선택하는지에 따라 배송 날짜가 자동으로 업데이트되며, 최종 배송 날짜는 주문 확인 이메일 및 주문 상태 페이지에서 확인할 수 있습니다."
+          },
+          {
+            "evidence_id": "evidence-policy-f8ec9264c0a2eb7ae28a68ae",
+            "document_id": "apple-kr-shipping",
+            "rule_group_id": "shipping-estimates",
+            "chunk_id": "policy-f8ec9264c0a2eb7ae28a68ae",
+            "title": "배송 및 픽업",
+            "heading": "예상 배송 시간",
+            "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+            "collected_at": "2026-10-22T15:32:45.019279Z",
+            "effective_date": null,
+            "excerpt": "배송 시간은 제품이 출고되어 배송 준비를 마칠 것으로 예상되는 시간입니다. 주변 여건에 따라 제품이 예상대로 배송되지 않을 수도 있습니다. 최종 배송은 대개 타사 운송업체를 통해 이루어집니다.\n아주 드문 경우이긴 하지만 출고 및 배송 시간을 확정한 이후에도 재고 부족으로 인해 주문이 일정대로 처리되지 않을 수도 있습니다. 이 경우 출고 및 배송 시간을 다시 알려 드립니다."
+          },
+          {
+            "evidence_id": "evidence-policy-313a1638bfb0ec867db25750",
+            "document_id": "apple-kr-shipping",
+            "rule_group_id": "shipping-damage",
+            "chunk_id": "policy-313a1638bfb0ec867db25750",
+            "title": "배송 및 픽업",
+            "heading": "주문한 제품 중 빠진 제품이 있거나 제품이 손상된 경우",
+            "source_url": "https://www.apple.com/kr/shop/help/shipping_delivery",
+            "collected_at": "2026-10-22T15:32:45.019279Z",
+            "effective_date": null,
+            "excerpt": "배송에 문제가 있을 경우, 고객의 불편을 최소화할 수 있도록 즉시 해당 배송업체에 연락하여 빠른 시일내에 문제를 해결해 드리겠습니다. 애플에서는 조사 진행상황, 문제가 발생한 장소 및 배송 재개 시기에 관한 정보를 고객에게 최대한 신속하게 알려드리도록 하겠습니다.\n제품 수령 후 해당 제품의 손상을 발견했다면, 애플 온라인 스토어 고객 서비스 로 문의하여 주십시오."
+          }
+        ],
+        "applied_policies": [],
+        "recommendation": {
+          "text": "AI 응답의 상태·인용 검증에 실패했습니다. 수동 확인해 주세요.",
+          "evidence_ids": []
+        },
+        "draft_reply": null,
+        "missing_fields": [],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 2251,
+            "status": "success",
+            "result_summary": "정책 근거 후보 4개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 배송이 예정일보다 하루 늦어진 경우 일별 정액 보상 또는 지연 보상 금액이 있는지, 배송 지연 관련 보상 정책",
+              "topic": "shipping"
+            },
+            "evidence_ids": [
+              "evidence-policy-efba507c7eb4f7d24c21ff43",
+              "evidence-policy-a9b5657ef7f53d40514b1475",
+              "evidence-policy-977d4108366c34bf39a92f29",
+              "evidence-policy-f8ec9264c0a2eb7ae28a68ae"
+            ]
+          },
+          {
+            "sequence": 2,
+            "duration_ms": 261,
+            "status": "success",
+            "result_summary": "정책 근거 후보 4개",
+            "tool_name": "search_policy",
+            "input": {
+              "query": "Apple 한국 온라인 스토어 배송 지연 보상, 배송이 예정일보다 늦어진 경우 일별 정액 보상 금액 또는 지연 보상 정책",
+              "topic": "shipping"
+            },
+            "evidence_ids": [
+              "evidence-policy-a9b5657ef7f53d40514b1475",
+              "evidence-policy-efba507c7eb4f7d24c21ff43",
+              "evidence-policy-313a1638bfb0ec867db25750",
+              "evidence-policy-977d4108366c34bf39a92f29"
+            ]
+          }
+        ]
+      },
+      "decisions": [
+        {
+          "action": "search_policy",
+          "requires_order": false,
+          "topic": "shipping",
+          "query": "Apple 한국 온라인 스토어 배송이 예정일보다 하루 늦어진 경우 일별 정액 보상 또는 지연 보상 금액이 있는지, 배송 지연 관련 보상 정책",
+          "status": null,
+          "date_facts": [],
+          "proposal": {
+            "action": "search_policy",
+            "requires_order": false,
+            "topic": "shipping",
+            "query": "Apple 한국 온라인 스토어 배송이 예정일보다 하루 늦어진 경우 일별 정액 보상 또는 지연 보상 금액이 있는지, 배송 지연 관련 보상 정책",
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "search_policy",
+          "requires_order": false,
+          "topic": "shipping",
+          "query": "Apple 한국 온라인 스토어 배송 지연 보상, 배송이 예정일보다 늦어진 경우 일별 정액 보상 금액 또는 지연 보상 정책",
+          "status": null,
+          "date_facts": [],
+          "proposal": {
+            "action": "search_policy",
+            "requires_order": false,
+            "topic": "shipping",
+            "query": "Apple 한국 온라인 스토어 배송 지연 보상, 배송이 예정일보다 늦어진 경우 일별 정액 보상 금액 또는 지연 보상 정책",
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "finish",
+          "requires_order": false,
+          "topic": "shipping",
+          "query": null,
+          "status": "insufficient_evidence",
+          "date_facts": [],
+          "proposal": {
+            "action": "finish",
+            "requires_order": false,
+            "topic": "shipping",
+            "query": null,
+            "status": "insufficient_evidence",
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": "확인한 배송 정책에는 배송 지연 시 매일 지급하는 정액 보상 금액이나 기준이 안내되어 있지 않습니다. 따라서 정액 보상이 있다고 단정할 수 없습니다. 예상 배송일은 확정 보장이 아니며, 배송 상태는 주문 상태 페이지에서 확인할 수 있습니다.",
+            "missing_fields": []
+          }
+        }
+      ],
+      "model_usage": [
+        {
+          "input_tokens": 1229,
+          "output_tokens": 89,
+          "total_tokens": 1318,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1226,
+            "cache_creation": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2461,
+          "output_tokens": 84,
+          "total_tokens": 2545,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 1335
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 2884,
+          "output_tokens": 114,
+          "total_tokens": 2998,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 1758
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "response_error": {
+        "type": "ValidationError",
+        "fields": [
+          {
+            "location": [
+              "recommendation"
+            ],
+            "type": "model_type",
+            "message": "Input should be a valid dictionary or instance of Recommendation"
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "O04",
+      "execution": {
+        "model": "real_openai",
+        "tools": "integration",
+        "mock_error": null,
+        "lookup": "real_sqlite",
+        "search": "real_chroma"
+      },
+      "question": "언제 도착하는지 알려주세요.",
+      "expected_statuses": [
+        "answered"
+      ],
+      "evaluation": {
+        "checks": {
+          "status": false,
+          "lookup_count": true,
+          "search_count": false,
+          "missing_fields": true,
+          "expected_rule_groups_retrieved": false,
+          "reference_time": true,
+          "source_provenance": true,
+          "tool_limits": true,
+          "order_facts": true,
+          "response_contract": true
+        },
+        "structural_pass": false,
+        "failed_checks": [
+          "status",
+          "search_count",
+          "expected_rule_groups_retrieved"
+        ],
+        "actual_tool_counts": {
+          "lookup_order": 1,
+          "search_policy": 0
+        },
+        "actual_applied_groups": [],
+        "actual_elapsed_days": null,
+        "semantic_checklist": {
+          "must_include": [
+            "2026-10-23 예상",
+            "가상 기록의 기준 시각",
+            "도착 확약 불가"
+          ],
+          "must_not_include": [
+            "확정 도착 시각",
+            "실시간 조회 주장"
+          ],
+          "review_status": "pending_manual_review"
+        }
+      },
+      "response": {
+        "contract_version": "1.0",
+        "request_id": "b990e88b-a132-4640-ad53-785a074583b8",
+        "reference_time": "2026-10-22T12:00:00+09:00",
+        "status": "insufficient_evidence",
+        "order_result": {
+          "kind": "found",
+          "order": {
+            "order_id": "A04",
+            "is_synthetic": true,
+            "store": "Apple KR Online Store (demo)",
+            "purchase_country": "KR",
+            "ordered_at": "2026-10-20T09:00:00+09:00",
+            "payment_method": "card",
+            "card_brand": "MasterCard",
+            "items": [
+              {
+                "item_id": "01",
+                "product_name": "Mac (demo)",
+                "product_type": "hardware",
+                "quantity": 1,
+                "status": "shipped",
+                "shipped_at": "2026-10-21T10:00:00+09:00",
+                "estimated_delivery_date": "2026-10-23",
+                "delivered_at": null,
+                "tracking_number": "DEMO-A04-01",
+                "last_tracking_event": "가상 기록: 운송 중",
+                "snapshot_at": "2026-10-22T12:00:00+09:00",
+                "condition": "unknown",
+                "components_complete": null,
+                "security_lock_disabled": null,
+                "return_requested_at": null
+              }
+            ]
+          },
+          "snapshot_at": "2026-10-22T12:00:00+09:00"
+        },
+        "sources": [],
+        "applied_policies": [],
+        "recommendation": {
+          "text": "수집한 정책에서 답변 근거를 확인하지 못했습니다.",
+          "evidence_ids": []
+        },
+        "draft_reply": null,
+        "missing_fields": [],
+        "tool_events": [
+          {
+            "sequence": 1,
+            "duration_ms": 3,
+            "status": "success",
+            "result_summary": "가상 주문 조회 완료",
+            "tool_name": "lookup_order",
+            "input": {
+              "order_id": "A04"
+            }
+          }
+        ]
+      },
+      "decisions": [
+        {
+          "action": "lookup_order",
+          "requires_order": true,
+          "topic": "shipping",
+          "query": null,
+          "status": null,
+          "date_facts": [],
+          "proposal": {
+            "action": "lookup_order",
+            "requires_order": true,
+            "topic": "shipping",
+            "query": null,
+            "status": null,
+            "applied_policies": [],
+            "recommendation": null,
+            "draft_reply": null,
+            "missing_fields": []
+          }
+        },
+        {
+          "action": "finish",
+          "requires_order": true,
+          "topic": "shipping",
+          "query": null,
+          "status": "answered",
+          "date_facts": [
+            {
+              "item_id": "01",
+              "elapsed_days_since_delivery": null
+            }
+          ],
+          "proposal": {
+            "action": "finish",
+            "requires_order": true,
+            "topic": "shipping",
+            "query": null,
+            "status": "answered",
+            "applied_policies": [],
+            "recommendation": {
+              "text": "주문 조회 결과, Mac (품목 01)은 2026년 10월 23일 도착 예정입니다. 이는 예상일이며 도착을 보장하지 않습니다.",
+              "evidence_ids": []
+            },
+            "draft_reply": "조회 결과 Mac (품목 01)은 2026년 10월 23일 도착 예정입니다. 예상일이므로 실제 도착일은 달라질 수 있습니다.",
+            "missing_fields": []
+          }
+        }
+      ],
+      "model_usage": [
+        {
+          "input_tokens": 1223,
+          "output_tokens": 50,
+          "total_tokens": 1273,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1220,
+            "cache_creation": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        },
+        {
+          "input_tokens": 1537,
+          "output_tokens": 131,
+          "total_tokens": 1668,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 1123,
+            "cache_creation": 411
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 0
+          }
+        }
+      ],
+      "model_error": null,
+      "response_error": null
+    }
+  ],
+  "note": "Structural checks are not semantic answer accuracy; L01 uses a scripted model.",
+  "completed_at": "2026-10-30T10:15:39.579454+00:00",
+  "summary": {
+    "cases": 2,
+    "structural_pass": 0,
+    "failed_case_ids": [
+      "E01",
+      "O04"
+    ],
+    "model_modes": {
+      "real_openai": 2
+    },
+    "real_model_calls": 5,
+    "model_tokens": {
+      "input_tokens": 9334,
+      "output_tokens": 468,
+      "total_tokens": 9802
+    },
+    "semantic_review": "manual diagnostic review: E01 null recommendation reproduced; O04 missing policy search reproduced",
+    "actual_cost_and_embedding_tokens": "not_collected"
+  }
+}
