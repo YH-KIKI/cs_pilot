@@ -4,21 +4,34 @@ import argparse
 import json
 import os
 from datetime import UTC, datetime
+from pathlib import Path
 
 from app.agent.model import PROMPT_VERSION
 from app.agent.service import get_consultation_engine
 from app.config import ROOT, get_settings
 from app.consultation_contract import ConsultationRequest
-from app.rag.chunks import write_json
+
+
+def write_smoke_report(output: Path, report: dict) -> None:
+    output.parent.mkdir(parents=True, exist_ok=True)
+    # Exclusive creation also protects a file created after the early CLI check.
+    with output.open("x", encoding="utf-8", newline="\n") as stream:
+        stream.write(json.dumps(report, ensure_ascii=False, indent=2) + "\n")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--allow-api", action="store_true")
     parser.add_argument("--case", action="append", dest="cases")
+    parser.add_argument("--output", type=Path, default=ROOT / "docs/day3-agent-smoke.json")
     args = parser.parse_args()
     if not args.allow_api:
         parser.error("--allow-api is required for real model/embedding calls")
+    output = args.output.resolve()
+    if not output.is_relative_to((ROOT / "docs").resolve()) or output.suffix.lower() != ".json":
+        parser.error("--output must be a JSON file under docs")
+    if output.exists():
+        parser.error("Report already exists; choose a new --output docs/new-name.json")
     cases = args.cases or ["P01", "O03", "E01", "O08"]
     if len(cases) > 6 or len(set(cases)) != len(cases):
         parser.error("Use at most six distinct cases per smoke run")
@@ -76,7 +89,10 @@ def main() -> None:
         "scope": "small real-provider smoke; not full 24-case agent evaluation",
         "cases": rows,
     }
-    write_json(ROOT / "docs/day3-agent-smoke.json", report)
+    try:
+        write_smoke_report(output, report)
+    except FileExistsError:
+        parser.error("Report was created during this run; no existing file was overwritten")
 
 
 if __name__ == "__main__":

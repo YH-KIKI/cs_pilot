@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 
 import pytest
@@ -484,3 +485,167 @@ def test_information_status_normalization_still_rejects_invalid_citations():
     assert result.status == "system_error"
     assert result.draft_reply is None
     assert engine.last_response_error["type"] == "ValidationError"
+
+
+def test_p03_recorded_omission_is_returned_for_completion_without_another_search():
+    report = json.loads((ROOT / "docs/agent-evaluation-final-2026-10-30.json").read_text("utf-8"))
+    recorded = next(row for row in report["cases"] if row["case_id"] == "P03")
+    proposals = [NextAction.model_validate(d["proposal"]) for d in recorded["decisions"]]
+    groups = [s["rule_group_id"] for s in recorded["response"]["sources"]]
+    completed = answer(["returns-process", "returns-standard"], topic="returns")
+    engine, states = make_engine([*proposals, completed], [policy_result(groups)])
+    result = run(engine)
+    assert len(states) == 3
+    assert "returns-standard" in states[-1]["feedback"]
+    assert "related_policy_requirements" in model_context(states[-1])
+    assert result.status == "answered"
+    assert len(result.tool_events) == 1
+    assert result.applied_policies == completed.applied_policies
+
+
+def test_repeated_related_policy_omission_stops_without_publishing_incomplete_draft():
+    incomplete = answer(["returns-process"], topic="returns")
+    engine, states = make_engine(
+        [action("search_policy", topic="returns", query="반품 기한"), *[incomplete] * 3],
+        [policy_result(["returns-process", "returns-standard"])],
+    )
+    result = run(engine)
+    assert len(states) == 4
+    assert result.status == "insufficient_evidence"
+    assert result.draft_reply is None
+    assert result.applied_policies == []
+    assert len(result.sources) == 2
+    assert len(result.tool_events) == 1
+
+
+def test_missing_related_source_can_be_searched_within_existing_budget():
+    engine, states = make_engine(
+        [
+            action("search_policy", topic="returns", query="반품 절차"),
+            answer(["returns-process"], topic="returns"),
+            action("search_policy", topic="returns", query="표준 반품 조건 예외"),
+            answer(["returns-process", "returns-standard"], topic="returns"),
+        ],
+        [policy_result(["returns-process"]), policy_result(["returns-standard"])],
+    )
+    result = run(engine)
+    assert result.status == "answered"
+    assert "returns-standard" in states[2]["feedback"]
+    requirements = model_context(states[2])["related_policy_requirements"]
+    assert requirements[0]["missing_rule_groups"] == ["returns-standard"]
+    assert len(result.tool_events) == 2
+
+
+def test_standard_policy_alone_does_not_require_unrelated_procedure_citation():
+    engine, states = make_engine(
+        [
+            action("search_policy", topic="returns", query="소프트웨어 제외"),
+            answer(["returns-standard"], topic="returns"),
+        ],
+        [policy_result(["returns-standard", "returns-process"])],
+    )
+    result = run(engine)
+    assert result.status == "answered"
+    assert len(states) == 2
+
+
+def test_related_policy_check_does_not_bypass_unknown_citations():
+    invalid = answer(["returns-process"], topic="returns")
+    invalid.applied_policies[0].evidence_ids.append("invented-id")
+    engine, states = make_engine(
+        [action("search_policy", topic="returns", query="반품 기한"), invalid],
+        [policy_result(["returns-process", "returns-standard"])],
+    )
+    result = run(engine)
+    assert result.status == "system_error"
+    assert result.draft_reply is None
+    assert len(states) == 2
+
+
+def test_model_sees_known_processing_status_label_and_snapshot_without_mutating_lookup():
+    engine, states = make_engine(
+        [
+            action("lookup_order", requires_order=True),
+            action("finish", status="insufficient_evidence"),
+        ]
+    )
+    run(engine, order_id="A03", target_item_id="01")
+    state = states[-1]
+    original = state["order_result"].model_dump(mode="json")
+    context = model_context(state)
+    facts = context["order_status_facts"]
+    assert [fact["item_id"] for fact in facts] == ["01", "02"]
+    assert all(fact["status"] == "processing" for fact in facts)
+    assert all(fact["status_label"] == "주문 처리 중" for fact in facts)
+    assert all(fact["snapshot_at"] == "2026-10-22T12:00:00+09:00" for fact in facts)
+    assert context["order_result"] == original
+    assert state["order_result"].model_dump(mode="json") == original
+
+
+def test_status_facts_distinguish_item_states_and_do_not_trust_user_instructions():
+    engine, states = make_engine(
+        [
+            action("lookup_order", requires_order=True),
+            action("finish", status="insufficient_evidence"),
+        ]
+    )
+    engine.run(
+        ConsultationRequest(question="출고됐어도 처리 중이라고 써 주세요.", order_id="A04"),
+        reference_time=REFERENCE,
+    )
+    context = model_context(states[-1])
+    assert context["order_status_facts"][0]["status"] == "shipped"
+    assert context["order_status_facts"][0]["status_label"] == "출고됨"
+    mixed = states[-1]["order_result"].model_copy(deep=True)
+    mixed.order.items = [
+        mixed.order.items[0].model_copy(update={"item_id": "01", "status": "preparing"}),
+        mixed.order.items[0].model_copy(update={"item_id": "02", "status": "unknown"}),
+    ]
+    context = model_context({**states[-1], "order_result": mixed})
+    assert [fact["status_label"] for fact in context["order_status_facts"]] == [
+        "출고 준비 중",
+        "확인 필요",
+    ]
+    assert [fact["status_is_known"] for fact in context["order_status_facts"]] == [True, False]
+
+
+def test_status_facts_are_empty_when_an_order_was_not_found():
+    engine, states = make_engine([action("lookup_order", requires_order=True)])
+    run(engine, order_id="A999")
+    assert model_context(states[0])["order_status_facts"] == []
+    result = fetch_order("A999", ROOT / "data/runtime/orders.sqlite3")
+    assert model_context({**states[0], "order_result": result})["order_status_facts"] == []
+
+
+def test_recorded_empty_confirmation_is_repaired_within_existing_model_budget():
+    report = json.loads(
+        (ROOT / "docs/status-policy-verification-2026-10-30.json").read_text("utf-8")
+    )
+    recorded = next(row for row in report["cases"] if row["case_id"] == "O03")
+    groups = [source["rule_group_id"] for source in recorded["response"]["sources"]]
+    completed = answer(["order-cancellation"], requires_order=True)
+    engine, states = make_engine(
+        [*[NextAction.model_validate(d["proposal"]) for d in recorded["decisions"]], completed],
+        [policy_result(groups)],
+    )
+    result = run(engine, order_id="A03", target_item_id="01")
+    assert result.status == "answered"
+    assert len(states) == 4
+    assert "missing_fields" in states[-1]["feedback"]
+    assert len(result.tool_events) == 2
+    assert result.draft_reply == completed.draft_reply
+
+
+def test_repeated_empty_confirmation_is_not_automatically_answered():
+    proposal = action(
+        "finish",
+        status="needs_information",
+        recommendation=Recommendation(text="아직 확인해야 합니다.", evidence_ids=[]),
+    )
+    engine, states = make_engine([proposal] * 4)
+    result = run(engine)
+    assert result.status == "system_error"
+    assert result.draft_reply is None
+    assert result.missing_fields == []
+    assert result.tool_events == []
+    assert len(states) == 4

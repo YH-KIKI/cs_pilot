@@ -1,0 +1,25 @@
+{
+  "suite_version": "status-policy-v1",
+  "reference_time": "2026-10-22T12:00:00+09:00",
+  "corpus_version": "apple-kr-20261023-v1",
+  "seed_version": "2026-10-22-v1",
+  "note": "기존 day1-v1 24개는 유지한다. P02가 생략만으로 통과하는지와 구분해 주문 접수/처리 중의 변경 안내를 직접 확인하는 추가 사례다.",
+  "cases": [
+    {
+      "id": "SP01",
+      "category": "status_policy_meaning",
+      "question": "일반 주문 상태 안내에서 ‘주문 접수’와 ‘주문 처리 중’은 둘 다 주문 변경이 가능한가요?",
+      "order_id": null,
+      "target_item_id": null,
+      "mode": "integration",
+      "expected": {
+        "statuses": ["answered"],
+        "rule_groups": ["order-status"],
+        "tools": {"lookup_order": 0, "search_policy_min": 1, "search_policy_max": 2},
+        "missing_fields": [],
+        "must_include": ["주문 접수에서는 아직 변경 불가", "주문 처리 중에서는 변경 가능"],
+        "must_not_include": ["두 상태 모두 변경 가능", "변경 가능만으로 취소 가능 확정"]
+      }
+    }
+  ]
+}

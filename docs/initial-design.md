@@ -585,11 +585,13 @@ API 키·실행 로그·런타임 Chroma 폴더·생성된 SQLite DB 및 임시 
 단일 서비스 배포 구성:
 
 1. Node 빌드 단계에서 React의 정적 산출물 frontend/dist를 생성한다.
-2. Python 빌드 단계에서 schema.sql·seed_orders.sql·manifest.json으로 가상 SQLite DB를 생성·검증한다. 최종 Python 실행 이미지에 이 DB와 React 정적 산출물을 복사하고 Node 개발 서버는 실행하지 않는다. DB는 읽기 전용 연결로 조회하며 시작 시 verify-only 검사를 한다.
+2. Python 빌드 단계에서 schema.sql·seed_orders.sql·manifest.json으로 가상 SQLite DB를 생성·검증하고 고정 정책 청크/벡터/명세로 Chroma를 복원한다. 최종 Python 실행 이미지에 고정 자료·실행 DB/인덱스·React 정적 산출물을 복사하고 Node 개발 서버는 실행하지 않는다. 시작 명령은 기존 데이터가 있으면 검증하고, 런타임이 비어 있으면 같은 고정 자료에서 복원한 뒤 서버로 전환한다. 조회 DB 연결은 읽기 전용이다. 새 임베딩은 생성하지 않으며 불일치 자료를 덮어쓰지 않는다.
 3. FastAPI는 GET / 에서 index.html, /assets 에서 빌드된 정적 파일, /api/consultations에서 상담 API를 제공한다. Vite 기본 base=/에 맞춘다.
 4. 화면 하나이므로 클라이언트 라우터와 모든 경로를 index.html로 돌리는 catch-all은 추가하지 않는다. 알 수 없는 /api 경로는 정상적으로 404를 반환해야 한다.
 5. 동일 출처의 상대 경로 /api를 사용한다. 개발 시에만 Vite 프록시를 사용하고 배포에 프런트 전용 서버나 별도 도메인을 요구하지 않는다.
 6. 배포 검증은 /, JS/CSS 자산, /api/health, 상담 POST, 알 수 없는 /api 경로의 404 및 브라우저 새로고침을 포함한다. /api/health는 준비 상태 확인용으로 명시적으로 구현한다.
+
+2026-10-30 선행 구현: 위 빌드/시작 경로와 로컬 Docker·재시작·빈 런타임의 네트워크 없는 복원은 확인했다. 브라우저 클릭/새로고침·원격 배포·배포 환경 실제 AI 호출은 아직 미실행이다. [현재 설정과 실제 검증 범위](deployment.md)
 
 Render 무료 서비스는 유휴 시 중지되고 파일 변경이 재시작 등으로 사라질 수 있으므로 배포 산출물에서 인덱스를 복원한다. 무료 플랜으로 확인하고 기동 지연이 시연에 문제면 유료 인스턴스를 검토한다. API 키는 서버 환경변수에만 둔다.
 

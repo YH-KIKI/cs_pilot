@@ -104,21 +104,26 @@ Vite 빌드 자체는 TypeScript 타입 검사 성공을 뜻하지 않습니다.
 
 ## 배포
 
-Docker는 React 타입 검사·빌드와 SQLite 초기화를 먼저 수행합니다.
-최종 컨테이너는 FastAPI 한 서비스로 `/`, `/assets`, `/api`를 제공합니다.
-Render에서는 Docker 서비스를 선택하고 `OPENAI_API_KEY`는 나중에 서버 환경변수로 지정합니다.
-현재 단계에서는 키 없이 동작합니다. 컨테이너 시작 시 DB를 검증하며 매번 시드를 INSERT하지 않습니다.
+Docker는 React 타입 검사·빌드, 고정 SQLite 생성, 저장된 정책 벡터 11개의 Chroma 복원을 수행합니다.
+최종 컨테이너는 `python -m scripts.start`로 데이터와 UI를 확인한 뒤 FastAPI 한 서비스로
+`/`, `/assets`, `/api`를 제공합니다. 시작 준비에는 API 키나 재임베딩이 필요하지 않습니다.
+DB나 정책 자료가 다르면 덮어쓰지 않고 시작에 실패합니다. 비어 있으면 고정 자료에서 복원합니다.
+`PORT`를 반영하며 기본값은 8000입니다. 실제 상담은 서버에서 키와 두 API 허용값을 설정해야 합니다.
 
 ```powershell
 docker build -t cs-pilot .
-docker run --rm -p 8000:8000 cs-pilot
+docker run --rm -p 127.0.0.1:8001:8000 cs-pilot
 ```
 
-Docker/원격 배포 검증 여부는 [환경 검증 기록](docs/environment.md)을 확인하세요.
+위 예시는 기존 개발 서버와 분리한 8001 포트입니다.
+로컬 Docker 빌드·재시작·네트워크 없는 빈 런타임 복원을 검증했습니다. 원격 배포와 컨테이너의 실제
+AI 호출은 아직 검증하지 않았습니다. [배포 절차·설정·검증 범위](docs/deployment.md),
+[원본 검증 결과](docs/deployment-verification-2026-10-30.json)를 확인하세요.
 
 ## 학습 자료
 
 - [LangGraph 기본 상담 흐름](docs/agent-flow.md)
+- [단일 서비스 배포 준비](docs/deployment.md)
 
 - [RAG 구성과 API 없는 검증](docs/rag.md)
 

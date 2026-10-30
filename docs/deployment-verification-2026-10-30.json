@@ -1,0 +1,80 @@
+{
+  "started_at": "2026-10-30T13:00:35.443153+00:00",
+  "image": "cs-pilot:runtime-check",
+  "container": "cs-pilot-runtime-check-a7c72526",
+  "checks": {
+    "ui_and_built_assets": "passed",
+    "http_contract_and_disabled_ai": "passed",
+    "container_restart_same_orders_and_policy": "passed",
+    "empty_ephemeral_runtime_restored_without_network": "passed",
+    "invalid_port_fails_before_serving": "passed",
+    "corrupt_policy_bundle_fails_before_serving": "passed"
+  },
+  "paid_api_calls": 0,
+  "live_model_quality_evaluated": false,
+  "health": {
+    "status": "ok",
+    "database": "ready",
+    "ai_enabled": false,
+    "message": "상담 API가 연결됐습니다. 실제 AI 실행에는 서버의 명시적 API 허용이 필요합니다."
+  },
+  "before_restart": {
+    "database_sha256": "87598fd1f6cb87441b2cc299c46b742eb0727ce0b283772f94fc11993e0c3f87",
+    "counts": {
+      "orders": 12,
+      "order_items": 14
+    },
+    "policy_fingerprint": "e6e7f6497f032f682ed69317037035eb42a7fb087882c6922b6b5aded7b45ebf",
+    "policy_chunks": 11,
+    "exact_frozen_vector_lookup": "passed",
+    "readonly_lookup": "passed",
+    "excluded_host_data": "passed",
+    "embedding_backend_batches": 0
+  },
+  "after_restart": {
+    "database_sha256": "87598fd1f6cb87441b2cc299c46b742eb0727ce0b283772f94fc11993e0c3f87",
+    "counts": {
+      "orders": 12,
+      "order_items": 14
+    },
+    "policy_fingerprint": "e6e7f6497f032f682ed69317037035eb42a7fb087882c6922b6b5aded7b45ebf",
+    "policy_chunks": 11,
+    "exact_frozen_vector_lookup": "passed",
+    "readonly_lookup": "passed",
+    "excluded_host_data": "passed",
+    "embedding_backend_batches": 0
+  },
+  "fresh_runtime_offline_runs": [
+    {
+      "database_sha256": "87598fd1f6cb87441b2cc299c46b742eb0727ce0b283772f94fc11993e0c3f87",
+      "policy_fingerprint": "e6e7f6497f032f682ed69317037035eb42a7fb087882c6922b6b5aded7b45ebf",
+      "policy_chunks": 11,
+      "restored_chunks": 11,
+      "embedding_backend_batches": 0
+    },
+    {
+      "database_sha256": "87598fd1f6cb87441b2cc299c46b742eb0727ce0b283772f94fc11993e0c3f87",
+      "policy_fingerprint": "e6e7f6497f032f682ed69317037035eb42a7fb087882c6922b6b5aded7b45ebf",
+      "policy_chunks": 11,
+      "restored_chunks": 11,
+      "embedding_backend_batches": 0
+    }
+  ],
+  "image_id": "sha256:f561460effc98049b65c19be27350670607b3dce7c14db1fe276490bb1922a72",
+  "docker_server_version": "29.8.2",
+  "completed_at": "2026-10-30T13:00:55.685560+00:00",
+  "source_sha256": {
+    "Dockerfile": "d7e933b8ffa3616d469485801b64f3cf29d8a82ad09a713e5e61f63a436c90c1",
+    ".dockerignore": "2d9d2d25cbdeeb268a259c123e853a4128e75acc4056fffbcef4c2ba78fc18fa",
+    "app/runtime.py": "2a66242724a91cac062cc4b5575576b14f61e7cc2c282bd0e51df216b0715feb",
+    "scripts/start.py": "13d2341f21f55854e022d439c3c352431d714eab15f231d3877a12251dbaf736",
+    "app/main.py": "695285def4ff6aabd8f2a5176c84a0d29f843de6dca7a78c7b224247a74973b2",
+    "app/config.py": "18dd0060a17f82e6541343080e3bf8ebac5a2a618dcd8f1fd57c07ed69511e13",
+    "app/agent/model.py": "5075a89f11798cfc0d386bde9cce7789f054d98d078b45f02ae14af4428e4aaf",
+    "uv.lock": "c8b2ef5c1cdbd11ef738007738e08ad7c569a7eb5ef8d81c2b90d96ac5fdab52",
+    "frontend/package-lock.json": "aa7353cd0b6149be0dcd521443c045cf8f1cf92cffbf80e06a2eeeccd42985a0"
+  },
+  "status": "passed",
+  "test_container_removed": true,
+  "existing_development_server_8000": "not_modified"
+}

@@ -6,6 +6,7 @@ from uuid import uuid4
 from langgraph.graph import END, START, StateGraph
 from pydantic import ValidationError
 
+from app.agent.evidence import missing_related_rule_groups
 from app.agent.models import AgentState, NextAction
 from app.consultation_contract import (
     ConsultationRequest,
@@ -151,6 +152,18 @@ class ConsultationEngine:
         elif decision.action == "finish":
             searched = any(e.tool_name == "search_policy" for e in state["tool_events"])
             if (
+                decision.status == "needs_information"
+                and not decision.missing_fields
+                and calls < MAX_MODEL_CALLS
+            ):
+                route = "decide"
+                feedback = (
+                    "needs_information에는 missing_fields의 구체적인 확인 질문이 필요합니다. "
+                    "정말 정보가 부족하면 질문을 작성하세요. 조회와 정책으로 답할 수 있다면 "
+                    "answered와 고객 초안을 작성하세요. 신청/취소를 대신 실행하지 않는 것은 "
+                    "정보 부족과 다릅니다. 근거가 없다면 insufficient_evidence로 판단하세요."
+                )
+            elif (
                 decision.status == "answered"
                 and not state["sources"]
                 and not searched
@@ -163,6 +176,35 @@ class ConsultationEngine:
                 )
             else:
                 response = self.finish_response(current)
+                if response.status == "answered":
+                    try:
+                        missing_groups = missing_related_rule_groups(
+                            response.applied_policies, response.sources
+                        )
+                    except (OSError, ValueError, KeyError):
+                        response = terminal_response(
+                            current, "system_error", "검수된 정책 연결 정보를 확인하지 못했습니다."
+                        )
+                    else:
+                        if missing_groups:
+                            if calls < MAX_MODEL_CALLS:
+                                response = None
+                                route = "decide"
+                                feedback = (
+                                    "적용한 정책의 관련 조건·예외 근거가 누락됐습니다: "
+                                    + ", ".join(missing_groups)
+                                    + ". related_policy_requirements를 확인하세요. "
+                                    "이미 검색된 근거는 재검색 없이 적용 정책과 고객 초안에 "
+                                    "조건·예외를 설명하고 인용하세요. "
+                                    "없는 근거만 한도 내 검색하세요."
+                                )
+                            else:
+                                response = terminal_response(
+                                    current,
+                                    "insufficient_evidence",
+                                    "정책의 관련 조건·예외를 함께 적용하지 못했습니다. "
+                                    "검색된 출처를 상담원이 확인해 주세요.",
+                                )
         else:
             route = "lookup" if decision.action == "lookup_order" else "search"
         if response is None:
