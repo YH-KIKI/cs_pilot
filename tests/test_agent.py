@@ -796,3 +796,116 @@ def test_cancellation_guard_does_not_promote_information_or_evidence_shortage():
     assert result.status == "insufficient_evidence"
     assert result.draft_reply is None
     assert engine.response_normalizations == []
+
+
+def recorded_o03(*, completion=None, search_result=None, lookup=None):
+    report = json.loads((ROOT / "docs/agent-evaluation-v8-2026-10-30.json").read_text("utf-8"))
+    recorded = next(row for row in report["cases"] if row["case_id"] == "O03")
+    proposals = [NextAction.model_validate(row["proposal"]) for row in recorded["decisions"]]
+    engine, states = make_engine(
+        [*proposals, *([completion] if completion is not None else [])],
+        [search_result or policy_result(["order-cancellation", "order-status"])],
+        lookup=lookup,
+    )
+    return engine, states, proposals
+
+
+def test_recorded_o03_reconsiders_consent_without_forcing_a_response_or_another_search():
+    completed = answer(["order-cancellation"], requires_order=True)
+    engine, states, proposals = recorded_o03(completion=completed)
+    result = run(engine, order_id="A03", target_item_id="01")
+    assert result.status == "answered"
+    assert len(states) == 4
+    assert "동의" in states[-1]["feedback"]
+    assert len(result.tool_events) == 2
+    assert result.draft_reply == completed.draft_reply
+    assert proposals[-1].status == "needs_information"
+    assert proposals[-1].missing_fields[0].field == "other"
+
+
+def test_repeated_partial_cancellation_confirmation_stays_bounded_and_keeps_the_question():
+    engine, states, proposals = recorded_o03()
+    # The fixed decider repeats the same concrete question on its last call.
+    engine.decider = lambda state: states.append(state) or proposals[min(len(states) - 1, 2)]
+    result = run(engine, order_id="A03", target_item_id="01")
+    assert result.status == "needs_information"
+    assert len(states) == 4
+    assert result.missing_fields == proposals[-1].missing_fields
+    assert result.draft_reply is None
+    assert len(result.tool_events) == 2
+
+
+@pytest.mark.parametrize("field", ["card_brand", "payment_method", "order_status"])
+def test_real_missing_facts_are_not_reclassified_as_consent(field):
+    engine, states, proposals = recorded_o03()
+    proposals[-1].missing_fields = [
+        MissingField(field=field, item_id="01", question="실제 판단 정보를 확인해 주세요.")
+    ]
+    result = run(engine, order_id="A03", target_item_id="01")
+    assert result.status == "needs_information"
+    assert len(states) == 3
+    assert result.missing_fields == proposals[-1].missing_fields
+
+
+@pytest.mark.parametrize(
+    "payment,brand", [("card", None), ("card", "Other"), ("bank_transfer", None)]
+)
+def test_partial_confirmation_review_requires_known_restricted_card(payment, brand):
+    order = fetch_order("A03", ROOT / "data/runtime/orders.sqlite3").model_copy(deep=True)
+    order.order.payment_method = payment
+    order.order.card_brand = brand
+    engine, states, proposals = recorded_o03(lookup=lambda order_id: order)
+    result = run(engine, order_id="A03", target_item_id="01")
+    assert result.status == "needs_information"
+    assert len(states) == 3
+    assert result.missing_fields == proposals[-1].missing_fields
+
+
+def test_partial_confirmation_review_does_not_bypass_invalid_citations():
+    engine, states, proposals = recorded_o03()
+    proposals[-1].applied_policies[0].evidence_ids.append("invented")
+    result = run(engine, order_id="A03", target_item_id="01")
+    assert result.status == "system_error"
+    assert len(states) == 3
+    assert result.draft_reply is None
+
+
+def test_partial_confirmation_review_requires_applied_reviewed_policy():
+    search = policy_result(["order-cancellation", "order-status"])
+    next(
+        hit.source for hit in search.hits if hit.source.rule_group_id == "order-cancellation"
+    ).excerpt += " changed"
+    engine, states, proposals = recorded_o03(search_result=search)
+    result = run(engine, order_id="A03", target_item_id="01")
+    assert result.status == "needs_information"
+    assert len(states) == 3
+    assert result.missing_fields == proposals[-1].missing_fields
+
+
+@pytest.mark.parametrize("brand", ["MasterCard", "Diners"])
+def test_known_restricted_card_brands_can_use_the_same_bounded_review(brand):
+    order = fetch_order("A03", ROOT / "data/runtime/orders.sqlite3").model_copy(deep=True)
+    order.order.card_brand = brand
+    completed = answer(["order-cancellation"], requires_order=True)
+    engine, states, _ = recorded_o03(completion=completed, lookup=lambda order_id: order)
+    result = run(engine, order_id="A03", target_item_id="01")
+    assert result.status == "answered"
+    assert len(states) == 4
+    assert result.order_result.order.card_brand == brand
+
+
+def test_confirmation_review_does_not_apply_a_merely_retrieved_cancellation_candidate():
+    engine, states, proposals = recorded_o03()
+    status_id = next(hit.source.evidence_id for hit in policy_result(["order-status"]).hits)
+    proposals[-1].applied_policies = [AppliedPolicy(text="상태 안내", evidence_ids=[status_id])]
+    result = run(engine, order_id="A03", target_item_id="01")
+    assert result.status == "needs_information"
+    assert len(states) == 3
+
+
+def test_confirmation_review_does_not_choose_a_target_for_a_multi_item_order():
+    engine, states, proposals = recorded_o03()
+    result = run(engine, order_id="A03")
+    assert result.status == "needs_information"
+    assert len(states) == 3
+    assert result.missing_fields == proposals[-1].missing_fields

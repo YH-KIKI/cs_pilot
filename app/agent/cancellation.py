@@ -2,6 +2,7 @@
 
 from hashlib import sha256
 
+from app.agent.models import AgentState
 from app.consultation_contract import (
     AppliedPolicy,
     ConsultationRequest,
@@ -24,6 +25,39 @@ def matches_reviewed_cancellation(source: PolicySource) -> bool:
         and source.chunk_id == CANCELLATION_CHUNK
         and str(source.source_url) == "https://www.apple.com/kr/shop/help/viewing_changing_orders"
         and sha256(source.excerpt.encode("utf-8")).hexdigest() == CANCELLATION_TEXT_SHA256
+    )
+
+
+def needs_partial_cancellation_reconsideration(state: AgentState) -> bool:
+    """Request bounded reconsideration, never infer consent or force an answer."""
+    decision = state["decision"]
+    result = state["order_result"]
+    if (
+        decision is None
+        or decision.status != "needs_information"
+        or decision.topic != "cancellation"
+        or not decision.missing_fields
+        or any(field.field != "other" for field in decision.missing_fields)
+        or decision.recommendation is None
+        or result.kind != "found"
+    ):
+        return False
+    order = result.order
+    target = state["request"].target_item_id
+    if (
+        len(order.items) < 2
+        or order.payment_method != "card"
+        or (order.card_brand or "").casefold() not in {"visa", "mastercard", "diners"}
+        or target is None
+        or not any(item.item_id == target for item in order.items)
+    ):
+        return False
+    applied_ids = {key for policy in decision.applied_policies for key in policy.evidence_ids}
+    cited_ids = applied_ids | set(decision.recommendation.evidence_ids)
+    source_ids = {source.evidence_id for source in state["sources"]}
+    return cited_ids.issubset(source_ids) and any(
+        source.evidence_id in applied_ids and matches_reviewed_cancellation(source)
+        for source in state["sources"]
     )
 
 

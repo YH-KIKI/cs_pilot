@@ -6,7 +6,10 @@ from uuid import uuid4
 from langgraph.graph import END, START, StateGraph
 from pydantic import ValidationError
 
-from app.agent.cancellation import constrain_online_cancellation
+from app.agent.cancellation import (
+    constrain_online_cancellation,
+    needs_partial_cancellation_reconsideration,
+)
 from app.agent.evidence import missing_related_rule_groups
 from app.agent.models import AgentState, NextAction
 from app.consultation_contract import (
@@ -163,6 +166,17 @@ class ConsultationEngine:
                     "정말 정보가 부족하면 질문을 작성하세요. 조회와 정책으로 답할 수 있다면 "
                     "answered와 고객 초안을 작성하세요. 신청/취소를 대신 실행하지 않는 것은 "
                     "정보 부족과 다릅니다. 근거가 없다면 insufficient_evidence로 판단하세요."
+                )
+            elif calls < MAX_MODEL_CALLS and needs_partial_cancellation_reconsideration(current):
+                route = "decide"
+                feedback = (
+                    "조회한 카드·다품목·대상 품목과 적용한 검수 정책으로 부분 취소 제한을 "
+                    "설명할 수 있습니다. missing_fields가 실제 판단 정보 부족인지 다시 확인하세요. "
+                    "전체 주문 취소나 재주문에 대한 고객 동의는 실행 단계의 확인이며, "
+                    "이 서비스는 실제 처리를 실행하지 않으므로 정책 안내의 필수 정보가 아닙니다. "
+                    "동의 여부만 미확인이라면 제한과 대안을 answered/고객 초안으로 안내하세요. "
+                    "그 밖에 실제로 필요한 사실이나 근거가 부족하면 "
+                    "구체적인 확인 질문을 유지하세요."
                 )
             elif (
                 decision.status == "answered"

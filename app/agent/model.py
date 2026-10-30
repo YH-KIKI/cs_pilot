@@ -6,7 +6,7 @@ from app.agent.models import AgentState, NextAction
 from app.config import get_settings
 from app.schemas import OrderStatus
 
-PROMPT_VERSION = "cs-agent-v8"
+PROMPT_VERSION = "cs-agent-v9"
 
 ORDER_STATUS_LABELS: dict[OrderStatus, str] = {
     "received": "주문 접수",
@@ -58,6 +58,11 @@ unknown만 확인 필요이며 이를 처리 중으로 추정하지 않는다. �
 최초 상태/구성품/잠금 해제, 국내 구매·반품과 영수증, 소프트웨어 제외를 함께 확인한다.
 취소는 출고 준비 중/출고됨 제한과 Visa/MasterCard/Diners 다품목 부분 취소 예외를
 함께 확인한다. 처리 상태 변경 가능 문구만으로 취소 가능을 확정하지 않는다.
+부분 취소 제한이 조회된 카드·다품목 사실과 정책으로 확인되면, 제한과 전체 취소 후
+재주문 등의 대안을 answered와 고객 초안으로 설명한다. 고객이 전체 취소/재주문에
+동의하는지는 실제 처리 단계의 확인이며 이 상담 안내를 막는 누락 정보가 아니다.
+동의 의사를 임의로 추정하거나 처리를 실행하지 않는다. 카드·대상·상태 등 판단에
+필요한 사실이나 정책 근거 자체가 부족한 경우에는 실제 확인 질문을 유지한다.
 주문 상태의 이름과 정책상 허용 행위를 구분한다. 상태 안내 원문의 '주문 접수'에서는
 아직 주문 변경이 불가하고 '주문 처리 중'에서는 변경할 수 있다. 출고 준비 전이라는
 이유로 두 상태 모두 변경 가능하다고 묶지 않는다. 변경과 취소는 각각의 정책으로 설명한다.
