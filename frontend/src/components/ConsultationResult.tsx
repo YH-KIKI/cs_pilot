@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import type { ConsultationResponse } from '../schemas';
 import OrderSummary from './OrderSummary';
 
@@ -7,7 +8,14 @@ const labels = {
 } satisfies Record<ConsultationResponse['status'], string>;
 
 export default function ConsultationResult({ result }: { result: ConsultationResponse }) {
-  const evidenceLinks = (ids: string[]) => ids.map((id) => <a key={id} href={`#${id}`}>
+  const sourceElements = useRef(new Map<string, HTMLDetailsElement>());
+  const evidenceLinks = (ids: string[]) => ids.map((id) => <a key={id} href={`#${id}`} onClick={() => {
+    const source = sourceElements.current.get(id);
+    if (source) {
+      source.open = true;
+      source.focus();
+    }
+  }}>
     {' '}[근거 {result.sources.findIndex((source) => source.evidence_id === id) + 1}]
   </a>);
   return <div className="consultation-result">
@@ -24,7 +32,11 @@ export default function ConsultationResult({ result }: { result: ConsultationRes
     {result.draft_reply && <><h3>고객 답변 초안</h3><blockquote>{result.draft_reply}</blockquote></>}
     <h3>정책 출처 ({result.sources.length})</h3>
     {result.sources.length === 0 && <p className="muted">확인한 정책 근거가 없습니다.</p>}
-    {result.sources.map((source, index) => <details key={source.evidence_id} id={source.evidence_id}>
+    {result.sources.map((source, index) => <details key={source.evidence_id} id={source.evidence_id} tabIndex={-1}
+      ref={(element) => {
+        if (element) sourceElements.current.set(source.evidence_id, element);
+        else sourceElements.current.delete(source.evidence_id);
+      }}>
       <summary>근거 {index + 1} · {source.title} · {source.heading}</summary>
       <a href={source.source_url} target="_blank" rel="noreferrer">공식 정책 원문</a>
       <p className="muted">수집일: {source.collected_at} · 시행일: {source.effective_date ?? '확인되지 않음'}</p>

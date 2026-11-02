@@ -17,3 +17,9 @@
 strict와 noUncheckedIndexedAccess를 적용했습니다. any나 비null 단언으로 누락을 숨기지 않습니다.
 api.ts에서 JSON을 unknown으로 받고 스키마 검증 후 컴포넌트로 전달합니다.
 TypeScript는 정책 판단의 정확성이나 외부 데이터의 진실성을 보장하지 않습니다.
+
+5일차 출처 연결에서는 `Map<string, HTMLDetailsElement>`로 근거 ID와 펼칠 요소를 연결한다.
+`get(id)`의 결과는 요소 또는 `undefined`이므로 존재 확인 후에만 `open`과 `focus()`에 접근한다.
+잘못된 요소 타입이나 존재하지 않을 수 있는 값의 직접 접근은 타입 검사에서 발견할 수 있다.
+실제로 올바른 근거가 펼쳐지는지/키보드 초점이 이동하는지는 Playwright로 별도 확인한다.
+`npm run typecheck`는 검사 코드까지 포함하고, `npm run test:ui`는 런타임 응답 거부/화면 동작을 검증한다.
