@@ -22,6 +22,7 @@ React + TypeScript + Vite / Python 3.12 + FastAPI / SQLite / LangChain + LangGra
 가상 주문만 조회하며 실제 취소·환불·메시지 발송은 하지 않습니다.
 **프로젝트 3일차(기본 상담 연결)와 4일차(통합 검증)는 완료**했으며 실제 작업 날짜는 2026-10-30~31입니다. 5·6일차의 선행 구현도 main에 반영했고, 미실행 검증/원격 배포는 [일차별 현황](docs/devlog/README.md)과 [단계별 진행 상태](docs/initial-design.md#milestone-status)에 따로 표시했습니다.
 F01의 반대 초안과 O03의 불필요한 동의 확인을 보강한 최신 v9 전체 평가에서 **24/24 구조 통과**를 확인했습니다.
+2026-11-02에는 **5일차 로컬 화면 검증 17/17**을 통과하고 인용 클릭 시 출처 펼침/초점을 보강했습니다. [PR #4](https://github.com/YH-KIKI/cs_pilot/pull/4)에서 CI/병합 마감을 진행 중입니다. [이번 검증과 미실행 범위](docs/devlog/day05-2026-11-02.md)
 답변 24개를 읽어 검토했으며 설명 생략 등 남은 개선과 단일 실행의 한계를 [검토 기록](docs/agent-review-v9-2026-10-31.md)에 구분했습니다. 상담 흐름·검증·배포 시작 기반은 [PR #3](https://github.com/YH-KIKI/cs_pilot/pull/3)으로 main에 병합했습니다. [O03 보강·범위](docs/o03-fix-2026-10-31.md), [F01 보강·한계](docs/f01-guard-2026-10-30.md)
 기본 실행과 자동 테스트는 API를 호출하지 않습니다. 실제 신규 질문 임베딩은 키와 명시적 API 허용이 필요합니다. 첫 실제 검색 평가는 완료했으며 [결과와 한계](docs/evaluation.md)를 확인하세요.
 
@@ -85,6 +86,11 @@ powershell -ExecutionPolicy Bypass -File scripts/uv.ps1 run ruff check .
 프런트에서 `npm.cmd run typecheck`, `npm.cmd run build`를 모두 실행합니다.
 상담 계약은 `npm.cmd run check:contracts`로 서버 예시와 Zod 스키마를 대조합니다.
 Vite 빌드 자체는 TypeScript 타입 검사 성공을 뜻하지 않습니다.
+
+화면 검사는 프런트 폴더에서 최초 `npx.cmd playwright install chromium` 후 `npm.cmd run test:ui`로 실행합니다.
+별도 Vite 서버(127.0.0.1:5174)를 자동 시작/종료하고 계약 예시와 저장 출력만 재생합니다.
+백엔드/API 키가 필요하지 않으며 OpenAI를 호출하지 않습니다. 5174를 사용 중이면 기존 서버를 재사용하지 않고 실패합니다.
+실행 캡처·실패 trace는 Git 제외 경로 `data/runtime/`에 저장됩니다. 원격 CI에도 같은 검사 명령을 연결했습니다.
 
 ## SQLite 관계와 초기화
 
